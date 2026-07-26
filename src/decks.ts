@@ -3,13 +3,14 @@ import {
   type Analysis,
   type CatalogParadigm,
   type DrillDeck,
-  type DrillItem
+  type DrillItem,
+  type FilterField
 } from "./catalog";
 
 export interface ContentBlock {
   id: string;
   paradigmId: string;
-  selected: Record<string, string[]>;
+  selected: Partial<Record<FilterField, string[]>>;
   showTransliteration: boolean;
 }
 
@@ -28,14 +29,34 @@ export function createId(prefix: string): string {
 export function loadDecks(): SavedDeck[] {
   try {
     const value = JSON.parse(localStorage.getItem(storageKey) ?? "[]");
-    return Array.isArray(value) ? value : [];
+    const decks = Array.isArray(value) ? value : value?.version === 1 ? value.decks : [];
+    return Array.isArray(decks) ? decks.filter(isSavedDeck) : [];
   } catch {
     return [];
   }
 }
 
 export function saveDecks(decks: SavedDeck[]): void {
-  localStorage.setItem(storageKey, JSON.stringify(decks));
+  localStorage.setItem(storageKey, JSON.stringify({ version: 1, decks }));
+}
+
+function isSavedDeck(value: unknown): value is SavedDeck {
+  if (!value || typeof value !== "object") return false;
+  const deck = value as Partial<SavedDeck>;
+  return (
+    typeof deck.id === "string" &&
+    typeof deck.name === "string" &&
+    Array.isArray(deck.blocks) &&
+    deck.blocks.every(
+      (block) =>
+        block &&
+        typeof block.id === "string" &&
+        typeof block.paradigmId === "string" &&
+        typeof block.selected === "object" &&
+        typeof block.showTransliteration === "boolean" &&
+        catalogParadigms.some(({ id }) => id === block.paradigmId)
+    )
+  );
 }
 
 export function paradigmFor(block: ContentBlock): CatalogParadigm {
@@ -46,21 +67,36 @@ export function paradigmFor(block: ContentBlock): CatalogParadigm {
 
 function analysisMatches(
   analysis: Analysis,
-  selected: Record<string, string[]>
+  selected: Partial<Record<FilterField, string[]>>
 ): boolean {
   return Object.entries(selected).every(([field, values]) => {
-    const value =
-      field === "number"
-        ? analysis.grammaticalNumber
-        : analysis[field as keyof Analysis];
-    return typeof value === "string" && values.includes(value);
+    if (!values) return false;
+    const value = analysisValue(analysis, field as FilterField);
+    return value !== null && values.includes(value);
   });
 }
 
+function analysisValue(analysis: Analysis, field: FilterField): string | null {
+  switch (field) {
+    case "number":
+      return analysis.grammaticalNumber;
+    case "grammaticalCase":
+      return analysis.kind === "nominal" ? analysis.grammaticalCase : null;
+    case "tense":
+    case "voice":
+    case "mood":
+    case "person":
+      return analysis.kind === "finite-verb" ? analysis[field] : null;
+  }
+}
+
 export function itemsForBlock(block: ContentBlock): DrillItem[] {
-  return paradigmFor(block).items.filter((item) =>
-    item.analyses.some((analysis) => analysisMatches(analysis, block.selected))
-  );
+  return paradigmFor(block).items.flatMap((item) => {
+    const analyses = item.analyses.filter((analysis) =>
+      analysisMatches(analysis, block.selected)
+    );
+    return analyses.length ? [{ ...item, analyses }] : [];
+  });
 }
 
 function analysisIdentity(analysis: Analysis): string {
@@ -74,10 +110,12 @@ function analysisIdentity(analysis: Analysis): string {
 }
 
 export function blockError(block: ContentBlock): string | null {
-  const analyses = new Set(
-    itemsForBlock(block).flatMap((item) => item.analyses.map(analysisIdentity))
+  const analysisSets = new Set(
+    itemsForBlock(block).map((item) =>
+      item.analyses.map(analysisIdentity).sort().join("|")
+    )
   );
-  return analyses.size < 3
+  return analysisSets.size < 3
     ? "Escolha formas que ofereçam pelo menos três análises distintas."
     : null;
 }
@@ -92,14 +130,22 @@ export function playableDeck(deck: SavedDeck): DrillDeck {
   const deduplicated = new Map<string, DrillItem>();
   for (const block of deck.blocks) {
     for (const item of itemsForBlock(block)) {
-      const presentationKey = `${item.id}:${block.showTransliteration}`;
       const paradigm = paradigmFor(block);
-      deduplicated.set(presentationKey, {
+      const existing = deduplicated.get(item.id);
+      const analyses = new Map(
+        [...(existing?.analyses ?? []), ...item.analyses].map((analysis) => [
+          analysisIdentity(analysis),
+          analysis
+        ])
+      );
+      deduplicated.set(item.id, {
         ...item,
-        id: presentationKey,
-        support: block.showTransliteration
-          ? paradigm.lemma.transliteration
-          : undefined
+        analyses: [...analyses.values()],
+        support:
+          existing?.support ??
+          (block.showTransliteration
+            ? paradigm.lemma.transliteration
+            : undefined)
       });
     }
   }

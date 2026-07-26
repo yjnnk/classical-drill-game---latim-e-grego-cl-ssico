@@ -54,10 +54,18 @@ export interface DrillDeck {
 }
 
 export interface CatalogFilter {
-  field: string;
+  field: FilterField;
   label: string;
   options: Array<{ value: string; label: string }>;
 }
+
+export type FilterField =
+  | "grammaticalCase"
+  | "number"
+  | "tense"
+  | "voice"
+  | "mood"
+  | "person";
 
 export interface CatalogParadigm {
   id: string;
@@ -206,7 +214,7 @@ const optionLabels: Record<string, string> = {
 };
 
 function filter(
-  field: string,
+  field: FilterField,
   label: string,
   values: string[]
 ): CatalogFilter {

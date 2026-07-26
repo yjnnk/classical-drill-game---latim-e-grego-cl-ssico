@@ -3,7 +3,8 @@ import {
   catalogParadigms,
   type Analysis,
   type CatalogParadigm,
-  type DrillDeck
+  type DrillDeck,
+  type FilterField
 } from "./catalog";
 import {
   blockError,
@@ -217,10 +218,11 @@ function wireBlocks(deck: SavedDeck): void {
     if (!block) return;
     element.querySelectorAll<HTMLInputElement>("[data-field]").forEach((input) => {
       input.addEventListener("change", () => {
-        const values = new Set(block.selected[input.dataset.field ?? ""] ?? []);
+        const field = input.dataset.field as FilterField;
+        const values = new Set(block.selected[field] ?? []);
         if (input.checked) values.add(input.value);
         else values.delete(input.value);
-        block.selected[input.dataset.field ?? ""] = [...values];
+        block.selected[field] = [...values];
         renderEditor(deck);
       });
     });

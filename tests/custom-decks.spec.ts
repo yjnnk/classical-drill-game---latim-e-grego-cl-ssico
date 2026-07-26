@@ -90,10 +90,8 @@ test("um rascunho inválido é salvo, mas não pode iniciar", async ({ page }) =
   const block = page.getByRole("article").filter({
     has: page.getByRole("heading", { name: "κρήνη" })
   });
-  await block.getByLabel("genitivo").uncheck();
-  await block.getByLabel("dativo").uncheck();
   await block.getByLabel("acusativo").uncheck();
-  await block.getByLabel("dual").uncheck();
+  await block.getByLabel("singular").uncheck();
   await block.getByLabel("plural").uncheck();
   await expect(block).toContainText(
     "Escolha formas que ofereçam pelo menos três análises distintas."
@@ -106,4 +104,53 @@ test("um rascunho inválido é salvo, mas não pode iniciar", async ({ page }) =
   });
   await expect(draft).toContainText("Rascunho");
   await expect(draft.getByRole("button", { name: "Iniciar rodada" })).toBeDisabled();
+});
+
+test("sobreposições preservam o apoio e filtros removem análises sincréticas", async ({
+  page
+}) => {
+  await page.getByRole("button", { name: "Criar baralho" }).click();
+  await page.getByLabel("Nome do baralho").fill("Genitivos");
+  await page.getByRole("button", { name: "Adicionar conteúdo" }).click();
+  await page.getByRole("button", { name: "Adicionar κρήνη" }).click();
+
+  const first = page.getByRole("article").filter({
+    has: page.getByRole("heading", { name: "κρήνη" })
+  });
+  await first.getByLabel("nominativo").uncheck();
+  await first.getByLabel("dativo").uncheck();
+  await first.getByLabel("acusativo").uncheck();
+  await first
+    .getByLabel("Mostrar transliteração como apoio pedagógico")
+    .check();
+  await first.getByRole("button", { name: "Duplicar bloco" }).click();
+
+  const blocks = page.getByRole("article").filter({
+    has: page.getByRole("heading", { name: "κρήνη" })
+  });
+  await blocks
+    .nth(1)
+    .getByLabel("Mostrar transliteração como apoio pedagógico")
+    .uncheck();
+  await expect(page.getByText("2 blocos · 3 formas · pronto para iniciar")).toBeVisible();
+  await page.getByRole("button", { name: "Iniciar rodada" }).click();
+
+  for (let index = 0; index < 3; index += 1) {
+    await expect(page.getByText("krḗnē", { exact: true })).toBeVisible();
+    const form = (await page.locator(".greek-form").textContent())?.trim();
+    const answer: Record<string, string> = {
+      "τῆς κρήνης": "genitivo · singular",
+      "τοῖν κρήναιν": "genitivo · dual",
+      "τῶν κρηνῶν": "genitivo · plural"
+    };
+    if (!form || !answer[form]) throw new Error(`Forma genitiva inesperada: ${form}`);
+    if (form === "τοῖν κρήναιν") {
+      await expect(
+        page.getByRole("group", { name: "Alternativas" })
+      ).not.toContainText("dativo · dual");
+    }
+    await page.getByRole("button", { name: answer[form] }).click();
+    await page.getByRole("button", { name: "Continuar" }).click();
+  }
+  await expect(page.getByText("Rodada concluída")).toBeVisible();
 });
