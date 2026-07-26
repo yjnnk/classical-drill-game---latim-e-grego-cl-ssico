@@ -15,11 +15,12 @@ import {
   loadDecks,
   paradigmFor,
   playableDeck,
+  roundConfig,
   saveDecks,
   type ContentBlock,
   type SavedDeck
 } from "./decks";
-import { DrillRound, formatAnalysisSet } from "./round";
+import { DrillRound, type RoundConfig } from "./round";
 import "./styles.css";
 
 const root = document.querySelector<HTMLElement>("#app");
@@ -67,7 +68,15 @@ function renderHome(): void {
 
   app.querySelector<HTMLButtonElement>("[data-action='create']")?.addEventListener(
     "click",
-    () => renderEditor({ id: createId("deck"), name: "", blocks: [] })
+    () =>
+      renderEditor({
+        id: createId("deck"),
+        name: "",
+        blocks: [],
+        direction: "analysis",
+        coverage: "all",
+        quantity: 10
+      })
   );
   app.querySelectorAll<HTMLButtonElement>("[data-built-in]").forEach((button) => {
     const deck = builtInDecks.find(({ id }) => id === button.dataset.builtIn);
@@ -79,7 +88,7 @@ function renderHome(): void {
     button.addEventListener("click", () => {
       switch (button.dataset.deckAction) {
         case "start":
-          if (!deckError(deck)) startRound(playableDeck(deck));
+          if (!deckError(deck)) startRound(playableDeck(deck), roundConfig(deck));
           break;
         case "edit":
           renderEditor(structuredClone(deck));
@@ -144,6 +153,21 @@ function renderEditor(deck: SavedDeck, catalogOpen = false, query = "", category
       </div>
       <button class="add-block" type="button" data-action="catalog">＋ Adicionar conteúdo</button>
       ${catalogOpen ? catalogPicker(query, category) : ""}
+      <section class="round-settings" aria-labelledby="round-settings-title">
+        <div><p class="deck-label">Regras da rodada</p><h2 id="round-settings-title">Como praticar</h2></div>
+        <fieldset><legend>Direção</legend>
+          ${[
+            ["analysis", "Análise"],
+            ["production", "Produção assistida"],
+            ["mixed", "Misto"]
+          ].map(([value, label]) => `<label class="filter-option"><input type="radio" name="direction" value="${value}" ${deck.direction === value ? "checked" : ""}><span>${label}</span></label>`).join("")}
+        </fieldset>
+        <fieldset><legend>Cobertura</legend>
+          <label class="filter-option"><input type="radio" name="coverage" value="all" ${deck.coverage === "all" ? "checked" : ""}><span>Todas as formas</span></label>
+          <label class="filter-option"><input type="radio" name="coverage" value="limited" ${deck.coverage === "limited" ? "checked" : ""}><span>Quantidade definida</span></label>
+        </fieldset>
+        ${deck.coverage === "limited" ? `<label class="quantity-field">Quantidade<input type="number" aria-label="Quantidade de formas" min="1" max="${playableDeck(deck).items.length}" value="${deck.quantity}"></label>` : ""}
+      </section>
       <footer class="editor-footer">
         <div>${invalid ? `<p class="validation-message">${invalid}</p>` : `<p>${deckStats(deck)} · pronto para iniciar</p>`}</div>
         <div class="footer-actions">
@@ -166,8 +190,23 @@ function renderEditor(deck: SavedDeck, catalogOpen = false, query = "", category
   app.querySelector<HTMLButtonElement>("[data-action='start']")?.addEventListener("click", () => {
     if (!deckError(deck)) {
       persistDeck(deck);
-      startRound(playableDeck(deck));
+      startRound(playableDeck(deck), roundConfig(deck));
     }
+  });
+  app.querySelectorAll<HTMLInputElement>("[name='direction']").forEach((input) =>
+    input.addEventListener("change", () => {
+      deck.direction = input.value as SavedDeck["direction"];
+      renderEditor(deck);
+    })
+  );
+  app.querySelectorAll<HTMLInputElement>("[name='coverage']").forEach((input) =>
+    input.addEventListener("change", () => {
+      deck.coverage = input.value as SavedDeck["coverage"];
+      renderEditor(deck);
+    })
+  );
+  app.querySelector<HTMLInputElement>("[aria-label='Quantidade de formas']")?.addEventListener("change", (event) => {
+    deck.quantity = Number((event.currentTarget as HTMLInputElement).value);
   });
   wireBlocks(deck);
   if (catalogOpen) wireCatalog(deck, query, category);
@@ -280,25 +319,29 @@ function wireCatalog(deck: SavedDeck, query: string, category: string): void {
   });
 }
 
-function startRound(deck: DrillDeck): void {
-  const round = new DrillRound(deck.items);
+function startRound(
+  deck: DrillDeck,
+  config: RoundConfig = { direction: "analysis", coverage: "all" }
+): void {
+  const round = new DrillRound(deck.items, config);
   function renderQuestion(): void {
     const question = round.question();
     if (!question) return renderComplete();
+    const isAnalysis = question.direction === "analysis";
     app.innerHTML = `<section class="round" aria-labelledby="question-title">
       <header class="round-header"><button class="quiet" data-action="exit">Sair</button><p aria-live="polite">Progresso: ${round.masteredCount} de ${round.total}</p></header>
-      <div class="prompt"><p id="question-title">Qual é a análise desta forma?</p><p class="greek-form" lang="grc">${question.item.form}</p>${question.item.support ? `<p class="pedagogical-support">${question.item.support}</p>` : ""}</div>
-      <div class="options" role="group" aria-label="Alternativas">${question.options.map((option, index) => `<button class="option"><span class="option-number">${index + 1}</span><span>${formatAnalysisSet(option)}</span></button>`).join("")}</div><div class="feedback" aria-live="polite"></div></section>`;
+      <div class="prompt"><p id="question-title">${isAnalysis ? "Qual é a análise desta forma?" : "Qual forma corresponde a esta análise?"}</p><p class="${isAnalysis ? "greek-form" : "analysis-prompt"}" ${isAnalysis ? 'lang="grc"' : ""}>${question.prompt}</p>${isAnalysis && question.item.support ? `<p class="pedagogical-support">${question.item.support}</p>` : ""}</div>
+      <div class="options" role="group" aria-label="Alternativas">${question.choices.map((choice, index) => `<button class="option"><span class="option-number">${index + 1}</span><span>${choice.label}</span></button>`).join("")}</div><div class="feedback" aria-live="polite"></div></section>`;
     app.querySelector<HTMLButtonElement>("[data-action='exit']")?.addEventListener("click", renderHome);
     const buttons = [...app.querySelectorAll<HTMLButtonElement>(".option")];
     buttons.forEach((button, index) => {
-      const selected = question.options[index];
-      if (selected) button.addEventListener("click", () => answer(buttons, button, selected));
+      const selected = question.choices[index];
+      if (selected) button.addEventListener("click", () => answer(buttons, button, selected.id));
     });
   }
-  function answer(buttons: HTMLButtonElement[], selectedButton: HTMLButtonElement, selected: Analysis[]): void {
+  function answer(buttons: HTMLButtonElement[], selectedButton: HTMLButtonElement, selected: string): void {
     const result = round.answer(selected);
-    const correct = formatAnalysisSet(result.correctAnalyses);
+    const correct = result.correctLabel;
     buttons.forEach((button) => {
       button.disabled = true;
       if (button.textContent?.includes(correct)) button.classList.add("correct");

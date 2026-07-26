@@ -324,6 +324,45 @@ legend {
   margin: 1rem 0;
 }
 
+.round-settings {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid rgb(55 79 66 / 18%);
+  border-radius: 1.35rem;
+  background: rgb(255 253 247 / 86%);
+}
+
+.round-settings h2 {
+  margin: 0;
+  color: #21352b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.quantity-field {
+  display: grid;
+  align-content: start;
+  gap: 0.45rem;
+  color: #526158;
+  font-size: 0.8rem;
+  font-weight: 750;
+  text-transform: uppercase;
+}
+
+.quantity-field input {
+  width: 7rem;
+  min-height: 2.6rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid rgb(55 79 66 / 25%);
+  border-radius: 0.65rem;
+  background: #fffdf7;
+  font: inherit;
+}
+
 .search {
   margin: 1.25rem 0 0.75rem;
 }
@@ -457,6 +496,15 @@ legend {
   margin: 0.75rem 0 0;
   color: #66736c;
   font-style: italic;
+}
+
+.analysis-prompt {
+  max-width: 38rem;
+  margin: 0 auto;
+  color: #192b22;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  line-height: 1.35;
 }
 
 .options {
@@ -609,6 +657,10 @@ legend {
 
   .block-summary {
     flex-direction: column;
+  }
+
+  .round-settings {
+    grid-template-columns: 1fr;
   }
 }
 

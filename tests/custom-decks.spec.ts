@@ -154,3 +154,31 @@ test("sobreposições preservam o apoio e filtros removem análises sincréticas
   }
   await expect(page.getByText("Rodada concluída")).toBeVisible();
 });
+
+test("o estudante salva produção assistida com quantidade definida", async ({
+  page
+}) => {
+  await page.getByRole("button", { name: "Criar baralho" }).click();
+  await page.getByLabel("Nome do baralho").fill("Produção curta");
+  await page.getByRole("button", { name: "Adicionar conteúdo" }).click();
+  await page.getByRole("button", { name: "Adicionar κρήνη" }).click();
+  await page.getByLabel("Produção assistida").check();
+  await page.getByLabel("Quantidade definida").check();
+  await page.getByLabel("Quantidade de formas").fill("3");
+  await page.getByRole("button", { name: "Salvar baralho" }).click();
+
+  const deck = page.getByRole("article").filter({
+    has: page.getByRole("heading", { name: "Produção curta" })
+  });
+  await deck.getByRole("button", { name: "Iniciar rodada" }).click();
+
+  await expect(
+    page.getByText("Qual forma corresponde a esta análise?")
+  ).toBeVisible();
+  await expect(page.getByText(/ de 3/)).toBeVisible();
+  await expect(
+    page
+      .getByRole("group", { name: "Alternativas" })
+      .getByRole("button")
+  ).toHaveCount(3);
+});

@@ -6,6 +6,7 @@ import {
   type DrillItem,
   type FilterField
 } from "./catalog";
+import type { CoverageMode, DirectionMode, RoundConfig } from "./round";
 
 export interface ContentBlock {
   id: string;
@@ -18,6 +19,9 @@ export interface SavedDeck {
   id: string;
   name: string;
   blocks: ContentBlock[];
+  direction: DirectionMode;
+  coverage: CoverageMode;
+  quantity: number;
 }
 
 const storageKey = "classical-drill-decks:v1";
@@ -30,10 +34,21 @@ export function loadDecks(): SavedDeck[] {
   try {
     const value = JSON.parse(localStorage.getItem(storageKey) ?? "[]");
     const decks = Array.isArray(value) ? value : value?.version === 1 ? value.decks : [];
-    return Array.isArray(decks) ? decks.filter(isSavedDeck) : [];
+    return Array.isArray(decks)
+      ? decks.filter(isSavedDeck).map(withDefaults)
+      : [];
   } catch {
     return [];
   }
+}
+
+function withDefaults(deck: SavedDeck): SavedDeck {
+  return {
+    ...deck,
+    direction: deck.direction ?? "analysis",
+    coverage: deck.coverage ?? "all",
+    quantity: deck.quantity ?? 10
+  };
 }
 
 export function saveDecks(decks: SavedDeck[]): void {
@@ -141,6 +156,9 @@ export function playableDeck(deck: SavedDeck): DrillDeck {
       deduplicated.set(item.id, {
         ...item,
         analyses: [...analyses.values()],
+        sourceBlockIds: [
+          ...new Set([...(existing?.sourceBlockIds ?? []), block.id])
+        ],
         support:
           existing?.support ??
           (block.showTransliteration
@@ -154,6 +172,14 @@ export function playableDeck(deck: SavedDeck): DrillDeck {
     title: deck.name,
     description: `${deck.blocks.length} bloco${deck.blocks.length === 1 ? "" : "s"}`,
     items: [...deduplicated.values()]
+  };
+}
+
+export function roundConfig(deck: SavedDeck): RoundConfig {
+  return {
+    direction: deck.direction,
+    coverage: deck.coverage,
+    quantity: deck.quantity
   };
 }
 

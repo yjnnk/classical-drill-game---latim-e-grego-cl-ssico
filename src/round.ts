@@ -1,13 +1,37 @@
 import type { Analysis, DrillItem } from "./catalog";
 
+export type RoundDirection = "analysis" | "production";
+export type DirectionMode = RoundDirection | "mixed";
+export type CoverageMode = "all" | "limited";
+
+export interface RoundConfig {
+  direction: DirectionMode;
+  coverage: CoverageMode;
+  quantity?: number;
+  random?: () => number;
+}
+
+export interface RoundChoice {
+  id: string;
+  label: string;
+  correct: boolean;
+}
+
 export interface RoundQuestion {
   item: DrillItem;
-  options: Analysis[][];
+  direction: RoundDirection;
+  prompt: string;
+  choices: RoundChoice[];
 }
 
 export interface AnswerResult {
   isCorrect: boolean;
-  correctAnalyses: Analysis[];
+  correctLabel: string;
+}
+
+interface ScheduledItem {
+  item: DrillItem;
+  direction: RoundDirection;
 }
 
 const labels = {
@@ -19,11 +43,7 @@ const labels = {
     perfect: "perfeito",
     pluperfect: "mais-que-perfeito"
   },
-  voice: {
-    active: "ativo",
-    middle: "médio",
-    passive: "passivo"
-  },
+  voice: { active: "ativo", middle: "médio", passive: "passivo" },
   mood: {
     indicative: "indicativo",
     subjunctive: "subjuntivo",
@@ -51,10 +71,6 @@ function analysisSetIdentity(analyses: Analysis[]): string {
   return analyses.map(analysisIdentity).sort().join("|");
 }
 
-function sameAnalysisSet(left: Analysis[], right: Analysis[]): boolean {
-  return analysisSetIdentity(left) === analysisSetIdentity(right);
-}
-
 function matchingTraits(left: Analysis, right: Analysis): number {
   if (left.kind !== right.kind) return -1;
   return Object.entries(left).filter(
@@ -65,24 +81,21 @@ function matchingTraits(left: Analysis, right: Analysis): number {
 function setCloseness(left: Analysis[], right: Analysis[]): number {
   return Math.max(
     ...left.flatMap((leftAnalysis) =>
-      right.map((rightAnalysis) =>
-        matchingTraits(leftAnalysis, rightAnalysis)
-      )
+      right.map((rightAnalysis) => matchingTraits(leftAnalysis, rightAnalysis))
     )
   );
 }
 
-function shuffled<T>(values: T[]): T[] {
-  return values
-    .map((value) => ({ value, order: Math.random() }))
-    .sort((left, right) => left.order - right.order)
-    .map(({ value }) => value);
+function shuffled<T>(values: T[], random: () => number): T[] {
+  const result = [...values];
+  for (let index = result.length - 1; index > 0; index -= 1) {
+    const target = Math.floor(random() * (index + 1));
+    [result[index], result[target]] = [result[target]!, result[index]!];
+  }
+  return result;
 }
 
-function translated(
-  dictionary: Record<string, string>,
-  value: string
-): string {
+function translated(dictionary: Record<string, string>, value: string): string {
   return dictionary[value] ?? value;
 }
 
@@ -103,23 +116,63 @@ export function formatAnalysisSet(analyses: Analysis[]): string {
   return analyses.map(formatAnalysis).join(" ou ");
 }
 
+function withoutDiacritics(value: string): string {
+  return value.normalize("NFD").replace(/\p{M}/gu, "");
+}
+
+function balancedSample(
+  items: DrillItem[],
+  quantity: number,
+  random: () => number
+): DrillItem[] {
+  const groups = new Map<string, DrillItem[]>();
+  for (const item of shuffled(items, random)) {
+    const block = item.sourceBlockIds?.[0] ?? "unassigned";
+    groups.set(block, [...(groups.get(block) ?? []), item]);
+  }
+  const selected: DrillItem[] = [];
+  while (selected.length < quantity && [...groups.values()].some(Boolean)) {
+    for (const group of groups.values()) {
+      const item = group.shift();
+      if (item) selected.push(item);
+      if (selected.length === quantity) break;
+    }
+  }
+  return selected;
+}
+
 export class DrillRound {
   readonly total: number;
   private readonly mastered = new Set<string>();
-  private readonly analysisSets: Analysis[][];
-  private queue: DrillItem[];
+  private readonly eligible: DrillItem[];
+  private readonly random: () => number;
+  private queue: ScheduledItem[];
+  private activeQuestion: RoundQuestion | null = null;
 
-  constructor(items: DrillItem[]) {
-    this.total = items.length;
-    this.queue = shuffled(items);
-    this.analysisSets = items
-      .map((item) => item.analyses)
-      .filter(
-        (analyses, index, all) =>
-          all.findIndex((candidate) =>
-            sameAnalysisSet(candidate, analyses)
-          ) === index
-      );
+  constructor(
+    items: DrillItem[],
+    config: RoundConfig = { direction: "analysis", coverage: "all" }
+  ) {
+    this.random = config.random ?? Math.random;
+    this.eligible = items;
+    const scheduledItems =
+      config.coverage === "limited"
+        ? balancedSample(
+            items,
+            Math.min(Math.max(config.quantity ?? items.length, 1), items.length),
+            this.random
+          )
+        : shuffled(items, this.random);
+    this.queue = scheduledItems.map((item, index) => ({
+      item,
+      direction:
+        config.direction === "mixed"
+          ? index % 2 === 0
+            ? "analysis"
+            : "production"
+          : config.direction
+    }));
+    this.total = this.queue.length;
   }
 
   get masteredCount(): number {
@@ -127,42 +180,139 @@ export class DrillRound {
   }
 
   question(): RoundQuestion | null {
-    const item = this.queue[0];
-    if (!item) return null;
+    const scheduled = this.queue[0];
+    if (!scheduled) return null;
+    if (
+      this.activeQuestion &&
+      this.activeQuestion.item.id === scheduled.item.id &&
+      this.activeQuestion.direction === scheduled.direction
+    ) {
+      return this.activeQuestion;
+    }
+    this.activeQuestion =
+      scheduled.direction === "analysis"
+        ? this.analysisQuestion(scheduled.item)
+        : this.productionQuestion(scheduled.item);
+    return this.activeQuestion;
+  }
 
-    const distractors = this.analysisSets
-      .filter((analyses) => !sameAnalysisSet(analyses, item.analyses))
+  private analysisQuestion(item: DrillItem): RoundQuestion {
+    const correctIdentity = analysisSetIdentity(item.analyses);
+    const candidates = [
+      ...new Map(
+        this.eligible.map((candidate) => [
+          analysisSetIdentity(candidate.analyses),
+          candidate.analyses
+        ])
+      ).entries()
+    ]
+      .filter(
+        ([identity, analyses]) =>
+          identity !== correctIdentity &&
+          analyses[0]?.kind === item.analyses[0]?.kind
+      )
       .sort(
-        (left, right) =>
+        ([, left], [, right]) =>
           setCloseness(right, item.analyses) -
           setCloseness(left, item.analyses)
       )
       .slice(0, 2);
-
-    if (distractors.length < 2) {
+    if (candidates.length < 2) {
       throw new Error(`O baralho não possui distrações suficientes para ${item.id}.`);
     }
-
+    const choices = [
+      {
+        id: correctIdentity,
+        label: formatAnalysisSet(item.analyses),
+        correct: true
+      },
+      ...candidates.map(([id, analyses]) => ({
+        id,
+        label: formatAnalysisSet(analyses),
+        correct: false
+      }))
+    ];
     return {
       item,
-      options: shuffled([item.analyses, ...distractors])
+      direction: "analysis",
+      prompt: item.form,
+      choices: shuffled(choices, this.random)
     };
   }
 
-  answer(selected: Analysis[]): AnswerResult {
+  private productionQuestion(item: DrillItem): RoundQuestion {
+    const correctIdentity = analysisSetIdentity(item.analyses);
+    const groups = new Map<
+      string,
+      { analyses: Analysis[]; forms: string[] }
+    >();
+    for (const candidate of this.eligible) {
+      const identity = analysisSetIdentity(candidate.analyses);
+      const group = groups.get(identity) ?? {
+        analyses: candidate.analyses,
+        forms: []
+      };
+      if (!group.forms.includes(candidate.form)) group.forms.push(candidate.form);
+      groups.set(identity, group);
+    }
+    const correct = groups.get(correctIdentity);
+    if (!correct) throw new Error(`Forma correta ausente para ${item.id}.`);
+    const normalizedCorrect = new Set(
+      correct.forms.map((form) => withoutDiacritics(form))
+    );
+    const distractors = [...groups.entries()]
+      .filter(
+        ([identity, group]) =>
+          identity !== correctIdentity &&
+          group.analyses[0]?.kind === item.analyses[0]?.kind &&
+          group.forms.every(
+            (form) => !normalizedCorrect.has(withoutDiacritics(form))
+          )
+      )
+      .sort(
+        ([, left], [, right]) =>
+          setCloseness(right.analyses, item.analyses) -
+          setCloseness(left.analyses, item.analyses)
+      )
+      .slice(0, 2);
+    if (distractors.length < 2) {
+      throw new Error(`O baralho não possui formas distratoras suficientes para ${item.id}.`);
+    }
+    const choices = [
+      {
+        id: correctIdentity,
+        label: correct.forms.join(" / "),
+        correct: true
+      },
+      ...distractors.map(([id, group]) => ({
+        id,
+        label: group.forms.join(" / "),
+        correct: false
+      }))
+    ];
+    return {
+      item,
+      direction: "production",
+      prompt: formatAnalysisSet(item.analyses),
+      choices: shuffled(choices, this.random)
+    };
+  }
+
+  answer(choiceId: string): AnswerResult {
     const current = this.queue.shift();
-    if (!current) {
+    const question = this.activeQuestion;
+    if (!current || !question) {
       throw new Error("Não há pergunta ativa para responder.");
     }
-
-    const isCorrect = sameAnalysisSet(selected, current.analyses);
-    if (isCorrect) {
-      this.mastered.add(current.id);
+    const selected = question.choices.find(({ id }) => id === choiceId);
+    const correct = question.choices.find(({ correct }) => correct);
+    if (!selected || !correct) throw new Error("Alternativa inválida.");
+    if (selected.correct) {
+      this.mastered.add(current.item.id);
     } else {
-      const reviewDistance = Math.min(2, this.queue.length);
-      this.queue.splice(reviewDistance, 0, current);
+      this.queue.push(current);
     }
-
-    return { isCorrect, correctAnalyses: current.analyses };
+    this.activeQuestion = null;
+    return { isCorrect: selected.correct, correctLabel: correct.label };
   }
 }

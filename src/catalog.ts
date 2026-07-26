@@ -44,6 +44,7 @@ export interface DrillItem {
   form: string;
   analyses: Analysis[];
   support?: string;
+  sourceBlockIds?: string[];
 }
 
 export interface DrillDeck {

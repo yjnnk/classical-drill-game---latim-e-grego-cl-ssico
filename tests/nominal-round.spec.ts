@@ -92,7 +92,7 @@ test("uma forma errada volta depois de outras perguntas", async ({ page }) => {
   await expect(page.getByText("Esta forma voltará.", { exact: false })).toBeVisible();
   await page.getByRole("button", { name: "Continuar" }).click();
 
-  for (let index = 0; index < 2; index += 1) {
+  for (let index = 0; index < 7; index += 1) {
     await answerCurrentCorrectly(page);
     await expect(page.getByText("Correto")).toBeVisible();
     await page.getByRole("button", { name: "Continuar" }).click();
