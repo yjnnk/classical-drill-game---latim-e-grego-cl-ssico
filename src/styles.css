@@ -287,6 +287,10 @@ legend {
   font-size: 0.9rem;
 }
 
+.article-mode {
+  margin-top: 1rem;
+}
+
 .block-summary {
   display: flex;
   justify-content: space-between;
@@ -496,6 +500,12 @@ legend {
   margin: 0.75rem 0 0;
   color: #66736c;
   font-style: italic;
+}
+
+.form-context {
+  margin: 0.6rem 0 0;
+  color: #66736c;
+  font-size: 0.92rem;
 }
 
 .analysis-prompt {

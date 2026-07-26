@@ -18,6 +18,7 @@ export interface ContentBlock {
   paradigmId: string;
   selected: Partial<Record<FilterField, string[]>>;
   showTransliteration: boolean;
+  articleMode: "with" | "without";
 }
 
 export interface SavedDeck {
@@ -53,6 +54,11 @@ function withDefaults(deck: SavedDeck): SavedDeck {
   const quantity = Number(deck.quantity);
   return {
     ...deck,
+    blocks: deck.blocks.map((block) => ({
+      ...block,
+      articleMode:
+        block.articleMode === "without" ? "without" : "with"
+    })),
     direction: directions.includes(deck.direction) ? deck.direction : "analysis",
     coverage: coverages.includes(deck.coverage) ? deck.coverage : "all",
     quantity:
@@ -106,6 +112,8 @@ function analysisValue(analysis: Analysis, field: FilterField): string | null {
       return analysis.grammaticalNumber;
     case "grammaticalCase":
       return analysis.kind === "nominal" ? analysis.grammaticalCase : null;
+    case "gender":
+      return analysis.kind === "nominal" ? analysis.gender ?? null : null;
     case "tense":
     case "voice":
     case "mood":
@@ -120,7 +128,13 @@ export function itemsForBlock(block: ContentBlock): DrillItem[] {
       analysisMatches(analysis, block.selected)
     );
     return analyses.length ? [{ ...item, analyses }] : [];
-  });
+  }).map((item) => ({
+    ...item,
+    form:
+      block.articleMode === "without" && item.bareForm
+        ? item.bareForm
+        : item.form
+  }));
 }
 
 function analysisIdentity(analysis: Analysis): string {
@@ -164,15 +178,17 @@ export function playableDeck(deck: SavedDeck): DrillDeck {
   for (const block of deck.blocks) {
     for (const item of itemsForBlock(block)) {
       const paradigm = paradigmFor(block);
-      const existing = deduplicated.get(item.id);
+      const presentationId = `${item.id}:${block.articleMode}`;
+      const existing = deduplicated.get(presentationId);
       const analyses = new Map(
         [...(existing?.analyses ?? []), ...item.analyses].map((analysis) => [
           analysisIdentity(analysis),
           analysis
         ])
       );
-      deduplicated.set(item.id, {
+      deduplicated.set(presentationId, {
         ...item,
+        id: presentationId,
         analyses: [...analyses.values()],
         sourceBlockIds: [
           ...new Set([...(existing?.sourceBlockIds ?? []), block.id])
@@ -191,11 +207,27 @@ export function playableDeck(deck: SavedDeck): DrillDeck {
       });
     }
   }
+  const items = [...deduplicated.values()];
+  const formsAcrossParadigms = new Map<string, Set<string>>();
+  for (const item of items) {
+    const key = item.form.normalize("NFC");
+    const paradigms = formsAcrossParadigms.get(key) ?? new Set<string>();
+    item.sourceParadigmIds?.forEach((id) => paradigms.add(id));
+    formsAcrossParadigms.set(key, paradigms);
+  }
+  for (const item of items) {
+    if ((formsAcrossParadigms.get(item.form.normalize("NFC"))?.size ?? 0) > 1) {
+      item.context = item.sourceParadigmIds
+        ?.map((id) => catalogParadigms.find((paradigm) => paradigm.id === id)?.lemma.greek)
+        .filter(Boolean)
+        .join(" / ");
+    }
+  }
   return {
     id: deck.id,
     title: deck.name,
     description: `${deck.blocks.length} bloco${deck.blocks.length === 1 ? "" : "s"}`,
-    items: [...deduplicated.values()]
+    items
   };
 }
 
@@ -217,6 +249,7 @@ export function createBlock(paradigm: CatalogParadigm): ContentBlock {
         filter.options.map(({ value }) => value)
       ])
     ),
-    showTransliteration: false
+    showTransliteration: false,
+    articleMode: "with"
   };
 }

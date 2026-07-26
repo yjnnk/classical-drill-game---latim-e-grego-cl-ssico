@@ -101,7 +101,11 @@ function translated(dictionary: Record<string, string>, value: string): string {
 
 export function formatAnalysis(analysis: Analysis): string {
   if (analysis.kind === "nominal") {
-    return `${analysis.grammaticalCase} · ${analysis.grammaticalNumber}`;
+    return [
+      analysis.grammaticalCase,
+      analysis.grammaticalNumber,
+      analysis.gender
+    ].filter(Boolean).join(" · ");
   }
   return [
     translated(labels.tense, analysis.tense),

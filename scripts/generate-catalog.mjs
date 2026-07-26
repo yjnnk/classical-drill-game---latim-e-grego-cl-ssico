@@ -45,6 +45,7 @@ function nominalCase(label) {
   if (normalized.includes("gen.") || normalized.includes("γενικ")) return "genitive";
   if (normalized.includes("dat.") || normalized.includes("δοτικ")) return "dative";
   if (normalized.includes("acc.") || normalized.includes("αἰτια")) return "accusative";
+  if (normalized.includes("voc.") || normalized.includes("κλητικ")) return "vocative";
   throw new Error(`Caso nominal desconhecido: ${label}`);
 }
 
@@ -53,7 +54,10 @@ function numberFromColumn(column) {
 }
 
 function stripArticle(form) {
-  return form.replace(/^(ἡ|ὁ|τό|τὸ)\s+/u, "");
+  return form.replace(
+    /^(?:(?:ὁ|ἡ|τ[όὸώὼάὰ]|τοῦ|τῆς|τῷ|τῇ|τόν|τήν|οἱ|αἱ|τά|τῶν|τοῖς|ταῖς|τούς|τά̄ς|τοῖν|ταῖν|τὼ)(?:,\s*)?)+\s+/u,
+    ""
+  );
 }
 
 function mergeByVariants(items, paradigmId) {
@@ -96,7 +100,17 @@ function mergeByVariants(items, paradigmId) {
             (analysis) => [analysisIdentity(analysis), analysis]
           )
         ).values()
-      ]
+      ],
+      ...((item.bareVariants || matchingGroups.some((group) => group.bareVariants))
+        ? {
+            bareVariants: [
+              ...new Set([
+                ...matchingGroups.flatMap((group) => group.bareVariants ?? []),
+                ...(item.bareVariants ?? [])
+              ])
+            ]
+          }
+        : {})
     });
   }
   return groups.map((item) => {
@@ -141,6 +155,8 @@ function parseKrene(sheet) {
   return {
     id: "noun:krene",
     kind: "nominal",
+    category: "noun",
+    declension: "first",
     lemma: {
       greek: stripArticle(nominative),
       transliteration: heading.transliteration,
@@ -148,6 +164,305 @@ function parseKrene(sheet) {
     },
     items: mergeByVariants(rawItems, "noun:krene")
   };
+}
+
+function parseHeading(heading) {
+  const parenthetical = parseLemmaHeading(heading);
+  if (parenthetical.gloss) return parenthetical;
+  const quoted = heading.match(/^(.+?)\s+"[^"]+"\s+(.+)$/u);
+  return {
+    transliteration: quoted?.[1]?.trim() ?? heading.trim(),
+    gloss: quoted?.[2]?.trim() ?? "forma nominal"
+  };
+}
+
+function nearestHeading(sheet, headerRow) {
+  for (let rowNumber = headerRow - 1; rowNumber >= Math.max(1, headerRow - 4); rowNumber -= 1) {
+    const value = textOf(sheet.getRow(rowNumber).getCell(2));
+    if (
+      value &&
+      !/DECLENSION|κλίσις|κλίσεως|masc|fem|neut|ἄρρεν|θηλύ|οὐδετερ|κρά̄σεως|contraction/iu.test(
+        value
+      )
+    ) {
+      return value;
+    }
+  }
+  return "";
+}
+
+function parseNounSheet(sheet, declension) {
+  if (!sheet) throw new Error(`A aba da ${declension} declinação não foi encontrada.`);
+  const paradigms = [];
+  sheet.eachRow((row) => {
+    if (!textOf(row.getCell(2)).includes("πτῶσις")) return;
+    const heading = nearestHeading(sheet, row.number);
+    if (!heading) return;
+    const rawItems = [];
+    let nominative = "";
+    for (let rowNumber = row.number + 1; rowNumber <= Math.min(row.number + 6, sheet.rowCount); rowNumber += 1) {
+      const caseLabel = textOf(sheet.getRow(rowNumber).getCell(2));
+      if (!caseLabel) continue;
+      let grammaticalCase;
+      try {
+        grammaticalCase = nominalCase(caseLabel);
+      } catch {
+        break;
+      }
+      for (let column = 3; column <= 5; column += 1) {
+        const form = textOf(sheet.getRow(rowNumber).getCell(column));
+        if (!form) continue;
+        if (!nominative && grammaticalCase === "nominative" && column === 3) {
+          nominative = stripArticle(form);
+        }
+        rawItems.push({
+          variants: [form],
+          bareVariants: [stripArticle(form)],
+          analyses: [{ case: grammaticalCase, number: numberFromColumn(column) }]
+        });
+      }
+    }
+    if (!nominative || rawItems.length < 3) return;
+    const parsedHeading = parseHeading(heading);
+    const id =
+      heading.startsWith("krḗnē")
+        ? "noun:krene"
+        : `noun:${declension}:${stableHash(
+            `${heading}|${rawItems.flatMap(({ variants }) => variants).join("|")}`
+          )}`;
+    paradigms.push({
+      id,
+      kind: "nominal",
+      category: "noun",
+      declension,
+      lemma: { greek: nominative, ...parsedHeading },
+      items: mergeByVariants(rawItems, id)
+    });
+  });
+  return paradigms;
+}
+
+const genders = ["masculine", "feminine", "neuter"];
+const standardNumberByColumn = {
+  3: "singular", 4: "singular", 5: "singular",
+  6: "dual", 7: "dual", 8: "dual",
+  9: "plural", 10: "plural", 11: "plural"
+};
+const standardGenderByColumn = {
+  3: "masculine", 4: "feminine", 5: "neuter",
+  6: "masculine", 7: "feminine", 8: "neuter",
+  9: "masculine", 10: "feminine", 11: "neuter"
+};
+
+function parseGenderedGrid(sheet, headerRow, id, metadata) {
+  const rawItems = [];
+  for (let rowNumber = headerRow + 1; rowNumber <= Math.min(headerRow + 6, sheet.rowCount); rowNumber += 1) {
+    const caseLabel = textOf(sheet.getRow(rowNumber).getCell(2));
+    if (!caseLabel) continue;
+    let grammaticalCase;
+    try {
+      grammaticalCase = nominalCase(caseLabel);
+    } catch {
+      break;
+    }
+    for (let column = 3; column <= 11; column += 1) {
+      const form = textOf(sheet.getRow(rowNumber).getCell(column));
+      if (!form) continue;
+      rawItems.push({
+        variants: form.split(",").map((value) => value.trim()).filter(Boolean),
+        analyses: [{
+          case: grammaticalCase,
+          number: standardNumberByColumn[column],
+          gender: standardGenderByColumn[column]
+        }]
+      });
+    }
+  }
+  if (rawItems.length < 3) return null;
+  return {
+    id,
+    kind: "nominal",
+    ...metadata,
+    items: mergeByVariants(rawItems, id)
+  };
+}
+
+function parseArticle(sheet) {
+  if (!sheet) throw new Error("A aba “Article” não foi encontrada.");
+  return parseGenderedGrid(sheet, 3, "article:ho", {
+    category: "article",
+    lemma: { greek: "ὁ, ἡ, τό", transliteration: "ho, hē, tó", gloss: "artigo" }
+  });
+}
+
+const pronounLabels = {
+  "ὅδε": ["hóde", "este"],
+  "αὐτός": ["autós", "ele próprio"],
+  "οὗτος": ["hoûtos", "este"],
+  "ἐκεῖνος": ["ekeînos", "aquele"],
+  "τίς": ["tís", "quem?"],
+  "τις": ["tis", "alguém"],
+  "ὅς": ["hós", "pronome relativo"],
+  "ὅστις": ["hóstis", "quem quer que"],
+  "ἀλλήλοιν": ["allḗlois", "um ao outro"]
+};
+
+function parsePronouns(sheet) {
+  if (!sheet) throw new Error("A aba “Pronouns” não foi encontrada.");
+  const paradigms = [];
+  sheet.eachRow((row) => {
+    if (!textOf(row.getCell(2)).includes("πτῶσις")) return;
+    const genderHeader = Array.from({ length: 9 }, (_, index) =>
+      textOf(sheet.getRow(row.number - 1).getCell(index + 3))
+    );
+    if (genderHeader.filter((value) => /ἀ\.|θ\.|οὐ\./u.test(value)).length < 6) return;
+    const firstCaseRow = sheet.getRow(row.number + 1);
+    const lemma = textOf(firstCaseRow.getCell(3));
+    if (!lemma) return;
+    const label = pronounLabels[lemma] ?? [lemma, "pronome"];
+    const id = `pronoun:${stableHash(lemma)}`;
+    const paradigm = parseGenderedGrid(sheet, row.number, id, {
+      category: "pronoun",
+      lemma: { greek: lemma, transliteration: label[0], gloss: label[1] }
+    });
+    if (paradigm && !paradigms.some(({ id: existing }) => existing === id)) {
+      paradigms.push(paradigm);
+    }
+  });
+
+  const addSimplePronoun = (idSuffix, lemma, transliteration, gloss, cells) => {
+    const rawItems = cells.flatMap(({ row, grammaticalCase, columns }) =>
+      columns.flatMap(({ column, number, genders: cellGenders }) => {
+        const form = textOf(sheet.getRow(row).getCell(column));
+        if (!form) return [];
+        const applicableGenders = cellGenders ?? [undefined];
+        return [{
+          variants: form.split(",").map((value) => value.trim()).filter(Boolean),
+          analyses: applicableGenders.map((gender) => ({
+            case: grammaticalCase,
+            number,
+            ...(gender ? { gender } : {})
+          }))
+        }];
+      })
+    );
+    if (rawItems.length < 3) return;
+    const id = `pronoun:${idSuffix}`;
+    paradigms.push({
+      id,
+      kind: "nominal",
+      category: "pronoun",
+      lemma: { greek: lemma, transliteration, gloss },
+      items: mergeByVariants(rawItems, id)
+    });
+  };
+
+  const personalColumns = [
+    { column: 3, number: "singular" },
+    { column: 5, number: "dual" },
+    { column: 6, number: "plural" }
+  ];
+  const caseRows = (start, cases, columns) =>
+    cases.map((grammaticalCase, index) => ({
+      row: start + index,
+      grammaticalCase,
+      columns
+    }));
+  addSimplePronoun(
+    "ego",
+    "ἐγώ",
+    "egṓ",
+    "eu",
+    caseRows(68, ["nominative", "genitive", "dative", "accusative"], personalColumns)
+  );
+  addSimplePronoun(
+    "su",
+    "σύ",
+    "sý",
+    "tu",
+    caseRows(74, ["nominative", "genitive", "dative", "accusative"], personalColumns)
+  );
+
+  const allGenders = genders;
+  const reflexiveColumns = [
+    { column: 3, number: "singular", genders: ["masculine"] },
+    { column: 4, number: "singular", genders: ["feminine"] },
+    { column: 6, number: "dual", genders: allGenders },
+    { column: 8, number: "plural", genders: ["masculine"] },
+    { column: 10, number: "plural", genders: ["feminine"] }
+  ];
+  addSimplePronoun(
+    "emautou",
+    "ἐμαυτοῦ",
+    "emautoû",
+    "de mim mesmo",
+    [82, 83, 84].map((row, index) => ({
+      row,
+      grammaticalCase: ["genitive", "dative", "accusative"][index],
+      columns: reflexiveColumns
+    }))
+  );
+  addSimplePronoun(
+    "seautou",
+    "σεαυτοῦ",
+    "seautoû",
+    "de ti mesmo",
+    [88, 90, 92].map((row, index) => ({
+      row,
+      grammaticalCase: ["genitive", "dative", "accusative"][index],
+      columns: reflexiveColumns
+    }))
+  );
+
+  const reciprocalColumns = [
+    ...[6, 7, 8].map((column, index) => ({
+      column,
+      number: "dual",
+      genders: [genders[index]]
+    })),
+    ...[9, 10, 11].map((column, index) => ({
+      column,
+      number: "plural",
+      genders: [genders[index]]
+    }))
+  ];
+  addSimplePronoun(
+    "allelon",
+    "ἀλλήλων",
+    "allḗlōn",
+    "uns aos outros",
+    [113, 114, 115].map((row, index) => ({
+      row,
+      grammaticalCase: ["genitive", "dative", "accusative"][index],
+      columns: reciprocalColumns
+    }))
+  );
+  const thirdPersonalCells = [
+    {
+      row: 105,
+      grammaticalCase: "nominative",
+      columns: [{ column: 4, number: "plural", genders: allGenders }]
+    },
+    ...[106, 107, 108].flatMap((row, index) => [
+      {
+        row,
+        grammaticalCase: ["genitive", "dative", "accusative"][index],
+        columns: [
+          { column: 3, number: "singular", genders: allGenders },
+          { column: 4, number: "dual", genders: allGenders },
+          { column: 4, number: "plural", genders: allGenders }
+        ]
+      }
+    ])
+  ];
+  addSimplePronoun(
+    "spheis",
+    "σφεῖς",
+    "spheîs",
+    "eles, elas",
+    thirdPersonalCells
+  );
+  return paradigms;
 }
 
 const personAndNumberByColumn = {
@@ -246,6 +561,7 @@ function parseLuo(sheet) {
   return {
     id: "verb:luo",
     kind: "finite-verb",
+    category: "verb",
     lemma: {
       greek: "λῡ́ω",
       transliteration: "lū́ō",
@@ -271,13 +587,17 @@ const catalog = {
   language: "grc",
   source: {
     workbook: basename(sourcePath),
-    sheets: ["1st decl", "λῡ́ω"]
+    sheets: ["Article", "Pronouns", "1st decl", "2nd decl", "3rd decl", "λῡ́ω"]
   },
   corrections: await readCorrections(),
   paradigms: [
-    parseKrene(workbook.getWorksheet("1st decl")),
+    parseArticle(workbook.getWorksheet("Article")),
+    ...parsePronouns(workbook.getWorksheet("Pronouns")),
+    ...parseNounSheet(workbook.getWorksheet("1st decl"), "first"),
+    ...parseNounSheet(workbook.getWorksheet("2nd decl"), "second"),
+    ...parseNounSheet(workbook.getWorksheet("3rd decl"), "third"),
     parseLuo(workbook.getWorksheet("λῡ́ω"))
-  ]
+  ].filter(Boolean)
 };
 
 await mkdir(dirname(outputPath), { recursive: true });

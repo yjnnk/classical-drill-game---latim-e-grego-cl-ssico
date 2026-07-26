@@ -18,6 +18,8 @@ const allowedValues = {
   voice: new Set(["active", "middle", "passive"]),
   mood: new Set(["indicative", "subjunctive", "optative", "imperative"]),
   person: new Set(["first", "second", "third"])
+  ,
+  gender: new Set(["masculine", "feminine", "neuter"])
 };
 
 function requireNonEmptyString(value, message) {
@@ -39,6 +41,11 @@ function validateAnalysis(analysis, kind, itemId) {
         `Valor gramatical inválido em ${itemId}: ${field}=${analysis[field]}`
       );
     }
+  }
+  if (analysis?.gender !== undefined && !allowedValues.gender.has(analysis.gender)) {
+    throw new Error(
+      `Valor gramatical inválido em ${itemId}: gender=${analysis.gender}`
+    );
   }
 }
 
@@ -69,6 +76,10 @@ export function validateCatalog(catalog) {
     identifiers.add(paradigm.id);
     paradigmIds.add(paradigm.id);
     requireNonEmptyString(paradigm.kind, `Paradigma ${paradigm.id} sem tipo.`);
+    requireNonEmptyString(
+      paradigm.category,
+      `Paradigma ${paradigm.id} sem categoria.`
+    );
     requireNonEmptyString(
       paradigm.lemma?.greek,
       `Paradigma ${paradigm.id} sem lema grego.`

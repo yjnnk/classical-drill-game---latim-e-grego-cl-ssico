@@ -22,6 +22,56 @@ async function writeKnownWorkbook(path) {
     [null, "αἰτιᾱτική (acc.)", "τὴν κρήνην", "τὼ κρήνᾱ", "τὰ̄ς κρήνᾱς"]
   ]);
 
+  const second = workbook.addWorksheet("2nd decl");
+  second.addRows([
+    [0, "total repetitions", "ἡ δευτέρη κλίσις", "SECOND DECLENSION"],
+    [],
+    [null, "SECOND DECLENSION", "masculine"],
+    [null, "ăgrós (campo)"],
+    [0, "πτῶσις / ἀριθμός", "singular", "dual", "plural"],
+    [null, "ὀρθή", "ὁ ἀγρός", "τὼ ἀγρώ", "οἱ ἀγροί"],
+    [null, "γενική", "τοῦ ἀγροῦ", "τοῖν ἀγροῖν", "τῶν ἀγρῶν"],
+    [null, "δοτική", "τῷ ἀγρῷ", "τοῖν ἀγροῖν", "τοῖς ἀγροῖς"],
+    [null, "αἰτιᾱτική", "τὸν ἀγρόν", "τὼ ἀγρώ", "τοὺς ἀγρούς"]
+  ]);
+
+  const third = workbook.addWorksheet("3rd decl");
+  third.addRows([
+    [0, "total repetitions", "ἡ τρίτη κλίσις", "THIRD DECLENSION"],
+    [],
+    [0, "ὀνοματ- \"nōmen\" nome"],
+    [null, "πτῶσις / ἀριθμός", "singular", "dual", "plural"],
+    [null, "ὀρθή", "τὸ ὄνομα", "τὼ ὀνόματε", "τὰ ὀνόματα"],
+    [null, "γενική", "τοῦ ὀνόματος", "τοῖν ὀνομάτοιν", "τῶν ὀνομάτων"],
+    [null, "δοτική", "τῷ ὀνόματι", "τοῖν ὀνομάτοιν", "τοῖς ὀνόμασι(ν)"],
+    [null, "αἰτιᾱτική", "τὸ ὄνομα", "τὼ ὀνόματε", "τὰ ὀνόματα"]
+  ]);
+
+  const article = workbook.addWorksheet("Article");
+  article.addRows([
+    [null, "τὸ ἄρθρον", "THE ARTICLE"],
+    [null, null, "ἀ. m", "θ. f", "οὐ. n", "ἀ. m", "θ. f", "οὐ. n", "ἀ. m", "θ. f", "οὐ. n"],
+    [0, "πτῶσις / ἀριθμός", null, "singular", null, null, "dual", null, "plural"],
+    [null, "ὀρθή", "ὁ", "ἡ", "τό", "τώ", "τώ", "τώ", "οἱ", "αἱ", "τά"],
+    [null, "γενική", "τοῦ", "τῆς", "τοῦ", "τοῖν", "τοῖν", "τοῖν", "τῶν", "τῶν", "τῶν"],
+    [null, "δοτική", "τῷ", "τῇ", "τῷ", "τοῖν", "τοῖν", "τοῖν", "τοῖς", "ταῖς", "τοῖς"],
+    [null, "αἰτιᾱτική", "τόν", "τήν", "τό", "τώ", "τώ", "τώ", "τούς", "τά̄ς", "τά"]
+  ]);
+
+  const pronouns = workbook.addWorksheet("Pronouns");
+  pronouns.addRows([
+    [null, "ἡ ἀντωνυμίᾱ", null, null, "pronome"],
+    [],
+    [],
+    [null, "ἡ ἀναφορικὴ ἀντωνυμίᾱ", null, null, null, null, "pronome relativo"],
+    [null, null, "ἀ. m", "θ. f", "οὐ. n", "ἀ. m", "θ. f", "οὐ. n", "ἀ. m", "θ. f", "οὐ. n"],
+    [0, "πτῶσις / ἀριθμός", null, "singular", null, null, "dual", null, "plural"],
+    [null, "ὀρθή", "ὅς", "ἥ", "ὅ", "ὥ", "ὥ", "ὥ", "οἵ", "αἵ", "ἅ"],
+    [null, "γενική", "οὗ", "ἧς", "οὗ", "οἷν", "οἷν", "οἷν", "ὧν", "ὧν", "ὧν"],
+    [null, "δοτική", "ᾧ", "ᾗ", "ᾧ", "οἷν", "οἷν", "οἷν", "οἷς", "αἷς", "οἷς"],
+    [null, "αἰτιᾱτική", "ὅν", "ἥν", "ὅ", "ὥ", "ὥ", "ὥ", "οὕς", "ἅ̄ς", "ἅ"]
+  ]);
+
   const verbs = workbook.addWorksheet("λῡ́ω");
   verbs.addRows([
     [null, "λύ̄ω \"solvō\" loosen"],
@@ -91,8 +141,8 @@ test("a CLI gera um catálogo versionado com κρήνη e λῡ́ω", async () 
   assert.equal(catalog.schemaVersion, 1);
   assert.equal(catalog.language, "grc");
   assert.deepEqual(
-    catalog.paradigms.map(({ id }) => id),
-    ["noun:krene", "verb:luo"]
+    catalog.paradigms.map(({ category }) => category).sort(),
+    ["article", "noun", "noun", "noun", "pronoun", "verb"]
   );
 
   const krene = catalog.paradigms.find(({ id }) => id === "noun:krene");
@@ -150,6 +200,26 @@ test("a CLI gera um catálogo versionado com κρήνη e λῡ́ω", async () 
     ["middle", "passive"]
   );
   assert.deepEqual(catalog.corrections, []);
+
+  const relative = catalog.paradigms.find(
+    ({ category }) => category === "pronoun"
+  );
+  assert.ok(
+    relative.items.some(({ analyses }) =>
+      analyses.some(
+        ({ case: grammaticalCase, number, gender }) =>
+          grammaticalCase === "genitive" &&
+          number === "dual" &&
+          gender === "feminine"
+      )
+    )
+  );
+  assert.ok(
+    catalog.paradigms.some(
+      ({ category, declension }) =>
+        category === "noun" && declension === "third"
+    )
+  );
 });
 
 test("o validador rejeita identificadores duplicados", async () => {
@@ -167,6 +237,7 @@ test("o validador rejeita identificadores duplicados", async () => {
         {
           id: "noun:krene",
           kind: "nominal",
+          category: "noun",
           lemma: { greek: "κρήνη", transliteration: "krḗnē", gloss: "fonte" },
           items: [
             {
@@ -207,6 +278,7 @@ function validMinimalCatalog() {
       {
         id: "noun:krene",
         kind: "nominal",
+        category: "noun",
         lemma: { greek: "κρήνη", transliteration: "krḗnē", gloss: "fonte" },
         items: [
           {

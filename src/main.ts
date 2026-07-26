@@ -250,6 +250,10 @@ function blockCard(
         <label class="filter-option"><input type="checkbox" data-field="${filter.field}" value="${option.value}" aria-label="${option.label}" ${(block.selected[filter.field] ?? []).includes(option.value) ? "checked" : ""}><span>${option.label}</span></label>`).join("")}
       </fieldset>`).join("")}</div>
     <label class="pedagogy-option"><input type="checkbox" data-presentation="transliteration" ${block.showTransliteration ? "checked" : ""}> Mostrar transliteração como apoio pedagógico</label>
+    ${paradigm.supportsArticleMode ? `<fieldset class="article-mode"><legend>Apresentação nominal</legend>
+      <label class="filter-option"><input type="radio" name="article-${block.id}" value="with" ${block.articleMode === "with" ? "checked" : ""}><span>Com artigo</span></label>
+      <label class="filter-option"><input type="radio" name="article-${block.id}" value="without" ${block.articleMode === "without" ? "checked" : ""}><span>Sem artigo</span></label>
+    </fieldset>` : ""}
     <div class="block-summary"><strong>${items.length} formas incluídas</strong><span>${summary}</span></div>
     ${error ? `<p class="validation-message">${error}</p>` : ""}
   </article>`;
@@ -272,6 +276,12 @@ function wireBlocks(deck: SavedDeck): void {
     element.querySelector<HTMLInputElement>("[data-presentation]")?.addEventListener("change", (event) => {
       block.showTransliteration = (event.currentTarget as HTMLInputElement).checked;
     });
+    element.querySelectorAll<HTMLInputElement>(`[name='article-${block.id}']`).forEach((input) =>
+      input.addEventListener("change", () => {
+        block.articleMode = input.value as ContentBlock["articleMode"];
+        renderEditor(deck);
+      })
+    );
     element.querySelector<HTMLButtonElement>("[data-block-action='duplicate']")?.addEventListener("click", () => {
       const copy = structuredClone(block);
       copy.id = createId("block");
@@ -298,7 +308,13 @@ function catalogPicker(query: string, category: string): string {
   return `<aside class="catalog" aria-labelledby="catalog-title">
     <div class="catalog-header"><div><p class="eyebrow">Catálogo</p><h2 id="catalog-title">Escolha um paradigma</h2></div><button class="quiet" data-action="close-catalog">Fechar</button></div>
     <input class="search" type="search" aria-label="Pesquisar paradigmas" value="${escapeHtml(query)}" placeholder="Grego, transliteração ou português">
-    <div class="category-tabs">${["Todos", "Substantivo", "Verbo"].map((value) => `<button class="${category === value ? "active" : ""}" data-category="${value}">${value}${value === "Substantivo" ? "s" : value === "Verbo" ? "s" : ""}</button>`).join("")}</div>
+    <div class="category-tabs">${[
+      ["Todos", "Todos"],
+      ["Substantivo", "Substantivos"],
+      ["Pronome", "Pronomes"],
+      ["Artigo", "Artigo"],
+      ["Verbo", "Verbos"]
+    ].map(([value, label]) => `<button class="${category === value ? "active" : ""}" data-category="${value}">${label}</button>`).join("")}</div>
     <div class="catalog-results">${results.map(catalogResult).join("") || "<p>Nenhum paradigma encontrado.</p>"}</div>
   </aside>`;
 }
@@ -334,7 +350,7 @@ function startRound(
     const isAnalysis = question.direction === "analysis";
     app.innerHTML = `<section class="round" aria-labelledby="question-title">
       <header class="round-header"><button class="quiet" data-action="exit">Sair</button><p aria-live="polite">Progresso: ${round.masteredCount} de ${round.total}</p></header>
-      <div class="prompt"><p id="question-title">${isAnalysis ? "Qual é a análise desta forma?" : "Qual forma corresponde a esta análise?"}</p><p class="${isAnalysis ? "greek-form" : "analysis-prompt"}" ${isAnalysis ? 'lang="grc"' : ""}>${question.prompt}</p>${isAnalysis && question.item.support ? `<p class="pedagogical-support">${question.item.support}</p>` : ""}</div>
+      <div class="prompt"><p id="question-title">${isAnalysis ? "Qual é a análise desta forma?" : "Qual forma corresponde a esta análise?"}</p><p class="${isAnalysis ? "greek-form" : "analysis-prompt"}" ${isAnalysis ? 'lang="grc"' : ""}>${question.prompt}</p>${isAnalysis && question.item.context ? `<p class="form-context">Lema: <span lang="grc">${question.item.context}</span></p>` : ""}${isAnalysis && question.item.support ? `<p class="pedagogical-support">${question.item.support}</p>` : ""}</div>
       <div class="options" role="group" aria-label="Alternativas">${question.choices.map((choice, index) => `<button class="option"><span class="option-number">${index + 1}</span><span>${choice.label}</span></button>`).join("")}</div><div class="feedback" aria-live="polite"></div></section>`;
     app.querySelector<HTMLButtonElement>("[data-action='exit']")?.addEventListener("click", renderHome);
     const buttons = [...app.querySelectorAll<HTMLButtonElement>(".option")];
