@@ -46,8 +46,20 @@ test("uma forma errada volta depois de outras perguntas", async ({ page }) => {
   const correct = missedForm ? analysesByForm[missedForm] : undefined;
   if (!missedForm || !correct) throw new Error("A rodada não apresentou uma forma conhecida.");
 
-  const wrongOption = page.locator("[data-answer]").filter({ hasNotText: correct }).first();
-  await wrongOption.click();
+  const options = await page
+    .getByRole("group", { name: "Alternativas" })
+    .getByRole("button")
+    .all();
+  const wrongOption = await Promise.all(
+    options.map(async (option) => ({
+      option,
+      label: await option.innerText()
+    }))
+  ).then((candidates) =>
+    candidates.find(({ label }) => !label.includes(correct))
+  );
+  if (!wrongOption) throw new Error("A pergunta não ofereceu uma alternativa incorreta.");
+  await wrongOption.option.click();
 
   await expect(page.getByText("Ainda não")).toBeVisible();
   await expect(page.getByText("Esta forma voltará.", { exact: false })).toBeVisible();
