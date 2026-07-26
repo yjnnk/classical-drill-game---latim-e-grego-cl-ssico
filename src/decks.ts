@@ -203,24 +203,34 @@ export function playableDeck(deck: SavedDeck): DrillDeck {
           existing?.support ??
           (block.showTransliteration
             ? paradigm.lemma.transliteration
-            : undefined)
+            : undefined),
+        productionContext: paradigm.lemma.greek
       });
     }
   }
   const items = [...deduplicated.values()];
   const formsAcrossParadigms = new Map<string, Set<string>>();
+  const variantsOf = (item: DrillItem) =>
+    item.form.split(/\s*\/\s*/u).map((variant) => variant.normalize("NFC"));
   for (const item of items) {
-    const key = item.form.normalize("NFC");
-    const paradigms = formsAcrossParadigms.get(key) ?? new Set<string>();
-    item.sourceParadigmIds?.forEach((id) => paradigms.add(id));
-    formsAcrossParadigms.set(key, paradigms);
+    for (const key of variantsOf(item)) {
+      const paradigms = formsAcrossParadigms.get(key) ?? new Set<string>();
+      item.sourceParadigmIds?.forEach((id) => paradigms.add(id));
+      formsAcrossParadigms.set(key, paradigms);
+    }
   }
   for (const item of items) {
-    if ((formsAcrossParadigms.get(item.form.normalize("NFC"))?.size ?? 0) > 1) {
+    if (
+      variantsOf(item).some(
+        (variant) => (formsAcrossParadigms.get(variant)?.size ?? 0) > 1
+      )
+    ) {
       item.context = item.sourceParadigmIds
         ?.map((id) => catalogParadigms.find((paradigm) => paradigm.id === id)?.lemma.greek)
         .filter(Boolean)
         .join(" / ");
+    } else {
+      delete item.context;
     }
   }
   return {

@@ -21,6 +21,7 @@ export interface RoundQuestion {
   item: DrillItem;
   direction: RoundDirection;
   prompt: string;
+  context?: string;
   choices: RoundChoice[];
 }
 
@@ -69,6 +70,14 @@ function analysisIdentity(analysis: Analysis): string {
 
 function analysisSetIdentity(analyses: Analysis[]): string {
   return analyses.map(analysisIdentity).sort().join("|");
+}
+
+function paradigmIdentity(item: DrillItem): string {
+  return [...(item.sourceParadigmIds ?? [item.id])].sort().join("|");
+}
+
+function productionIdentity(item: DrillItem): string {
+  return `${paradigmIdentity(item)}::${analysisSetIdentity(item.analyses)}`;
 }
 
 function matchingTraits(left: Analysis, right: Analysis): number {
@@ -273,16 +282,18 @@ export class DrillRound {
   }
 
   private productionQuestion(item: DrillItem): RoundQuestion {
-    const correctIdentity = analysisSetIdentity(item.analyses);
+    const correctAnalysisIdentity = analysisSetIdentity(item.analyses);
+    const correctIdentity = productionIdentity(item);
     const groups = new Map<
       string,
-      { analyses: Analysis[]; forms: string[] }
+      { analyses: Analysis[]; forms: string[]; item: DrillItem }
     >();
     for (const candidate of this.eligible) {
-      const identity = analysisSetIdentity(candidate.analyses);
+      const identity = productionIdentity(candidate);
       const group = groups.get(identity) ?? {
         analyses: candidate.analyses,
-        forms: []
+        forms: [],
+        item: candidate
       };
       if (!group.forms.includes(candidate.form)) group.forms.push(candidate.form);
       groups.set(identity, group);
@@ -302,16 +313,10 @@ export class DrillRound {
           )
       )
       .sort(
-        ([leftId, left], [rightId, right]) => {
-          const leftItem = this.eligible.find(
-            ({ analyses }) => analysisSetIdentity(analyses) === leftId
-          );
-          const rightItem = this.eligible.find(
-            ({ analyses }) => analysisSetIdentity(analyses) === rightId
-          );
+        ([, left], [, right]) => {
           const paradigmPriority =
-            Number(Boolean(rightItem && sharesParadigm(item, rightItem))) -
-            Number(Boolean(leftItem && sharesParadigm(item, leftItem)));
+            Number(sharesParadigm(item, right.item)) -
+            Number(sharesParadigm(item, left.item));
           return (
             paradigmPriority ||
             setCloseness(right.analyses, item.analyses) -
@@ -339,6 +344,14 @@ export class DrillRound {
       item,
       direction: "production",
       prompt: formatAnalysisSet(item.analyses),
+      context:
+        [...groups.values()].some(
+          (group) =>
+            analysisSetIdentity(group.analyses) === correctAnalysisIdentity &&
+            !sharesParadigm(item, group.item)
+        )
+          ? item.productionContext
+          : undefined,
       choices: shuffled(choices, this.random)
     };
   }

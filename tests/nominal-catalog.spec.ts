@@ -42,12 +42,27 @@ test("substantivo sem artigo e sem dual respeita o recorte na rodada", async ({
   await expect(block).toContainText("singular e plural");
   await page.getByRole("button", { name: "Iniciar rodada" }).click();
 
-  await expect(page.locator(".greek-form")).not.toContainText(
-    /^(ὁ|ἡ|τὸ|τοῦ|τῷ|τὴν|οἱ|αἱ|τὰ|τῶν|τοῖς|ταῖς)/
-  );
-  await expect(
-    page.getByRole("group", { name: "Alternativas" })
-  ).not.toContainText("dual");
+  const answers: Record<string, string> = {
+    "δένδρον": "nominativo · singular ou acusativo · singular",
+    "δένδρα": "nominativo · plural ou acusativo · plural",
+    "δένδρου": "genitivo · singular",
+    "δένδρων": "genitivo · plural",
+    "δένδρῳ": "dativo · singular",
+    "δένδροις": "dativo · plural"
+  };
+  for (let index = 0; index < 6; index += 1) {
+    const form = (await page.locator(".greek-form").textContent())?.trim();
+    if (!form || !answers[form]) throw new Error(`Forma inesperada: ${form}`);
+    expect(form).not.toMatch(
+      /^(ὁ|ἡ|τὸ|τοῦ|τῷ|τὴν|οἱ|αἱ|τὰ|τῶν|τοῖς|ταῖς)/
+    );
+    await expect(
+      page.getByRole("group", { name: "Alternativas" })
+    ).not.toContainText("dual");
+    await page.getByRole("button", { name: answers[form] }).click();
+    await page.getByRole("button", { name: "Continuar" }).click();
+  }
+  await expect(page.getByText("Rodada concluída")).toBeVisible();
 });
 
 test("pronome filtra gênero e funciona em produção assistida", async ({

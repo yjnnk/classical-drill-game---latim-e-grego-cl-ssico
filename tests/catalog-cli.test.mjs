@@ -153,6 +153,13 @@ test("a CLI gera um catálogo versionado com κρήνη e λῡ́ω", async () 
     { case: "genitive", number: "dual" },
     { case: "dative", number: "dual" }
   ]);
+  assert.ok(
+    krene.items.every(({ bareVariants = [] }) =>
+      bareVariants.every(
+        (variant) => !/^(ὁ|ἡ|τὸν|τὴν|τοὺς|τὰ̄ς)\s/u.test(variant)
+      )
+    )
+  );
 
   const luo = catalog.paradigms.find(({ id }) => id === "verb:luo");
   assert.ok(

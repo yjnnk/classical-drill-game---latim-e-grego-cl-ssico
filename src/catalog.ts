@@ -39,6 +39,7 @@ export interface DrillItem {
   analyses: Analysis[];
   support?: string;
   context?: string;
+  productionContext?: string;
   sourceBlockIds?: string[];
   sourceParadigmIds?: string[];
 }

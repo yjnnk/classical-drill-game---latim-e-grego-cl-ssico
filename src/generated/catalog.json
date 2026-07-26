@@ -3082,6 +3082,60 @@
           ]
         },
         {
+          "id": "pronoun:325ee3ba3948:65ce33858e94",
+          "variants": [
+            "αὑτῆς"
+          ],
+          "analyses": [
+            {
+              "case": "genitive",
+              "number": "singular",
+              "gender": "feminine"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:325ee3ba3948:18e4020c6ed3",
+          "variants": [
+            "αὑτοῦ"
+          ],
+          "analyses": [
+            {
+              "case": "genitive",
+              "number": "singular",
+              "gender": "masculine"
+            },
+            {
+              "case": "genitive",
+              "number": "singular",
+              "gender": "neuter"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:325ee3ba3948:0223ffd0105e",
+          "variants": [
+            "αὑτῶν"
+          ],
+          "analyses": [
+            {
+              "case": "genitive",
+              "number": "plural",
+              "gender": "masculine"
+            },
+            {
+              "case": "genitive",
+              "number": "plural",
+              "gender": "feminine"
+            },
+            {
+              "case": "genitive",
+              "number": "plural",
+              "gender": "neuter"
+            }
+          ]
+        },
+        {
           "id": "pronoun:325ee3ba3948:f21c73760053",
           "variants": [
             "ἑαυτῇ"
@@ -3167,6 +3221,106 @@
           "id": "pronoun:325ee3ba3948:a38be816912c",
           "variants": [
             "ἑαυτοῖς"
+          ],
+          "analyses": [
+            {
+              "case": "dative",
+              "number": "plural",
+              "gender": "masculine"
+            },
+            {
+              "case": "dative",
+              "number": "plural",
+              "gender": "neuter"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:325ee3ba3948:e04bb4a334e4",
+          "variants": [
+            "αὑτῇ"
+          ],
+          "analyses": [
+            {
+              "case": "dative",
+              "number": "singular",
+              "gender": "feminine"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:325ee3ba3948:85efcbf7e689",
+          "variants": [
+            "αὑτῷ"
+          ],
+          "analyses": [
+            {
+              "case": "dative",
+              "number": "singular",
+              "gender": "masculine"
+            },
+            {
+              "case": "dative",
+              "number": "singular",
+              "gender": "neuter"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:325ee3ba3948:abb7412840ea",
+          "variants": [
+            "αὑτοῖν"
+          ],
+          "analyses": [
+            {
+              "case": "genitive",
+              "number": "dual",
+              "gender": "masculine"
+            },
+            {
+              "case": "genitive",
+              "number": "dual",
+              "gender": "feminine"
+            },
+            {
+              "case": "genitive",
+              "number": "dual",
+              "gender": "neuter"
+            },
+            {
+              "case": "dative",
+              "number": "dual",
+              "gender": "masculine"
+            },
+            {
+              "case": "dative",
+              "number": "dual",
+              "gender": "feminine"
+            },
+            {
+              "case": "dative",
+              "number": "dual",
+              "gender": "neuter"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:325ee3ba3948:f69fb17ee452",
+          "variants": [
+            "αὑταῖς"
+          ],
+          "analyses": [
+            {
+              "case": "dative",
+              "number": "plural",
+              "gender": "feminine"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:325ee3ba3948:d2ea3b887597",
+          "variants": [
+            "αὑτοῖς"
           ],
           "analyses": [
             {
@@ -3273,6 +3427,107 @@
           "id": "pronoun:325ee3ba3948:cf38661cb0fb",
           "variants": [
             "ἑαυτά"
+          ],
+          "analyses": [
+            {
+              "case": "accusative",
+              "number": "plural",
+              "gender": "neuter"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:325ee3ba3948:ae5efc4ab647",
+          "variants": [
+            "αὑτόν"
+          ],
+          "analyses": [
+            {
+              "case": "accusative",
+              "number": "singular",
+              "gender": "masculine"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:325ee3ba3948:44b42676336c",
+          "variants": [
+            "αὑτήν"
+          ],
+          "analyses": [
+            {
+              "case": "accusative",
+              "number": "singular",
+              "gender": "feminine"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:325ee3ba3948:ac3d20310864",
+          "variants": [
+            "αὑτό"
+          ],
+          "analyses": [
+            {
+              "case": "accusative",
+              "number": "singular",
+              "gender": "neuter"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:325ee3ba3948:590bb2ea65bb",
+          "variants": [
+            "αὑτώ"
+          ],
+          "analyses": [
+            {
+              "case": "accusative",
+              "number": "dual",
+              "gender": "masculine"
+            },
+            {
+              "case": "accusative",
+              "number": "dual",
+              "gender": "feminine"
+            },
+            {
+              "case": "accusative",
+              "number": "dual",
+              "gender": "neuter"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:325ee3ba3948:13dd8121d202",
+          "variants": [
+            "αὑτούς"
+          ],
+          "analyses": [
+            {
+              "case": "accusative",
+              "number": "plural",
+              "gender": "masculine"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:325ee3ba3948:8673e764fc59",
+          "variants": [
+            "αὑτά̄ς"
+          ],
+          "analyses": [
+            {
+              "case": "accusative",
+              "number": "plural",
+              "gender": "feminine"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:325ee3ba3948:4a838806883c",
+          "variants": [
+            "αὑτά"
           ],
           "analyses": [
             {
@@ -3846,6 +4101,32 @@
           ]
         },
         {
+          "id": "pronoun:seautou:2998c28f6876",
+          "variants": [
+            "σαυτοῦ"
+          ],
+          "analyses": [
+            {
+              "case": "genitive",
+              "number": "singular",
+              "gender": "masculine"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:seautou:30200eb965e2",
+          "variants": [
+            "σαυτῆς"
+          ],
+          "analyses": [
+            {
+              "case": "genitive",
+              "number": "singular",
+              "gender": "feminine"
+            }
+          ]
+        },
+        {
           "id": "pronoun:seautou:ab4dcfff2c89",
           "variants": [
             "σεαυτῷ"
@@ -3936,6 +4217,32 @@
           ]
         },
         {
+          "id": "pronoun:seautou:a7b99f37f9aa",
+          "variants": [
+            "σαυτῷ"
+          ],
+          "analyses": [
+            {
+              "case": "dative",
+              "number": "singular",
+              "gender": "masculine"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:seautou:ab4ceb3537df",
+          "variants": [
+            "σαυτῇ"
+          ],
+          "analyses": [
+            {
+              "case": "dative",
+              "number": "singular",
+              "gender": "feminine"
+            }
+          ]
+        },
+        {
           "id": "pronoun:seautou:d2bec571780a",
           "variants": [
             "σεαυτόν"
@@ -4006,6 +4313,32 @@
             {
               "case": "accusative",
               "number": "plural",
+              "gender": "feminine"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:seautou:a98b1ec536a2",
+          "variants": [
+            "σαυτόν"
+          ],
+          "analyses": [
+            {
+              "case": "accusative",
+              "number": "singular",
+              "gender": "masculine"
+            }
+          ]
+        },
+        {
+          "id": "pronoun:seautou:4365c4d1dd8e",
+          "variants": [
+            "σαυτήν"
+          ],
+          "analyses": [
+            {
+              "case": "accusative",
+              "number": "singular",
               "gender": "feminine"
             }
           ]
@@ -4531,7 +4864,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν κρήνην"
+            "κρήνην"
           ]
         },
         {
@@ -4565,7 +4898,7 @@
             }
           ],
           "bareVariants": [
-            "τὰ̄ς κρήνᾱς"
+            "κρήνᾱς"
           ]
         }
       ]
@@ -4702,7 +5035,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν οἰκίᾱν"
+            "οἰκίᾱν"
           ]
         },
         {
@@ -4736,7 +5069,7 @@
             }
           ],
           "bareVariants": [
-            "τὰ̄ς οἰκίᾱς"
+            "οἰκίᾱς"
           ]
         }
       ]
@@ -4873,7 +5206,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν θάλατταν"
+            "θάλατταν"
           ]
         },
         {
@@ -4907,7 +5240,7 @@
             }
           ],
           "bareVariants": [
-            "τὰ̄ς θαλάττᾱς"
+            "θαλάττᾱς"
           ]
         }
       ]
@@ -5044,7 +5377,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν μάχαιραν"
+            "μάχαιραν"
           ]
         },
         {
@@ -5078,7 +5411,7 @@
             }
           ],
           "bareVariants": [
-            "τὰ̄ς μαχαίρᾱς"
+            "μαχαίρᾱς"
           ]
         }
       ]
@@ -5215,7 +5548,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν πολί̄την"
+            "πολί̄την"
           ]
         },
         {
@@ -5249,7 +5582,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς πολί̄τᾱς"
+            "πολί̄τᾱς"
           ]
         },
         {
@@ -5401,7 +5734,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν νεᾱνίᾱν"
+            "νεᾱνίᾱν"
           ]
         },
         {
@@ -5435,7 +5768,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς νεᾱνίᾱς"
+            "νεᾱνίᾱς"
           ]
         },
         {
@@ -5587,7 +5920,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν ἀγρόν"
+            "ἀγρόν"
           ]
         },
         {
@@ -5621,7 +5954,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς ἀγρούς"
+            "ἀγρούς"
           ]
         },
         {
@@ -5922,7 +6255,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν λαγώ/λαγών"
+            "λαγώ/λαγών"
           ]
         },
         {
@@ -5956,7 +6289,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς λαγώς"
+            "λαγώς"
           ]
         }
       ]
@@ -6093,7 +6426,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν νόον > νοῦν"
+            "νόον > νοῦν"
           ]
         },
         {
@@ -6127,7 +6460,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς νόους > νοῦς"
+            "νόους > νοῦς"
           ]
         }
       ]
@@ -6413,7 +6746,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν λαίλαπα"
+            "λαίλαπα"
           ]
         },
         {
@@ -6447,7 +6780,7 @@
             }
           ],
           "bareVariants": [
-            "τὰ̄ς λαίλαπας"
+            "λαίλαπας"
           ]
         }
       ]
@@ -6584,7 +6917,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν κόρακα"
+            "κόρακα"
           ]
         },
         {
@@ -6618,7 +6951,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς κόρακας"
+            "κόρακας"
           ]
         }
       ]
@@ -6755,7 +7088,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν λαμπάδα"
+            "λαμπάδα"
           ]
         },
         {
@@ -6789,7 +7122,7 @@
             }
           ],
           "bareVariants": [
-            "τὰ̄ς λαμπάδας"
+            "λαμπάδας"
           ]
         }
       ]
@@ -7075,7 +7408,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν λέοντα"
+            "λέοντα"
           ]
         },
         {
@@ -7109,7 +7442,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς λέοντας"
+            "λέοντας"
           ]
         },
         {
@@ -7261,7 +7594,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν τρίχα"
+            "τρίχα"
           ]
         },
         {
@@ -7295,7 +7628,7 @@
             }
           ],
           "bareVariants": [
-            "τὰ̄ς τρίχας"
+            "τρίχας"
           ]
         }
       ]
@@ -7432,7 +7765,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν γυναῖκα"
+            "γυναῖκα"
           ]
         },
         {
@@ -7466,7 +7799,7 @@
             }
           ],
           "bareVariants": [
-            "τὰ̄ς γυναῖκας"
+            "γυναῖκας"
           ]
         },
         {
@@ -7618,7 +7951,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν κήρῡκα"
+            "κήρῡκα"
           ]
         },
         {
@@ -7652,7 +7985,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς κήρῡκας"
+            "κήρῡκας"
           ]
         }
       ]
@@ -7789,7 +8122,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν, τὴν παῖδα"
+            "παῖδα"
           ]
         },
         {
@@ -7823,7 +8156,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς, τὰ̄ς παῖδας"
+            "παῖδας"
           ]
         },
         {
@@ -8009,7 +8342,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς πόδας"
+            "πόδας"
           ]
         }
       ]
@@ -8146,7 +8479,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν ἄνακτα"
+            "ἄνακτα"
           ]
         },
         {
@@ -8180,7 +8513,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς ἄνακτας"
+            "ἄνακτας"
           ]
         },
         {
@@ -8332,7 +8665,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν νύκτα"
+            "νύκτα"
           ]
         },
         {
@@ -8366,7 +8699,7 @@
             }
           ],
           "bareVariants": [
-            "τὰ̄ς νύκτας"
+            "νύκτας"
           ]
         }
       ]
@@ -8652,7 +8985,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν χάριν"
+            "χάριν"
           ]
         },
         {
@@ -8686,7 +9019,7 @@
             }
           ],
           "bareVariants": [
-            "τὰ̄ς χάριτας"
+            "χάριτας"
           ]
         }
       ]
@@ -8972,7 +9305,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν δαίμονα"
+            "δαίμονα"
           ]
         },
         {
@@ -9006,7 +9339,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς δαίμονας"
+            "δαίμονας"
           ]
         },
         {
@@ -9158,7 +9491,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν ἀγῶνα"
+            "ἀγῶνα"
           ]
         },
         {
@@ -9192,7 +9525,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς ἀγῶνας"
+            "ἀγῶνας"
           ]
         }
       ]
@@ -9265,7 +9598,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν Πύκνα"
+            "Πύκνα"
           ]
         }
       ]
@@ -9338,7 +9671,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν Ἀπόλλων,\nτὸν Ἀπόλλω"
+            "Ἀπόλλων,\nτὸν Ἀπόλλω"
           ]
         },
         {
@@ -9426,7 +9759,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν Ποσειδῶ"
+            "Ποσειδῶ"
           ]
         },
         {
@@ -9578,7 +9911,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν ἄρνα"
+            "ἄρνα"
           ]
         },
         {
@@ -9612,7 +9945,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς ἄρνας"
+            "ἄρνας"
           ]
         }
       ]
@@ -9749,7 +10082,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν κύνα"
+            "κύνα"
           ]
         },
         {
@@ -9783,7 +10116,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς κύνας"
+            "κύνας"
           ]
         },
         {
@@ -9935,7 +10268,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν ῥήτορα"
+            "ῥήτορα"
           ]
         },
         {
@@ -9969,7 +10302,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς ῥήτορας"
+            "ῥήτορας"
           ]
         },
         {
@@ -10121,7 +10454,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν δοτῆρα"
+            "δοτῆρα"
           ]
         },
         {
@@ -10155,7 +10488,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς δοτῆρας"
+            "δοτῆρας"
           ]
         }
       ]
@@ -10441,7 +10774,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν πατέρα"
+            "πατέρα"
           ]
         },
         {
@@ -10475,7 +10808,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς πατέρας"
+            "πατέρας"
           ]
         },
         {
@@ -10627,7 +10960,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν μητέρα"
+            "μητέρα"
           ]
         },
         {
@@ -10661,7 +10994,7 @@
             }
           ],
           "bareVariants": [
-            "τὰ̄ς μητέρας"
+            "μητέρας"
           ]
         },
         {
@@ -10813,7 +11146,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν θυγατέρα"
+            "θυγατέρα"
           ]
         },
         {
@@ -10847,7 +11180,7 @@
             }
           ],
           "bareVariants": [
-            "τὰ̄ς θυγατέρας"
+            "θυγατέρας"
           ]
         },
         {
@@ -10999,7 +11332,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν ἄνδρα"
+            "ἄνδρα"
           ]
         },
         {
@@ -11033,7 +11366,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς ἄνδρας"
+            "ἄνδρας"
           ]
         },
         {
@@ -11334,7 +11667,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν σωτῆρα"
+            "σωτῆρα"
           ]
         },
         {
@@ -11368,7 +11701,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς σωτῆρας"
+            "σωτῆρας"
           ]
         },
         {
@@ -11456,7 +11789,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν Δήμητρα"
+            "Δήμητρα"
           ]
         },
         {
@@ -11608,7 +11941,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν ἀστέρα"
+            "ἀστέρα"
           ]
         },
         {
@@ -11642,7 +11975,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς ἀστέρας"
+            "ἀστέρας"
           ]
         }
       ]
@@ -12077,7 +12410,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν μάρτυρα"
+            "μάρτυρα"
           ]
         },
         {
@@ -12111,7 +12444,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς μάρτυρας"
+            "μάρτυρας"
           ]
         }
       ]
@@ -12248,7 +12581,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν χεῖρα"
+            "χεῖρα"
           ]
         },
         {
@@ -12282,7 +12615,7 @@
             }
           ],
           "bareVariants": [
-            "τὰ̄ς χεῖρας"
+            "χεῖρας"
           ]
         }
       ]
@@ -12653,7 +12986,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν Σωκράτη[ν]"
+            "Σωκράτη[ν]"
           ]
         },
         {
@@ -12820,7 +13153,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν τριήρη"
+            "τριήρη"
           ]
         },
         {
@@ -12854,7 +13187,7 @@
             }
           ],
           "bareVariants": [
-            "τὰ̄ς τριήρεις"
+            "τριήρεις"
           ]
         },
         {
@@ -12942,7 +13275,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν Περικλέᾱ"
+            "Περικλέᾱ"
           ]
         },
         {
@@ -13541,7 +13874,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν βότρυν"
+            "βότρυν"
           ]
         },
         {
@@ -13575,7 +13908,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς βότρῡς (-υας)"
+            "βότρῡς (-υας)"
           ]
         },
         {
@@ -13727,7 +14060,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν πόλιν"
+            "πόλιν"
           ]
         },
         {
@@ -13761,7 +14094,7 @@
             }
           ],
           "bareVariants": [
-            "τὰ̄ς πόλεις"
+            "πόλεις"
           ]
         },
         {
@@ -14062,7 +14395,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν ἰχθύ̄ν"
+            "ἰχθύ̄ν"
           ]
         },
         {
@@ -14096,7 +14429,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς ἰχθῦς  (-ύας)"
+            "ἰχθῦς  (-ύας)"
           ]
         },
         {
@@ -14248,7 +14581,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν βασιλέᾱ"
+            "βασιλέᾱ"
           ]
         },
         {
@@ -14282,7 +14615,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς βασιλέᾱς"
+            "βασιλέᾱς"
           ]
         },
         {
@@ -14434,7 +14767,7 @@
             }
           ],
           "bareVariants": [
-            "τὴν ναῦν"
+            "ναῦν"
           ]
         },
         {
@@ -14468,7 +14801,7 @@
             }
           ],
           "bareVariants": [
-            "τὰ̄ς ναῦς"
+            "ναῦς"
           ]
         },
         {
@@ -14620,7 +14953,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν βοῦν"
+            "βοῦν"
           ]
         },
         {
@@ -14654,7 +14987,7 @@
             }
           ],
           "bareVariants": [
-            "τοὺς βοῦς"
+            "βοῦς"
           ]
         },
         {
@@ -14742,7 +15075,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν Πειραιᾶ"
+            "Πειραιᾶ"
           ]
         },
         {
@@ -14830,7 +15163,7 @@
             }
           ],
           "bareVariants": [
-            "τὸν Δία"
+            "Δία"
           ]
         },
         {

@@ -55,7 +55,7 @@ function numberFromColumn(column) {
 
 function stripArticle(form) {
   return form.replace(
-    /^(?:(?:ὁ|ἡ|τ[όὸώὼάὰ]|τοῦ|τῆς|τῷ|τῇ|τόν|τήν|οἱ|αἱ|τά|τῶν|τοῖς|ταῖς|τούς|τά̄ς|τοῖν|ταῖν|τὼ)(?:,\s*)?)+\s+/u,
+    /^(?:(?:ὁ|ἡ|τ[όὸώὼάὰ]|τοῦ|τῆς|τῷ|τῇ|τόν|τὸν|τήν|τὴν|οἱ|αἱ|τά|τὰ|τῶν|τοῖς|ταῖς|τούς|τοὺς|τά̄ς|τὰ̄ς|τοῖν|ταῖν|τὼ)(?:,\s*)?)+\s+/u,
     ""
   );
 }
@@ -256,17 +256,23 @@ const standardGenderByColumn = {
 
 function parseGenderedGrid(sheet, headerRow, id, metadata) {
   const rawItems = [];
+  let grammaticalCase;
   for (let rowNumber = headerRow + 1; rowNumber <= Math.min(headerRow + 6, sheet.rowCount); rowNumber += 1) {
     const caseLabel = textOf(sheet.getRow(rowNumber).getCell(2));
-    if (!caseLabel) continue;
-    let grammaticalCase;
-    try {
-      grammaticalCase = nominalCase(caseLabel);
-    } catch {
-      break;
+    const continuation = !caseLabel;
+    if (caseLabel) {
+      try {
+        grammaticalCase = nominalCase(caseLabel);
+      } catch {
+        break;
+      }
     }
+    if (!grammaticalCase) continue;
     for (let column = 3; column <= 11; column += 1) {
-      const form = textOf(sheet.getRow(rowNumber).getCell(column));
+      const sourceForm = textOf(sheet.getRow(rowNumber).getCell(column));
+      if (continuation && !/^\(.+\)$/u.test(sourceForm)) continue;
+      const form = sourceForm
+        .replace(/^\((.+)\)$/u, "$1");
       if (!form) continue;
       rawItems.push({
         variants: form.split(",").map((value) => value.trim()).filter(Boolean),
@@ -333,7 +339,8 @@ function parsePronouns(sheet) {
   const addSimplePronoun = (idSuffix, lemma, transliteration, gloss, cells) => {
     const rawItems = cells.flatMap(({ row, grammaticalCase, columns }) =>
       columns.flatMap(({ column, number, genders: cellGenders }) => {
-        const form = textOf(sheet.getRow(row).getCell(column));
+        const form = textOf(sheet.getRow(row).getCell(column))
+          .replace(/^\((.+)\)$/u, "$1");
         if (!form) return [];
         const applicableGenders = cellGenders ?? [undefined];
         return [{
@@ -407,11 +414,18 @@ function parsePronouns(sheet) {
     "σεαυτοῦ",
     "seautoû",
     "de ti mesmo",
-    [88, 90, 92].map((row, index) => ({
-      row,
-      grammaticalCase: ["genitive", "dative", "accusative"][index],
-      columns: reflexiveColumns
-    }))
+    [88, 90, 92].flatMap((row, index) => [
+      {
+        row,
+        grammaticalCase: ["genitive", "dative", "accusative"][index],
+        columns: reflexiveColumns
+      },
+      {
+        row: row + 1,
+        grammaticalCase: ["genitive", "dative", "accusative"][index],
+        columns: reflexiveColumns.slice(0, 2)
+      }
+    ])
   );
 
   const reciprocalColumns = [

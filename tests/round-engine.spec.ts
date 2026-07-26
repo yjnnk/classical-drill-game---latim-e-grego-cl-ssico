@@ -46,6 +46,48 @@ test("produção assistida oferece três formas e agrupa variantes corretas", ()
   ]);
 });
 
+test("produção separa paradigmas com a mesma análise e informa o lema", () => {
+  const nominalItems: DrillItem[] = [
+    ["a-nom", "κρήνη", "nominativo", "paradigm:krene"],
+    ["a-gen", "κρήνης", "genitivo", "paradigm:krene"],
+    ["a-dat", "κρήνῃ", "dativo", "paradigm:krene"],
+    ["b-nom", "τιμή", "nominativo", "paradigm:time"],
+    ["b-gen", "τιμῆς", "genitivo", "paradigm:time"],
+    ["b-dat", "τιμῇ", "dativo", "paradigm:time"]
+  ].map(([id, form, grammaticalCase, paradigmId]) => ({
+    id,
+    form,
+    sourceParadigmIds: [paradigmId],
+    productionContext: paradigmId === "paradigm:krene" ? "κρήνη" : "τιμή",
+    analyses: [
+      {
+        kind: "nominal",
+        grammaticalCase,
+        grammaticalNumber: "singular"
+      }
+    ]
+  })) as DrillItem[];
+  const round = new DrillRound(nominalItems, {
+    direction: "production",
+    coverage: "all",
+    random: () => 0.5
+  });
+
+  let question = round.question();
+  while (question && question.item.id !== "a-gen") {
+    const correct = question.choices.find(({ correct }) => correct);
+    if (!correct) throw new Error("Pergunta sem resposta correta.");
+    round.answer(correct.id);
+    question = round.question();
+  }
+
+  expect(question?.context).toBe("κρήνη");
+  expect(question?.choices.find(({ correct }) => correct)?.label).toBe("κρήνης");
+  expect(question?.choices.find(({ correct }) => correct)?.label).not.toContain(
+    "τιμῆς"
+  );
+});
+
 test("misto divide as direções sem repetir o item original", () => {
   const round = new DrillRound(items, {
     direction: "mixed",
