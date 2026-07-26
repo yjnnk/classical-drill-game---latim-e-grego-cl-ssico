@@ -13,7 +13,10 @@ const analysesByForm: Record<string, string> = {
 
 async function startRound(page: Page) {
   await page.goto("/");
-  await page.getByRole("button", { name: "Iniciar rodada" }).click();
+  const deck = page.getByRole("article").filter({
+    has: page.getByRole("heading", { name: "κρήνη" })
+  });
+  await deck.getByRole("button", { name: "Iniciar rodada" }).click();
 }
 
 async function answerCurrentCorrectly(page: Page) {
@@ -32,11 +35,35 @@ test("o estudante inicia uma rodada de κρήνη", async ({ page }) => {
   ).toBeVisible();
   await expect(page.getByText("κρήνη", { exact: true })).toBeVisible();
 
-  await page.getByRole("button", { name: "Iniciar rodada" }).click();
+  const deck = page.getByRole("article").filter({
+    has: page.getByRole("heading", { name: "κρήνη" })
+  });
+  await deck.getByRole("button", { name: "Iniciar rodada" }).click();
 
   await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
   await expect(page.getByText(/ de 8/)).toBeVisible();
   await expect(page.getByRole("button")).toHaveCount(4);
+});
+
+test("o estudante inicia uma rodada de λῡ́ω a partir do catálogo", async ({
+  page
+}) => {
+  await page.goto("/");
+  const deck = page.getByRole("article").filter({
+    has: page.getByRole("heading", { name: "λῡ́ω" })
+  });
+
+  await deck.getByRole("button", { name: "Iniciar rodada" }).click();
+
+  await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
+  await expect(page.getByRole("group", { name: "Alternativas" })).toContainText(
+    "presente"
+  );
+  await expect(
+    page
+      .getByRole("group", { name: "Alternativas" })
+      .getByRole("button")
+  ).toHaveCount(3);
 });
 
 test("uma forma errada volta depois de outras perguntas", async ({ page }) => {
@@ -100,7 +127,10 @@ test("a rodada completa continua disponível offline", async ({ context, page })
   await expect(
     page.getByRole("heading", { name: "Prática de grego clássico" })
   ).toBeVisible();
-  await page.getByRole("button", { name: "Iniciar rodada" }).click();
+  const deck = page.getByRole("article").filter({
+    has: page.getByRole("heading", { name: "κρήνη" })
+  });
+  await deck.getByRole("button", { name: "Iniciar rodada" }).click();
 
   for (let index = 0; index < 8; index += 1) {
     await answerCurrentCorrectly(page);

@@ -1,5 +1,9 @@
-import { kreneForms, type NominalAnalysis } from "./catalog";
-import { formatAnalysis, NominalRound } from "./round";
+import {
+  builtInDecks,
+  type Analysis,
+  type DrillDeck
+} from "./catalog";
+import { DrillRound, formatAnalysisSet } from "./round";
 import "./styles.css";
 
 function requireAppRoot(): HTMLElement {
@@ -19,24 +23,37 @@ function renderHome(): void {
       <h1 id="page-title">Prática de grego clássico</h1>
       <p class="intro">Escolha a análise completa de cada forma. Se errar, ela volta até você acertar.</p>
 
-      <article class="deck-card">
-        <div>
-          <p class="deck-label">Baralho inicial</p>
-          <h2 lang="grc">κρήνη</h2>
-          <p>Primeira declinação · singular e plural · 8 formas</p>
-        </div>
-        <button class="primary" type="button" data-action="start">Iniciar rodada</button>
-      </article>
+      <div class="deck-list">
+        ${builtInDecks
+          .map(
+            (deck) => `
+              <article class="deck-card">
+                <div>
+                  <p class="deck-label">Baralho inicial</p>
+                  <h2 lang="grc">${deck.title}</h2>
+                  <p>${deck.description}</p>
+                </div>
+                <button class="primary" type="button" data-deck="${deck.id}">Iniciar rodada</button>
+              </article>
+            `
+          )
+          .join("")}
+      </div>
     </section>
   `;
 
-  app
-    .querySelector<HTMLButtonElement>("[data-action='start']")
-    ?.addEventListener("click", startRound);
+  app.querySelectorAll<HTMLButtonElement>("[data-deck]").forEach((button) => {
+    const deck = builtInDecks.find(
+      (candidate) => candidate.id === button.dataset.deck
+    );
+    if (deck) {
+      button.addEventListener("click", () => startRound(deck));
+    }
+  });
 }
 
-function startRound(): void {
-  const round = new NominalRound(kreneForms);
+function startRound(deck: DrillDeck): void {
+  const round = new DrillRound(deck.items);
 
   function renderQuestion(): void {
     const question = round.question();
@@ -63,7 +80,7 @@ function startRound(): void {
               (option, index) => `
                 <button class="option" type="button">
                   <span class="option-number">${index + 1}</span>
-                  <span>${formatAnalysis(option)}</span>
+                  <span>${formatAnalysisSet(option)}</span>
                 </button>
               `
             )
@@ -93,10 +110,10 @@ function startRound(): void {
   function answer(
     buttons: HTMLButtonElement[],
     selectedButton: HTMLButtonElement,
-    selectedAnalysis: NominalAnalysis
+    selectedAnalysis: Analysis[]
   ): void {
     const result = round.answer(selectedAnalysis);
-    const correctLabel = formatAnalysis(result.correctAnalysis);
+    const correctLabel = formatAnalysisSet(result.correctAnalyses);
 
     buttons.forEach((button) => {
       button.disabled = true;

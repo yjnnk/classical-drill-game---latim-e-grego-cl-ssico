@@ -2,6 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests",
+  testMatch: "**/*.spec.ts",
   globalSetup: "./tests/global-setup.ts",
   timeout: 10_000,
   fullyParallel: false,

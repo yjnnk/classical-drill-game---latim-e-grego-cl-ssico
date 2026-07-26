@@ -1,61 +1,151 @@
+import generatedCatalog from "./generated/catalog.json";
+
 export type GrammaticalCase =
   | "nominativo"
   | "genitivo"
   | "dativo"
   | "acusativo";
 
-export type GrammaticalNumber = "singular" | "plural";
+export type GrammaticalNumber = "singular" | "dual" | "plural";
 
 export interface NominalAnalysis {
+  kind: "nominal";
   grammaticalCase: GrammaticalCase;
   grammaticalNumber: GrammaticalNumber;
 }
 
-export interface NominalForm {
-  id: string;
-  form: string;
-  analysis: NominalAnalysis;
+export interface FiniteVerbAnalysis {
+  kind: "finite-verb";
+  tense: string;
+  voice: string;
+  mood: string;
+  person: string;
+  grammaticalNumber: GrammaticalNumber;
 }
 
-export const kreneForms: NominalForm[] = [
-  {
-    id: "krene-nom-sg",
-    form: "ἡ κρήνη",
-    analysis: { grammaticalCase: "nominativo", grammaticalNumber: "singular" }
-  },
-  {
-    id: "krene-gen-sg",
-    form: "τῆς κρήνης",
-    analysis: { grammaticalCase: "genitivo", grammaticalNumber: "singular" }
-  },
-  {
-    id: "krene-dat-sg",
-    form: "τῇ κρήνῃ",
-    analysis: { grammaticalCase: "dativo", grammaticalNumber: "singular" }
-  },
-  {
-    id: "krene-acc-sg",
-    form: "τὴν κρήνην",
-    analysis: { grammaticalCase: "acusativo", grammaticalNumber: "singular" }
-  },
-  {
-    id: "krene-nom-pl",
-    form: "αἱ κρῆναι",
-    analysis: { grammaticalCase: "nominativo", grammaticalNumber: "plural" }
-  },
-  {
-    id: "krene-gen-pl",
-    form: "τῶν κρηνῶν",
-    analysis: { grammaticalCase: "genitivo", grammaticalNumber: "plural" }
-  },
-  {
-    id: "krene-dat-pl",
-    form: "ταῖς κρήναις",
-    analysis: { grammaticalCase: "dativo", grammaticalNumber: "plural" }
-  },
-  {
-    id: "krene-acc-pl",
-    form: "τὰ̄ς κρήνᾱς",
-    analysis: { grammaticalCase: "acusativo", grammaticalNumber: "plural" }
+export type Analysis = NominalAnalysis | FiniteVerbAnalysis;
+
+export interface DrillItem {
+  id: string;
+  form: string;
+  analyses: Analysis[];
+}
+
+export interface DrillDeck {
+  id: string;
+  title: string;
+  description: string;
+  items: DrillItem[];
+}
+
+interface GeneratedNominalAnalysis {
+  case: "nominative" | "genitive" | "dative" | "accusative";
+  number: "singular" | "dual" | "plural";
+}
+
+interface GeneratedFiniteVerbAnalysis {
+  tense: string;
+  voice: string;
+  mood: string;
+  person: string;
+  number: "singular" | "dual" | "plural";
+}
+
+interface GeneratedItem<TAnalysis> {
+  id: string;
+  variants: string[];
+  analyses: TAnalysis[];
+}
+
+const caseLabels: Record<GeneratedNominalAnalysis["case"], GrammaticalCase> = {
+  nominative: "nominativo",
+  genitive: "genitivo",
+  dative: "dativo",
+  accusative: "acusativo"
+};
+
+function requireParadigm(id: string) {
+  const paradigm = generatedCatalog.paradigms.find(
+    (candidate) => candidate.id === id
+  );
+  if (!paradigm) {
+    throw new Error(`O catálogo gerado não contém o paradigma ${id}.`);
   }
-];
+  return paradigm;
+}
+
+function nominalDeck(): DrillDeck {
+  const paradigm = requireParadigm("noun:krene");
+  const items = (
+    paradigm.items as GeneratedItem<GeneratedNominalAnalysis>[]
+  )
+    .filter(
+      (item) =>
+        item.analyses.length === 1 &&
+        item.analyses[0]?.number !== "dual"
+    )
+    .map((item): DrillItem => {
+      const analysis = item.analyses[0];
+      const form = item.variants[0];
+      if (!analysis || !form) {
+        throw new Error(`Item nominal inválido no catálogo: ${item.id}`);
+      }
+      return {
+        id: item.id,
+        form,
+        analyses: [
+          {
+            kind: "nominal",
+            grammaticalCase: caseLabels[analysis.case],
+            grammaticalNumber: analysis.number
+          }
+        ]
+      };
+    });
+
+  return {
+    id: "deck:krene",
+    title: "κρήνη",
+    description: "Primeira declinação · singular e plural · 8 formas",
+    items
+  };
+}
+
+function verbDeck(): DrillDeck {
+  const paradigm = requireParadigm("verb:luo");
+  const items = (
+    paradigm.items as GeneratedItem<GeneratedFiniteVerbAnalysis>[]
+  )
+    .filter((item) =>
+      item.analyses.some(
+        (analysis) =>
+          analysis.tense === "present" &&
+          analysis.voice === "active" &&
+          analysis.mood === "indicative"
+      )
+    )
+    .map(
+      (item): DrillItem => ({
+        id: item.id,
+        form: item.variants.join(" / "),
+        analyses: item.analyses.map((analysis) => ({
+          kind: "finite-verb",
+          tense: analysis.tense,
+          voice: analysis.voice,
+          mood: analysis.mood,
+          person: analysis.person,
+          grammaticalNumber: analysis.number
+        }))
+      })
+    );
+
+  return {
+    id: "deck:luo-present-active-indicative",
+    title: "λῡ́ω",
+    description: `Presente · ativo · indicativo · ${items.length} formas`,
+    items
+  };
+}
+
+export const catalogVersion = generatedCatalog.catalogVersion;
+export const builtInDecks: DrillDeck[] = [nominalDeck(), verbDeck()];

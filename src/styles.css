@@ -86,6 +86,11 @@ h1 {
   box-shadow: 0 1.25rem 3rem rgb(52 70 59 / 9%);
 }
 
+.deck-list {
+  display: grid;
+  gap: 1rem;
+}
+
 .deck-card h2 {
   margin-bottom: 0.25rem;
   color: #21352b;

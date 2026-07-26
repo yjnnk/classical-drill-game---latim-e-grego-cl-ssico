@@ -5,15 +5,20 @@
   "type": "module",
   "scripts": {
     "build": "tsc --noEmit && vite build",
+    "catalog:generate": "node scripts/generate-catalog.mjs",
+    "catalog:validate": "node scripts/validate-catalog.mjs src/generated/catalog.json",
     "dev": "vite",
+    "prebuild": "npm run catalog:validate",
     "preview": "vite preview",
-    "test": "playwright test",
+    "test": "node scripts/test-all.mjs",
+    "test:catalog": "node --test tests/catalog-cli.test.mjs",
     "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.1",
     "@types/node": "^26.1.1",
+    "exceljs": "^4.4.0",
     "typescript": "^5.8.3",
     "vite": "^7.0.6",
     "vite-plugin-pwa": "^1.0.1"

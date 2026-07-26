@@ -1,0 +1,4930 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "2026.07.26",
+  "language": "grc",
+  "source": {
+    "workbook": " Ancient Greek Ranieri-Dowling Method Summary of Forms v2.0.xlsx",
+    "sheets": [
+      "1st decl",
+      "λῡ́ω"
+    ]
+  },
+  "corrections": [],
+  "paradigms": [
+    {
+      "id": "noun:krene",
+      "kind": "nominal",
+      "lemma": {
+        "greek": "κρήνη",
+        "transliteration": "krḗnē",
+        "gloss": "fonte"
+      },
+      "items": [
+        {
+          "id": "noun:krene:e41c2f521882",
+          "variants": [
+            "ἡ κρήνη"
+          ],
+          "analyses": [
+            {
+              "case": "nominative",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "noun:krene:b2cc75efbcdb",
+          "variants": [
+            "αἱ κρῆναι"
+          ],
+          "analyses": [
+            {
+              "case": "nominative",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "noun:krene:5b4a2417d010",
+          "variants": [
+            "τῆς κρήνης"
+          ],
+          "analyses": [
+            {
+              "case": "genitive",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "noun:krene:f30637682c8e",
+          "variants": [
+            "τῶν κρηνῶν"
+          ],
+          "analyses": [
+            {
+              "case": "genitive",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "noun:krene:bbcd3ea781c6",
+          "variants": [
+            "τῇ κρήνῃ"
+          ],
+          "analyses": [
+            {
+              "case": "dative",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "noun:krene:e3b150c7252d",
+          "variants": [
+            "τοῖν κρήναιν"
+          ],
+          "analyses": [
+            {
+              "case": "genitive",
+              "number": "dual"
+            },
+            {
+              "case": "dative",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "noun:krene:f257b19e2db0",
+          "variants": [
+            "ταῖς κρήναις"
+          ],
+          "analyses": [
+            {
+              "case": "dative",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "noun:krene:5b927bbec14f",
+          "variants": [
+            "τὴν κρήνην"
+          ],
+          "analyses": [
+            {
+              "case": "accusative",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "noun:krene:0b9445c8b18a",
+          "variants": [
+            "τὼ κρήνᾱ"
+          ],
+          "analyses": [
+            {
+              "case": "nominative",
+              "number": "dual"
+            },
+            {
+              "case": "accusative",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "noun:krene:9252533a0b99",
+          "variants": [
+            "τὰ̄ς κρήνᾱς"
+          ],
+          "analyses": [
+            {
+              "case": "accusative",
+              "number": "plural"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "verb:luo",
+      "kind": "finite-verb",
+      "lemma": {
+        "greek": "λῡ́ω",
+        "transliteration": "lū́ō",
+        "gloss": "soltar"
+      },
+      "items": [
+        {
+          "id": "verb:luo:291c90860226",
+          "variants": [
+            "λῡ́εις"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:0b71a5b5c3e3",
+          "variants": [
+            "λῡ́ομεν"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:4945346dc9aa",
+          "variants": [
+            "λῡ́ουσι(ν)"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:47e8b4c9fb56",
+          "variants": [
+            "λῡ́ω"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            },
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:d7f1f1d13c4f",
+          "variants": [
+            "λῡ́ῃς"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:954252a1c415",
+          "variants": [
+            "λῡ́ητον"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:b9e45cfc213e",
+          "variants": [
+            "λῡ́ωμεν"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:3f01b0a6a0c3",
+          "variants": [
+            "λῡ́ητε"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:fd5d07ac60b7",
+          "variants": [
+            "λῡ́ωσι(ν)"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:6d16aa65cd1b",
+          "variants": [
+            "λῡ́οιμι"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "optative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:801e4d2c64e2",
+          "variants": [
+            "λῡ́οις"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "optative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:1f720a6e228d",
+          "variants": [
+            "λῡ́οι"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "optative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:9f8e968bab8a",
+          "variants": [
+            "λῡ́οιτον"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "optative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:fc2384d3344e",
+          "variants": [
+            "λῡοίτην"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "optative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:bac5c29f46f6",
+          "variants": [
+            "λῡ́οιμεν"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "optative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:3d1121862cb9",
+          "variants": [
+            "λῡ́οιτε"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "optative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:d8e9a4c95838",
+          "variants": [
+            "λῡ́οιεν"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "optative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:ceafb493ace8",
+          "variants": [
+            "λῦε"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:20e3f3d459e3",
+          "variants": [
+            "λῡέτω"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:323ae2060683",
+          "variants": [
+            "λῡ́ετον"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:3ff9e747e323",
+          "variants": [
+            "λῡέτων"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:a00760fe591f",
+          "variants": [
+            "λῡ́ετε"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            },
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:cb5e904fc378",
+          "variants": [
+            "λῡόντων"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:0500b7941305",
+          "variants": [
+            "λῡ́ομαι"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:cc25a264a459",
+          "variants": [
+            "λῡ́εται"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:3caedad42f1c",
+          "variants": [
+            "λῡόμεθα"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:45a58616b180",
+          "variants": [
+            "λῡ́ονται"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:3bb631d058d7",
+          "variants": [
+            "λῡ́ωμαι"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "singular"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:2fd25bae0856",
+          "variants": [
+            "λῡ́ει",
+            "λῡ́ῃ"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            },
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "singular"
+            },
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            },
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "singular"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:a2d63e7037ae",
+          "variants": [
+            "λῡ́ηται"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "singular"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:4f932c242f6d",
+          "variants": [
+            "λῡ́ησθον"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:e6ddb92d73c2",
+          "variants": [
+            "λῡώμεθα"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "plural"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:2ac5fd84d41a",
+          "variants": [
+            "λῡ́ησθε"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "plural"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:b5d8e24019e6",
+          "variants": [
+            "λῡ́ωνται"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "plural"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:b2944aebcab8",
+          "variants": [
+            "λῡοίμην"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "first",
+              "number": "singular"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:d2d80fbb41d0",
+          "variants": [
+            "λῡ́οιο"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "second",
+              "number": "singular"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:5d7fe10c7a36",
+          "variants": [
+            "λῡ́οιτο"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "third",
+              "number": "singular"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:5901beb4d170",
+          "variants": [
+            "λῡ́οισθον"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:d94c23ab9c24",
+          "variants": [
+            "λῡοίσθην"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:eb13954b6804",
+          "variants": [
+            "λῡοίμεθα"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "first",
+              "number": "plural"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:c6bd629b6cf9",
+          "variants": [
+            "λῡ́οισθε"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "second",
+              "number": "plural"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:c0fbd1d1dae1",
+          "variants": [
+            "λῡ́οιντο"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "third",
+              "number": "plural"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:00e62057dfd5",
+          "variants": [
+            "λῡ́ου"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "second",
+              "number": "singular"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:bad81f18e552",
+          "variants": [
+            "λῡέσθω"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "third",
+              "number": "singular"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:7d803de5466a",
+          "variants": [
+            "λῡ́εσθον"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:17de92f1c080",
+          "variants": [
+            "λῡ́εσθε"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            },
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "second",
+              "number": "plural"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:604aa0c35721",
+          "variants": [
+            "λῡέσθων"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "third",
+              "number": "plural"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:729f841759aa",
+          "variants": [
+            "ἔλῡες"
+          ],
+          "analyses": [
+            {
+              "tense": "imperfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:a88ded8e7a8e",
+          "variants": [
+            "ἔλῡε(ν)"
+          ],
+          "analyses": [
+            {
+              "tense": "imperfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:ab4a26e8718f",
+          "variants": [
+            "ἐλύ̄ετον"
+          ],
+          "analyses": [
+            {
+              "tense": "imperfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:19cb2bfc5cc8",
+          "variants": [
+            "ἐλῡέτην"
+          ],
+          "analyses": [
+            {
+              "tense": "imperfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:de62e085104e",
+          "variants": [
+            "ἐλύ̄ομεν"
+          ],
+          "analyses": [
+            {
+              "tense": "imperfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:7585ad0c8584",
+          "variants": [
+            "ἐλύ̄ετε"
+          ],
+          "analyses": [
+            {
+              "tense": "imperfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:e123ba3b6719",
+          "variants": [
+            "ἔλῡον"
+          ],
+          "analyses": [
+            {
+              "tense": "imperfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            },
+            {
+              "tense": "imperfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:de7239405dc0",
+          "variants": [
+            "ἐλῡόμην"
+          ],
+          "analyses": [
+            {
+              "tense": "imperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            },
+            {
+              "tense": "imperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:5ca008d27646",
+          "variants": [
+            "ἐλύ̄ου"
+          ],
+          "analyses": [
+            {
+              "tense": "imperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            },
+            {
+              "tense": "imperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:9aae0667d33b",
+          "variants": [
+            "ἐλύ̄ετο"
+          ],
+          "analyses": [
+            {
+              "tense": "imperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            },
+            {
+              "tense": "imperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:b77c494fe2e6",
+          "variants": [
+            "ἐλύ̄εσθον"
+          ],
+          "analyses": [
+            {
+              "tense": "imperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "imperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:e2a202a32c4e",
+          "variants": [
+            "ἐλῡέσθην"
+          ],
+          "analyses": [
+            {
+              "tense": "imperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "imperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:ab91cb60cd93",
+          "variants": [
+            "ἐλῡόμεθα"
+          ],
+          "analyses": [
+            {
+              "tense": "imperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            },
+            {
+              "tense": "imperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:f01491312d81",
+          "variants": [
+            "ἐλύ̄εσθε"
+          ],
+          "analyses": [
+            {
+              "tense": "imperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            },
+            {
+              "tense": "imperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:bced47dc4306",
+          "variants": [
+            "ἐλύ̄οντο"
+          ],
+          "analyses": [
+            {
+              "tense": "imperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            },
+            {
+              "tense": "imperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:455609146490",
+          "variants": [
+            "λῡ́σεις"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:865744821bf1",
+          "variants": [
+            "λῡ́σετον"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:1011459c09ae",
+          "variants": [
+            "λῡ́σομεν"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:a78bdb697813",
+          "variants": [
+            "λῡ́σετε"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:601003955305",
+          "variants": [
+            "λῡ́σουσι(ν)"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:0d87fe5e4b93",
+          "variants": [
+            "λῡ́σοιμι"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "optative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:c1711f0127de",
+          "variants": [
+            "λῡ́σοις"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "optative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:026271cd28df",
+          "variants": [
+            "λῡ́σοι"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "optative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:a897facf5fc1",
+          "variants": [
+            "λῡ́σοιτον"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "optative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:5dd48df59594",
+          "variants": [
+            "λῡσοίτην"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "optative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:d6580038cf8f",
+          "variants": [
+            "λῡ́σοιμεν"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "optative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:11c7fb5b7c79",
+          "variants": [
+            "λῡ́σοιτε"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "optative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:70c80a741f9b",
+          "variants": [
+            "λῡ́σοιεν"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "optative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:5eb6a4464db2",
+          "variants": [
+            "λῡ́σομαι"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:8235f238a0ec",
+          "variants": [
+            "λῡ́σεται"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:3fe5c381e10d",
+          "variants": [
+            "λῡ́σεσθον"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:bddc47e59610",
+          "variants": [
+            "λῡσόμεθα"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:3d3679ff343b",
+          "variants": [
+            "λῡ́σεσθε"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:74d975edaa78",
+          "variants": [
+            "λῡ́σονται"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:481e9a54d1c7",
+          "variants": [
+            "λῡσοίμην"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:da47ba56c5d7",
+          "variants": [
+            "λῡ́σοιο"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:0084142ff005",
+          "variants": [
+            "λῡ́σοιτο"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:0480a3efa251",
+          "variants": [
+            "λῡ́σοισθον"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:7b196b4fd709",
+          "variants": [
+            "λῡσοίσθην"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:d5b185da914c",
+          "variants": [
+            "λῡσοίμεθα"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:2a8fc0d50922",
+          "variants": [
+            "λῡ́σοισθε"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:c5dfceabc0d5",
+          "variants": [
+            "λῡ́σοιντο"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:5c84c8e6bce3",
+          "variants": [
+            "λυθήσομαι"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:21006bd60cfc",
+          "variants": [
+            "λυθήσει",
+            "λυθήσῃ"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:81dfad7cee3c",
+          "variants": [
+            "λυθήσεται"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:aec242d8b1ef",
+          "variants": [
+            "λυθήσεσθον"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "future",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:6b53934682d0",
+          "variants": [
+            "λυθησόμεθα"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:d6f134148fc2",
+          "variants": [
+            "λυθήσεσθε"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:bb2fc4059a4d",
+          "variants": [
+            "λυθήσονται"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:5ac5ccf4f0a3",
+          "variants": [
+            "λυθησοίμην"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:375dc71dda06",
+          "variants": [
+            "λυθήσοιο"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:4ab5264645b2",
+          "variants": [
+            "λυθήσοιτο"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:ae3c06196dfd",
+          "variants": [
+            "λυθήσοισθον"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:55f277c96949",
+          "variants": [
+            "λυθησοίσθην"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:fb617625e43d",
+          "variants": [
+            "λυθησοίμεθα"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:0ff188c3d710",
+          "variants": [
+            "λυθήσοισθε"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:60bce1657cf3",
+          "variants": [
+            "λυθήσοιντο"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:7e903469bf0a",
+          "variants": [
+            "ἔλῡσα"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:9280f14ef010",
+          "variants": [
+            "ἔλῡσας"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:e52afd2f979a",
+          "variants": [
+            "ἔλῡσε(ν)"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:6b2388be8c76",
+          "variants": [
+            "ἐλῡ́σατον"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:c01ea5b7282d",
+          "variants": [
+            "ἐλῡσάτην"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:bea1bec9b3fb",
+          "variants": [
+            "ἐλῡ́σαμεν"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:5cd3df3d2216",
+          "variants": [
+            "ἐλῡ́σατε"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:ba78ed2f4ce1",
+          "variants": [
+            "ἔλῡσαν"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:487c2b9c8b93",
+          "variants": [
+            "λῡ́σω"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            },
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:33e71771c946",
+          "variants": [
+            "λῡ́σῃς"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:789278f7ae59",
+          "variants": [
+            "λῡ́σητον"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:e16a8b1a5944",
+          "variants": [
+            "λῡ́σωμεν"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:1a97502719a6",
+          "variants": [
+            "λῡ́σητε"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:6d577e244150",
+          "variants": [
+            "λῡ́σωσι(ν)"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:20d20815087d",
+          "variants": [
+            "λῡ́σαιμι"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "optative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:20851ce52895",
+          "variants": [
+            "λῡ́σαις"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "optative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:addfaadd9851",
+          "variants": [
+            "λῡ́σαι"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "optative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:c9f29e6858f7",
+          "variants": [
+            "λῡ́σαιτον"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "optative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:d1b8f1efb6ba",
+          "variants": [
+            "λῡσαίτην"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "optative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:3bf001682c58",
+          "variants": [
+            "λῡ́σαιμεν"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "optative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:30e87ed3f8f4",
+          "variants": [
+            "λῡ́σαιτε"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "optative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:965dabb1daaa",
+          "variants": [
+            "λῡ́σειαν"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "optative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:1e32bca2238c",
+          "variants": [
+            "λῦσον"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:4e1bac628bae",
+          "variants": [
+            "λῡσάτω"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:48f788f8456f",
+          "variants": [
+            "λῡ́σατον"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:6c3f5235124f",
+          "variants": [
+            "λῡσάτων"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:e0b8746710ba",
+          "variants": [
+            "λῡ́σατε"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:dcde219d7508",
+          "variants": [
+            "λῡσάντων"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:b248a0d978f1",
+          "variants": [
+            "ἐλῡσάμην"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:9da04f34c7ff",
+          "variants": [
+            "ἐλῡ́σω"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:07dc3f1d0426",
+          "variants": [
+            "ἐλῡ́σατο"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:3fc2141c4830",
+          "variants": [
+            "ἐλῡ́σασθον"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:e4a5b41958cb",
+          "variants": [
+            "ἐλῡσάσθην"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:3fc9dc6a767a",
+          "variants": [
+            "ἐλῡσάμεθα"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:ae2966372a3d",
+          "variants": [
+            "ἐλῡ́σασθε"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:fb8bdcbf1157",
+          "variants": [
+            "ἐλῡ́σαντο"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:b5937edef43a",
+          "variants": [
+            "λῡ́σωμαι"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:639fc4c75890",
+          "variants": [
+            "λῡ́σει",
+            "λῡ́σῃ"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            },
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            },
+            {
+              "tense": "aorist",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "singular"
+            },
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:1903a80d20dc",
+          "variants": [
+            "λῡ́σηται"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:b260f48bbd60",
+          "variants": [
+            "λῡ́σησθον"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:ad32ee94a55a",
+          "variants": [
+            "λῡσώμεθα"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:35030cb8e968",
+          "variants": [
+            "λῡ́σησθε"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:5b629a092c3d",
+          "variants": [
+            "λῡ́σωνται"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:836762262dc6",
+          "variants": [
+            "λῡσαίμην"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:0c8289519234",
+          "variants": [
+            "λῡ́σαιο"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:b8cc7cfbf375",
+          "variants": [
+            "λῡ́σαιτο"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:3b8e9eb34010",
+          "variants": [
+            "λῡ́σαισθον"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:dc7a616c876e",
+          "variants": [
+            "λῡσαίσθην"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:004a3b5c3136",
+          "variants": [
+            "λῡσαίμεθα"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:255fb0dfb651",
+          "variants": [
+            "λῡ́σαισθε"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:cd90b7da420a",
+          "variants": [
+            "λῡ́σαιντο"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:cb15fdfcc86c",
+          "variants": [
+            "λῦσαι"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:7462932c0aa5",
+          "variants": [
+            "λῡσάσθω"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:c9062c09c5cf",
+          "variants": [
+            "λῡ́σασθον"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:e065dac5a5fc",
+          "variants": [
+            "λῡ́σασθε"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:7b7b12fcaa15",
+          "variants": [
+            "λῡσάσθων"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "aorist",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:2846f4244ddf",
+          "variants": [
+            "ἐλύθην"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:0be5d29b69fc",
+          "variants": [
+            "ἐλύθης"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:3e6e79828b3d",
+          "variants": [
+            "ἐλύθη"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:a3d55e75a507",
+          "variants": [
+            "ἐλύθητον"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:531b0394ef76",
+          "variants": [
+            "ἐλυθήτην"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:c8f2d3dfac94",
+          "variants": [
+            "ἐλύθημεν"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:882870ebbe78",
+          "variants": [
+            "ἐλύθητε"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:a9f71ddc2580",
+          "variants": [
+            "ἐλύθησαν"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:313f124cc20d",
+          "variants": [
+            "λυθῶ"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:3c3d8c21fcfd",
+          "variants": [
+            "λυθῇς"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:6d18c39dc2a0",
+          "variants": [
+            "λυθῇ"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:b5ee4a1a416e",
+          "variants": [
+            "λυθῆτον"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:54a1fd58c8d2",
+          "variants": [
+            "λυθῶμεν"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:0740aeee35b6",
+          "variants": [
+            "λυθῆτε"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:7b3be46b33c6",
+          "variants": [
+            "λυθῶσι(ν)"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:ac9e92666564",
+          "variants": [
+            "λυθείην"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:6ebf96a8c393",
+          "variants": [
+            "λυθείης"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:14df0192224c",
+          "variants": [
+            "λυθείη"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:8eaf8c41c7e5",
+          "variants": [
+            "λυθεῖτον"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:31b3c09976c5",
+          "variants": [
+            "λυθείτην"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:25fed03b78de",
+          "variants": [
+            "λυθεῖμεν"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:e27d3bdfcc81",
+          "variants": [
+            "λυθεῖτε"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:a834c1978f79",
+          "variants": [
+            "λυθεῖεν"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:1b2723b08dcf",
+          "variants": [
+            "λύθητι"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:dfef74c742da",
+          "variants": [
+            "λυθήτω"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:817422c95ae6",
+          "variants": [
+            "λύθητον"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:a573689c88d9",
+          "variants": [
+            "λυθήτων"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:2ee8d719c08c",
+          "variants": [
+            "λύθητε"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:51659656e4fd",
+          "variants": [
+            "λυθέντων"
+          ],
+          "analyses": [
+            {
+              "tense": "aorist",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:f5b645a9f447",
+          "variants": [
+            "λέλυκα"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:ca292501ee83",
+          "variants": [
+            "λέλυκας"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:046c97d57ba7",
+          "variants": [
+            "λέλυκε(ν)"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:a1d327423425",
+          "variants": [
+            "λελύκατον"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:78374a8f31df",
+          "variants": [
+            "λελύκαμεν"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:3d3cd668f21c",
+          "variants": [
+            "λελύκατε"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:e0ad01121ea8",
+          "variants": [
+            "λελύκᾱσι(ν)"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:c3dbbe61cdd3",
+          "variants": [
+            "λελυκὼς ὦ"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:520308a03901",
+          "variants": [
+            "λελυκὼς ᾖς"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:a063711de60a",
+          "variants": [
+            "λελυκὼς ᾖ"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:dce69e8752dd",
+          "variants": [
+            "λελυκότε ἦτον"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:ac3d129e31cb",
+          "variants": [
+            "λελυκότες ὦμεν"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:74dc50e2169c",
+          "variants": [
+            "λελυκότες ἦτε"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:3bec395bcf4c",
+          "variants": [
+            "λελυκότες ὦσι(ν)"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:40499096f80e",
+          "variants": [
+            "λελυκὼς εἴην"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "optative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:1b3ddcb653ca",
+          "variants": [
+            "λελυκὼς εἴης"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "optative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:33c0163e7469",
+          "variants": [
+            "λελυκὼς εἴη"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "optative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:46578c814e61",
+          "variants": [
+            "λελυκότε εἶτον"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "optative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:bf7e17df076e",
+          "variants": [
+            "λελυκότε εἴτην"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "optative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:5ddb16541b8a",
+          "variants": [
+            "λελυκότες εἶμεν"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "optative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:e60a840485c9",
+          "variants": [
+            "λελυκότες εἶτε"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "optative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:b3f16186f773",
+          "variants": [
+            "λελυκότες εἶεν"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "optative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:da7268374ebd",
+          "variants": [
+            "λελυκὼς ἴσθι"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:3e5ca42fc924",
+          "variants": [
+            "λελυκὼς ἔστω"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:747855b48578",
+          "variants": [
+            "λελυκότε ἔστον"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:2e08c12f7225",
+          "variants": [
+            "λελυκότε ἔστων"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:46f9991d26d9",
+          "variants": [
+            "λελυκότες ἔστε"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:62841c309c7f",
+          "variants": [
+            "λελυκότες ὄντων"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "active",
+              "mood": "imperative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:a9752c78bc81",
+          "variants": [
+            "λέλυμαι"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:c8b2a744bb05",
+          "variants": [
+            "λέλυσαι"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:2ad64d475ba7",
+          "variants": [
+            "λέλυται"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:21ff779b608b",
+          "variants": [
+            "λελύμεθα"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:2ca800f787f1",
+          "variants": [
+            "λέλυνται"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:fcf62c40f373",
+          "variants": [
+            "λελυμένος ὦ"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "singular"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:246ead51b7d3",
+          "variants": [
+            "λελυμένος ᾖς"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "singular"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:e19fb6835119",
+          "variants": [
+            "λελυμένος ᾖ"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "singular"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:f9d1c2464724",
+          "variants": [
+            "λελυμένω ἦτον"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:e64ef1e54763",
+          "variants": [
+            "λελυμένοι ὦμεν"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "plural"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:31fd9d84012b",
+          "variants": [
+            "λελυμένοι ἦτε"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "plural"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:6d9d24f7e6aa",
+          "variants": [
+            "λελυμένοι ὦσι(ν)"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "plural"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "subjunctive",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:96b3c4befafa",
+          "variants": [
+            "λελυμένος"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "first",
+              "number": "singular"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "first",
+              "number": "singular"
+            },
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "second",
+              "number": "singular"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "second",
+              "number": "singular"
+            },
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "third",
+              "number": "singular"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:e6704a4608da",
+          "variants": [
+            "λελυμένω"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:2690d2e5eab2",
+          "variants": [
+            "λελυμένοι"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "first",
+              "number": "plural"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "first",
+              "number": "plural"
+            },
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "second",
+              "number": "plural"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "second",
+              "number": "plural"
+            },
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "third",
+              "number": "plural"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:7b9ced9e95d4",
+          "variants": [
+            "λέλυσο"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "second",
+              "number": "singular"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:96efe9fdc8a6",
+          "variants": [
+            "λελύσθω"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "third",
+              "number": "singular"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:465a64e50ca3",
+          "variants": [
+            "λέλυσθον"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:22579fdf966e",
+          "variants": [
+            "λέλυσθε"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            },
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "second",
+              "number": "plural"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:732fab35e228",
+          "variants": [
+            "λελύσθων"
+          ],
+          "analyses": [
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "perfect",
+              "voice": "middle",
+              "mood": "imperative",
+              "person": "third",
+              "number": "plural"
+            },
+            {
+              "tense": "perfect",
+              "voice": "passive",
+              "mood": "imperative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:6411601d4c03",
+          "variants": [
+            "ἐλελύκειν"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:a66f8a41eddb",
+          "variants": [
+            "ἐλελύκεις"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:15f60e145ced",
+          "variants": [
+            "ἐλελύκει(ν)"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:adad731ec842",
+          "variants": [
+            "ἐλελύκετον"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:4348e41d5896",
+          "variants": [
+            "ἐλελυκέτην"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:d4c9818b5370",
+          "variants": [
+            "ἐλελύκεμεν"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:7fbf51e32a0f",
+          "variants": [
+            "ἐλελύκετε"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:7ca427430c19",
+          "variants": [
+            "ἐλελύκεσαν"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:bc7a38ddda45",
+          "variants": [
+            "ἐλελύμην",
+            "λελύ̄σομαι"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:6d6cba99cfbd",
+          "variants": [
+            "ἐλέλυσο",
+            "λελύ̄σῃ"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:d47560292ebc",
+          "variants": [
+            "ἐλέλυτο",
+            "λελύ̄σεται"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:9918b9e793d5",
+          "variants": [
+            "ἐλελύσθην",
+            "ἐλέλυσθον",
+            "λελύ̄σεσθον"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:ae692468b853",
+          "variants": [
+            "ἐλελύμεθα",
+            "λελῡσόμεθα"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:69ebf53392d9",
+          "variants": [
+            "ἐλέλυσθε",
+            "λελύ̄σεσθε"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:27319d66b37f",
+          "variants": [
+            "ἐλέλυντο",
+            "λελύ̄σονται"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:a30e609ae23c",
+          "variants": [
+            "λελῡσοίμην"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "first",
+              "number": "singular"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:b780267c7b56",
+          "variants": [
+            "λελύ̄σοιο"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "second",
+              "number": "singular"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:40113627ef3e",
+          "variants": [
+            "λελύ̄σοιτο"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "third",
+              "number": "singular"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:b5cb0985995e",
+          "variants": [
+            "λελύ̄σοισθον"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:ef493f6d2b45",
+          "variants": [
+            "λελῡσοίσθην"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:605d4902c4d5",
+          "variants": [
+            "λελῡσοίμεθα"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "first",
+              "number": "plural"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:e0f0a7b13722",
+          "variants": [
+            "λελύ̄σοισθε"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "second",
+              "number": "plural"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:b522a4b317b2",
+          "variants": [
+            "λελύ̄σοιντο"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "optative",
+              "person": "third",
+              "number": "plural"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "optative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
