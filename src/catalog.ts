@@ -43,6 +43,7 @@ export interface DrillItem {
   id: string;
   form: string;
   analyses: Analysis[];
+  support?: string;
 }
 
 export interface DrillDeck {
@@ -50,6 +51,20 @@ export interface DrillDeck {
   title: string;
   description: string;
   items: DrillItem[];
+}
+
+export interface CatalogFilter {
+  field: string;
+  label: string;
+  options: Array<{ value: string; label: string }>;
+}
+
+export interface CatalogParadigm {
+  id: string;
+  category: "Substantivo" | "Verbo";
+  lemma: { greek: string; transliteration: string; gloss: string };
+  items: DrillItem[];
+  filters: CatalogFilter[];
 }
 
 interface GeneratedNominalAnalysis {
@@ -163,3 +178,118 @@ function verbDeck(): DrillDeck {
 
 export const catalogVersion = generatedCatalog.catalogVersion;
 export const builtInDecks: DrillDeck[] = [nominalDeck(), verbDeck()];
+
+const optionLabels: Record<string, string> = {
+  nominative: "nominativo",
+  genitive: "genitivo",
+  dative: "dativo",
+  accusative: "acusativo",
+  singular: "singular",
+  dual: "dual",
+  plural: "plural",
+  present: "presente",
+  imperfect: "imperfeito",
+  future: "futuro",
+  aorist: "aoristo",
+  perfect: "perfeito",
+  pluperfect: "mais-que-perfeito",
+  active: "ativo",
+  middle: "médio",
+  passive: "passivo",
+  indicative: "indicativo",
+  subjunctive: "subjuntivo",
+  optative: "optativo",
+  imperative: "imperativo",
+  first: "1ª pessoa",
+  second: "2ª pessoa",
+  third: "3ª pessoa"
+};
+
+function filter(
+  field: string,
+  label: string,
+  values: string[]
+): CatalogFilter {
+  return {
+    field,
+    label,
+    options: [...new Set(values)].map((value) => ({
+      value,
+      label: optionLabels[value] ?? value
+    }))
+  };
+}
+
+function catalogNominal(): CatalogParadigm {
+  const source = requireParadigm("noun:krene");
+  const items = (source.items as GeneratedItem<GeneratedNominalAnalysis>[]).map(
+    (item) => ({
+      id: item.id,
+      form: item.variants.join(" / "),
+      analyses: item.analyses.map(
+        (analysis): NominalAnalysis => ({
+          kind: "nominal",
+          grammaticalCase: caseLabels[analysis.case],
+          grammaticalNumber: analysis.number
+        })
+      )
+    })
+  );
+  return {
+    id: source.id,
+    category: "Substantivo",
+    lemma: source.lemma,
+    items,
+    filters: [
+      filter("grammaticalCase", "Caso", [
+        "nominativo",
+        "genitivo",
+        "dativo",
+        "acusativo"
+      ]),
+      filter("number", "Número", ["singular", "dual", "plural"])
+    ]
+  };
+}
+
+function catalogVerb(): CatalogParadigm {
+  const source = requireParadigm("verb:luo");
+  const items = (
+    source.items as GeneratedItem<GeneratedFiniteVerbAnalysis>[]
+  ).map((item) => ({
+    id: item.id,
+    form: item.variants.join(" / "),
+    analyses: item.analyses.map(
+      (analysis): FiniteVerbAnalysis => ({
+        kind: "finite-verb",
+        tense: analysis.tense,
+        voice: analysis.voice,
+        mood: analysis.mood,
+        person: analysis.person,
+        grammaticalNumber: analysis.number
+      })
+    )
+  }));
+  const values = (field: keyof GeneratedFiniteVerbAnalysis) =>
+    (
+      source.items as GeneratedItem<GeneratedFiniteVerbAnalysis>[]
+    ).flatMap((item) => item.analyses.map((analysis) => analysis[field]));
+  return {
+    id: source.id,
+    category: "Verbo",
+    lemma: source.lemma,
+    items,
+    filters: [
+      filter("tense", "Tempo", values("tense")),
+      filter("voice", "Voz", values("voice")),
+      filter("mood", "Modo", values("mood")),
+      filter("person", "Pessoa", values("person")),
+      filter("number", "Número", values("number"))
+    ]
+  };
+}
+
+export const catalogParadigms: CatalogParadigm[] = [
+  catalogNominal(),
+  catalogVerb()
+];
