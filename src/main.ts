@@ -149,7 +149,7 @@ function renderEditor(deck: SavedDeck, catalogOpen = false, query = "", category
         <label class="name-field">Nome do baralho<input aria-label="Nome do baralho" value="${escapeHtml(deck.name)}" placeholder="Ex.: primeira declinação"></label>
       </div>
       <div class="blocks">
-        ${deck.blocks.map((block, index) => blockCard(block, index)).join("")}
+        ${deck.blocks.map((block, index) => blockCard(block, index, deck.direction)).join("")}
       </div>
       <button class="add-block" type="button" data-action="catalog">＋ Adicionar conteúdo</button>
       ${catalogOpen ? catalogPicker(query, category) : ""}
@@ -220,10 +220,14 @@ function persistDeck(deck: SavedDeck): void {
   saveDecks(decks);
 }
 
-function blockCard(block: ContentBlock, index: number): string {
+function blockCard(
+  block: ContentBlock,
+  index: number,
+  direction: SavedDeck["direction"]
+): string {
   const paradigm = paradigmFor(block);
   const items = itemsForBlock(block);
-  const error = blockError(block);
+  const error = blockError(block, direction);
   const summary = paradigm.filters
     .map((filter) => {
       const chosen = block.selected[filter.field] ?? [];

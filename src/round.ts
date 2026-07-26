@@ -127,18 +127,33 @@ function balancedSample(
 ): DrillItem[] {
   const groups = new Map<string, DrillItem[]>();
   for (const item of shuffled(items, random)) {
-    const block = item.sourceBlockIds?.[0] ?? "unassigned";
-    groups.set(block, [...(groups.get(block) ?? []), item]);
+    for (const block of item.sourceBlockIds ?? ["unassigned"]) {
+      groups.set(block, [...(groups.get(block) ?? []), item]);
+    }
   }
   const selected: DrillItem[] = [];
-  while (selected.length < quantity && [...groups.values()].some(Boolean)) {
+  const selectedIds = new Set<string>();
+  while (
+    selected.length < quantity &&
+    [...groups.values()].some((group) =>
+      group.some(({ id }) => !selectedIds.has(id))
+    )
+  ) {
     for (const group of groups.values()) {
-      const item = group.shift();
-      if (item) selected.push(item);
+      const item = group.find(({ id }) => !selectedIds.has(id));
+      if (item) {
+        selected.push(item);
+        selectedIds.add(item.id);
+      }
       if (selected.length === quantity) break;
     }
   }
   return selected;
+}
+
+function sharesParadigm(left: DrillItem, right: DrillItem): boolean {
+  const rightParadigms = new Set(right.sourceParadigmIds ?? []);
+  return (left.sourceParadigmIds ?? []).some((id) => rightParadigms.has(id));
 }
 
 export class DrillRound {
@@ -212,9 +227,22 @@ export class DrillRound {
           analyses[0]?.kind === item.analyses[0]?.kind
       )
       .sort(
-        ([, left], [, right]) =>
-          setCloseness(right, item.analyses) -
-          setCloseness(left, item.analyses)
+        ([, left], [, right]) => {
+          const leftItem = this.eligible.find(
+            ({ analyses }) => analysisSetIdentity(analyses) === analysisSetIdentity(left)
+          );
+          const rightItem = this.eligible.find(
+            ({ analyses }) => analysisSetIdentity(analyses) === analysisSetIdentity(right)
+          );
+          const paradigmPriority =
+            Number(Boolean(rightItem && sharesParadigm(item, rightItem))) -
+            Number(Boolean(leftItem && sharesParadigm(item, leftItem)));
+          return (
+            paradigmPriority ||
+            setCloseness(right, item.analyses) -
+              setCloseness(left, item.analyses)
+          );
+        }
       )
       .slice(0, 2);
     if (candidates.length < 2) {
@@ -270,9 +298,22 @@ export class DrillRound {
           )
       )
       .sort(
-        ([, left], [, right]) =>
-          setCloseness(right.analyses, item.analyses) -
-          setCloseness(left.analyses, item.analyses)
+        ([leftId, left], [rightId, right]) => {
+          const leftItem = this.eligible.find(
+            ({ analyses }) => analysisSetIdentity(analyses) === leftId
+          );
+          const rightItem = this.eligible.find(
+            ({ analyses }) => analysisSetIdentity(analyses) === rightId
+          );
+          const paradigmPriority =
+            Number(Boolean(rightItem && sharesParadigm(item, rightItem))) -
+            Number(Boolean(leftItem && sharesParadigm(item, leftItem)));
+          return (
+            paradigmPriority ||
+            setCloseness(right.analyses, item.analyses) -
+              setCloseness(left.analyses, item.analyses)
+          );
+        }
       )
       .slice(0, 2);
     if (distractors.length < 2) {
@@ -314,5 +355,32 @@ export class DrillRound {
     }
     this.activeQuestion = null;
     return { isCorrect: selected.correct, correctLabel: correct.label };
+  }
+}
+
+export function roundFeasibilityError(
+  items: DrillItem[],
+  direction: DirectionMode
+): string | null {
+  const directions: RoundDirection[] =
+    direction === "mixed" ? ["analysis", "production"] : [direction];
+  try {
+    for (const currentDirection of directions) {
+      const round = new DrillRound(items, {
+        direction: currentDirection,
+        coverage: "all",
+        random: () => 0.5
+      });
+      let question = round.question();
+      while (question) {
+        const correct = question.choices.find(({ correct }) => correct);
+        if (!correct) throw new Error("Pergunta sem resposta correta.");
+        round.answer(correct.id);
+        question = round.question();
+      }
+    }
+    return null;
+  } catch {
+    return "Este bloco não oferece duas distrações válidas para a direção escolhida.";
   }
 }

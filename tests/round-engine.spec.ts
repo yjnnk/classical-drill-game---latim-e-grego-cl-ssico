@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 import type { DrillItem } from "../src/catalog";
-import { DrillRound } from "../src/round";
+import { DrillRound, roundFeasibilityError } from "../src/round";
 
 const items: DrillItem[] = [
   ["a1", "λῡ́ω", "first", "singular", "block:a"],
@@ -120,4 +120,28 @@ test("cobertura completa apresenta todos os originais antes da revisão", () => 
 
   expect(beforeReview).not.toContain(missed.item.id);
   expect(round.question()?.item.id).toBe(missed.item.id);
+});
+
+test("produção é inválida quando uma distração difere apenas por diacríticos", () => {
+  const diacriticItems: DrillItem[] = [
+    {
+      id: "accented",
+      form: "ά",
+      analyses: [{ kind: "nominal", grammaticalCase: "nominativo", grammaticalNumber: "singular" }]
+    },
+    {
+      id: "plain",
+      form: "α",
+      analyses: [{ kind: "nominal", grammaticalCase: "genitivo", grammaticalNumber: "singular" }]
+    },
+    {
+      id: "other",
+      form: "β",
+      analyses: [{ kind: "nominal", grammaticalCase: "dativo", grammaticalNumber: "singular" }]
+    }
+  ];
+
+  expect(roundFeasibilityError(diacriticItems, "production")).toBe(
+    "Este bloco não oferece duas distrações válidas para a direção escolhida."
+  );
 });
