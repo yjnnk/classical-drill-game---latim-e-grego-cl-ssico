@@ -113,14 +113,35 @@ test("a CLI gera um catálogo versionado com κρήνη e λῡ́ω", async () 
         analyses[0].number === "plural"
     )
   );
-  assert.ok(
-    luo.items.some(
-      ({ variants }) =>
-        variants.length === 2 &&
-        variants[0] === "λῡ́ει" &&
-        variants[1] === "λῡ́ῃ"
-    )
+  const indicativeVariant = luo.items.find(
+    ({ variants }) =>
+      variants.length === 2 &&
+      variants[0] === "λῡ́ει" &&
+      variants[1] === "λῡ́ῃ"
   );
+  assert.deepEqual(indicativeVariant.analyses, [
+    {
+      tense: "present",
+      voice: "middle",
+      mood: "indicative",
+      person: "second",
+      number: "singular"
+    },
+    {
+      tense: "present",
+      voice: "passive",
+      mood: "indicative",
+      person: "second",
+      number: "singular"
+    }
+  ]);
+  const subjunctiveEta = luo.items.find(
+    ({ variants, analyses }) =>
+      variants.length === 1 &&
+      variants[0] === "λῡ́ῃ" &&
+      analyses.some(({ mood }) => mood === "subjunctive")
+  );
+  assert.ok(subjunctiveEta);
   const presentSubjunctive = luo.items.find(({ variants }) =>
     variants.includes("λῡ́ωμαι")
   );
@@ -220,6 +241,22 @@ test("o validador rejeita uma análise incompleta", async () => {
   await expectValidationFailure(
     catalog,
     /Análise incompleta em noun:krene:nominative-singular: campo number/
+  );
+});
+
+test("o validador rejeita rótulos ausentes e vocabulário desconhecido", async () => {
+  const withoutGloss = validMinimalCatalog();
+  withoutGloss.paradigms[0].lemma.gloss = "";
+  await expectValidationFailure(
+    withoutGloss,
+    /Paradigma noun:krene sem glosa/
+  );
+
+  const unknownCase = validMinimalCatalog();
+  unknownCase.paradigms[0].items[0].analyses[0].case = "ablative";
+  await expectValidationFailure(
+    unknownCase,
+    /Valor gramatical inválido.*case=ablative/
   );
 });
 

@@ -4,6 +4,21 @@ import { pathToFileURL } from "node:url";
 
 const requiredNominalFields = ["case", "number"];
 const requiredFiniteVerbFields = ["tense", "voice", "mood", "person", "number"];
+const allowedValues = {
+  case: new Set(["nominative", "genitive", "dative", "accusative", "vocative"]),
+  number: new Set(["singular", "dual", "plural"]),
+  tense: new Set([
+    "present",
+    "imperfect",
+    "future",
+    "aorist",
+    "perfect",
+    "pluperfect"
+  ]),
+  voice: new Set(["active", "middle", "passive"]),
+  mood: new Set(["indicative", "subjunctive", "optative", "imperative"]),
+  person: new Set(["first", "second", "third"])
+};
 
 function requireNonEmptyString(value, message) {
   if (typeof value !== "string" || value.trim() === "") {
@@ -19,6 +34,11 @@ function validateAnalysis(analysis, kind, itemId) {
       analysis?.[field],
       `Análise incompleta em ${itemId}: campo ${field}`
     );
+    if (!allowedValues[field]?.has(analysis[field])) {
+      throw new Error(
+        `Valor gramatical inválido em ${itemId}: ${field}=${analysis[field]}`
+      );
+    }
   }
 }
 
@@ -52,6 +72,14 @@ export function validateCatalog(catalog) {
     requireNonEmptyString(
       paradigm.lemma?.greek,
       `Paradigma ${paradigm.id} sem lema grego.`
+    );
+    requireNonEmptyString(
+      paradigm.lemma?.transliteration,
+      `Paradigma ${paradigm.id} sem transliteração.`
+    );
+    requireNonEmptyString(
+      paradigm.lemma?.gloss,
+      `Paradigma ${paradigm.id} sem glosa.`
     );
     if (!Array.isArray(paradigm.items) || paradigm.items.length === 0) {
       throw new Error(`Paradigma ${paradigm.id} sem itens.`);

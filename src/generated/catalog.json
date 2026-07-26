@@ -21,7 +21,7 @@
       },
       "items": [
         {
-          "id": "noun:krene:e41c2f521882",
+          "id": "noun:krene:8aae93aa9fb7",
           "variants": [
             "ἡ κρήνη"
           ],
@@ -33,7 +33,7 @@
           ]
         },
         {
-          "id": "noun:krene:b2cc75efbcdb",
+          "id": "noun:krene:82b6d7fb95b1",
           "variants": [
             "αἱ κρῆναι"
           ],
@@ -45,7 +45,7 @@
           ]
         },
         {
-          "id": "noun:krene:5b4a2417d010",
+          "id": "noun:krene:3b75b8199475",
           "variants": [
             "τῆς κρήνης"
           ],
@@ -57,7 +57,7 @@
           ]
         },
         {
-          "id": "noun:krene:f30637682c8e",
+          "id": "noun:krene:d2e21c4a24b5",
           "variants": [
             "τῶν κρηνῶν"
           ],
@@ -69,7 +69,7 @@
           ]
         },
         {
-          "id": "noun:krene:bbcd3ea781c6",
+          "id": "noun:krene:d73cd42dc965",
           "variants": [
             "τῇ κρήνῃ"
           ],
@@ -81,7 +81,7 @@
           ]
         },
         {
-          "id": "noun:krene:e3b150c7252d",
+          "id": "noun:krene:913682ac4480",
           "variants": [
             "τοῖν κρήναιν"
           ],
@@ -97,7 +97,7 @@
           ]
         },
         {
-          "id": "noun:krene:f257b19e2db0",
+          "id": "noun:krene:cc5dc0b5f0f6",
           "variants": [
             "ταῖς κρήναις"
           ],
@@ -109,7 +109,7 @@
           ]
         },
         {
-          "id": "noun:krene:5b927bbec14f",
+          "id": "noun:krene:cc53c8fd39eb",
           "variants": [
             "τὴν κρήνην"
           ],
@@ -121,7 +121,7 @@
           ]
         },
         {
-          "id": "noun:krene:0b9445c8b18a",
+          "id": "noun:krene:3ce1dff62e28",
           "variants": [
             "τὼ κρήνᾱ"
           ],
@@ -137,7 +137,7 @@
           ]
         },
         {
-          "id": "noun:krene:9252533a0b99",
+          "id": "noun:krene:653b3faf08dd",
           "variants": [
             "τὰ̄ς κρήνᾱς"
           ],
@@ -160,7 +160,7 @@
       },
       "items": [
         {
-          "id": "verb:luo:291c90860226",
+          "id": "verb:luo:54ceca1fcee5",
           "variants": [
             "λῡ́εις"
           ],
@@ -175,7 +175,22 @@
           ]
         },
         {
-          "id": "verb:luo:0b71a5b5c3e3",
+          "id": "verb:luo:88466b429817",
+          "variants": [
+            "λῡ́ει"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:07e6e59df3c8",
           "variants": [
             "λῡ́ομεν"
           ],
@@ -190,7 +205,7 @@
           ]
         },
         {
-          "id": "verb:luo:4945346dc9aa",
+          "id": "verb:luo:f6cc9e6a360f",
           "variants": [
             "λῡ́ουσι(ν)"
           ],
@@ -205,7 +220,7 @@
           ]
         },
         {
-          "id": "verb:luo:47e8b4c9fb56",
+          "id": "verb:luo:81fb792a9033",
           "variants": [
             "λῡ́ω"
           ],
@@ -227,7 +242,7 @@
           ]
         },
         {
-          "id": "verb:luo:d7f1f1d13c4f",
+          "id": "verb:luo:72c3340b9262",
           "variants": [
             "λῡ́ῃς"
           ],
@@ -242,7 +257,7 @@
           ]
         },
         {
-          "id": "verb:luo:954252a1c415",
+          "id": "verb:luo:85a887162f23",
           "variants": [
             "λῡ́ητον"
           ],
@@ -264,7 +279,7 @@
           ]
         },
         {
-          "id": "verb:luo:b9e45cfc213e",
+          "id": "verb:luo:4dfdbc1dee33",
           "variants": [
             "λῡ́ωμεν"
           ],
@@ -279,7 +294,7 @@
           ]
         },
         {
-          "id": "verb:luo:3f01b0a6a0c3",
+          "id": "verb:luo:d341e4d67006",
           "variants": [
             "λῡ́ητε"
           ],
@@ -294,7 +309,7 @@
           ]
         },
         {
-          "id": "verb:luo:fd5d07ac60b7",
+          "id": "verb:luo:95fda73cf3e8",
           "variants": [
             "λῡ́ωσι(ν)"
           ],
@@ -309,7 +324,7 @@
           ]
         },
         {
-          "id": "verb:luo:6d16aa65cd1b",
+          "id": "verb:luo:3a639178a2ec",
           "variants": [
             "λῡ́οιμι"
           ],
@@ -324,7 +339,7 @@
           ]
         },
         {
-          "id": "verb:luo:801e4d2c64e2",
+          "id": "verb:luo:81519b77a6d6",
           "variants": [
             "λῡ́οις"
           ],
@@ -339,7 +354,7 @@
           ]
         },
         {
-          "id": "verb:luo:1f720a6e228d",
+          "id": "verb:luo:16c84079c640",
           "variants": [
             "λῡ́οι"
           ],
@@ -354,7 +369,7 @@
           ]
         },
         {
-          "id": "verb:luo:9f8e968bab8a",
+          "id": "verb:luo:743857030dab",
           "variants": [
             "λῡ́οιτον"
           ],
@@ -369,7 +384,7 @@
           ]
         },
         {
-          "id": "verb:luo:fc2384d3344e",
+          "id": "verb:luo:b0ee47d71950",
           "variants": [
             "λῡοίτην"
           ],
@@ -384,7 +399,7 @@
           ]
         },
         {
-          "id": "verb:luo:bac5c29f46f6",
+          "id": "verb:luo:d80ac3ba2027",
           "variants": [
             "λῡ́οιμεν"
           ],
@@ -399,7 +414,7 @@
           ]
         },
         {
-          "id": "verb:luo:3d1121862cb9",
+          "id": "verb:luo:96df092f488e",
           "variants": [
             "λῡ́οιτε"
           ],
@@ -414,7 +429,7 @@
           ]
         },
         {
-          "id": "verb:luo:d8e9a4c95838",
+          "id": "verb:luo:ce6688c0048a",
           "variants": [
             "λῡ́οιεν"
           ],
@@ -429,7 +444,7 @@
           ]
         },
         {
-          "id": "verb:luo:ceafb493ace8",
+          "id": "verb:luo:89571accd77a",
           "variants": [
             "λῦε"
           ],
@@ -444,7 +459,7 @@
           ]
         },
         {
-          "id": "verb:luo:20e3f3d459e3",
+          "id": "verb:luo:7457c4eb4fd3",
           "variants": [
             "λῡέτω"
           ],
@@ -459,7 +474,7 @@
           ]
         },
         {
-          "id": "verb:luo:323ae2060683",
+          "id": "verb:luo:f0642ada3932",
           "variants": [
             "λῡ́ετον"
           ],
@@ -488,7 +503,7 @@
           ]
         },
         {
-          "id": "verb:luo:3ff9e747e323",
+          "id": "verb:luo:993b8c3cccdd",
           "variants": [
             "λῡέτων"
           ],
@@ -503,7 +518,7 @@
           ]
         },
         {
-          "id": "verb:luo:a00760fe591f",
+          "id": "verb:luo:9055dcdac3db",
           "variants": [
             "λῡ́ετε"
           ],
@@ -525,7 +540,7 @@
           ]
         },
         {
-          "id": "verb:luo:cb5e904fc378",
+          "id": "verb:luo:ddbbae2689f0",
           "variants": [
             "λῡόντων"
           ],
@@ -540,7 +555,7 @@
           ]
         },
         {
-          "id": "verb:luo:0500b7941305",
+          "id": "verb:luo:edd5b9ae11eb",
           "variants": [
             "λῡ́ομαι"
           ],
@@ -562,7 +577,30 @@
           ]
         },
         {
-          "id": "verb:luo:cc25a264a459",
+          "id": "verb:luo:0048340cd234",
+          "variants": [
+            "λῡ́ει",
+            "λῡ́ῃ"
+          ],
+          "analyses": [
+            {
+              "tense": "present",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            },
+            {
+              "tense": "present",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:eddcc970b24e",
           "variants": [
             "λῡ́εται"
           ],
@@ -584,7 +622,7 @@
           ]
         },
         {
-          "id": "verb:luo:3caedad42f1c",
+          "id": "verb:luo:bf8260d01c11",
           "variants": [
             "λῡόμεθα"
           ],
@@ -606,7 +644,7 @@
           ]
         },
         {
-          "id": "verb:luo:45a58616b180",
+          "id": "verb:luo:2ba82a28c159",
           "variants": [
             "λῡ́ονται"
           ],
@@ -628,7 +666,7 @@
           ]
         },
         {
-          "id": "verb:luo:3bb631d058d7",
+          "id": "verb:luo:7385bf2b8327",
           "variants": [
             "λῡ́ωμαι"
           ],
@@ -650,38 +688,16 @@
           ]
         },
         {
-          "id": "verb:luo:2fd25bae0856",
+          "id": "verb:luo:5a1c40a22963",
           "variants": [
-            "λῡ́ει",
             "λῡ́ῃ"
           ],
           "analyses": [
             {
               "tense": "present",
               "voice": "active",
-              "mood": "indicative",
-              "person": "third",
-              "number": "singular"
-            },
-            {
-              "tense": "present",
-              "voice": "active",
               "mood": "subjunctive",
               "person": "third",
-              "number": "singular"
-            },
-            {
-              "tense": "present",
-              "voice": "middle",
-              "mood": "indicative",
-              "person": "second",
-              "number": "singular"
-            },
-            {
-              "tense": "present",
-              "voice": "passive",
-              "mood": "indicative",
-              "person": "second",
               "number": "singular"
             },
             {
@@ -701,7 +717,7 @@
           ]
         },
         {
-          "id": "verb:luo:a2d63e7037ae",
+          "id": "verb:luo:6d05fad87a1b",
           "variants": [
             "λῡ́ηται"
           ],
@@ -723,7 +739,7 @@
           ]
         },
         {
-          "id": "verb:luo:4f932c242f6d",
+          "id": "verb:luo:2e43d2c10fd2",
           "variants": [
             "λῡ́ησθον"
           ],
@@ -759,7 +775,7 @@
           ]
         },
         {
-          "id": "verb:luo:e6ddb92d73c2",
+          "id": "verb:luo:f00f9829d9c2",
           "variants": [
             "λῡώμεθα"
           ],
@@ -781,7 +797,7 @@
           ]
         },
         {
-          "id": "verb:luo:2ac5fd84d41a",
+          "id": "verb:luo:e74426f9b6df",
           "variants": [
             "λῡ́ησθε"
           ],
@@ -803,7 +819,7 @@
           ]
         },
         {
-          "id": "verb:luo:b5d8e24019e6",
+          "id": "verb:luo:edcbb668c256",
           "variants": [
             "λῡ́ωνται"
           ],
@@ -825,7 +841,7 @@
           ]
         },
         {
-          "id": "verb:luo:b2944aebcab8",
+          "id": "verb:luo:bf86688582c4",
           "variants": [
             "λῡοίμην"
           ],
@@ -847,7 +863,7 @@
           ]
         },
         {
-          "id": "verb:luo:d2d80fbb41d0",
+          "id": "verb:luo:c12fc2e3d5b9",
           "variants": [
             "λῡ́οιο"
           ],
@@ -869,7 +885,7 @@
           ]
         },
         {
-          "id": "verb:luo:5d7fe10c7a36",
+          "id": "verb:luo:3d33caf83786",
           "variants": [
             "λῡ́οιτο"
           ],
@@ -891,7 +907,7 @@
           ]
         },
         {
-          "id": "verb:luo:5901beb4d170",
+          "id": "verb:luo:7422a17e2b74",
           "variants": [
             "λῡ́οισθον"
           ],
@@ -913,7 +929,7 @@
           ]
         },
         {
-          "id": "verb:luo:d94c23ab9c24",
+          "id": "verb:luo:74dccc6f25d1",
           "variants": [
             "λῡοίσθην"
           ],
@@ -935,7 +951,7 @@
           ]
         },
         {
-          "id": "verb:luo:eb13954b6804",
+          "id": "verb:luo:a872885ffb79",
           "variants": [
             "λῡοίμεθα"
           ],
@@ -957,7 +973,7 @@
           ]
         },
         {
-          "id": "verb:luo:c6bd629b6cf9",
+          "id": "verb:luo:6d768f675753",
           "variants": [
             "λῡ́οισθε"
           ],
@@ -979,7 +995,7 @@
           ]
         },
         {
-          "id": "verb:luo:c0fbd1d1dae1",
+          "id": "verb:luo:6644c2433d6a",
           "variants": [
             "λῡ́οιντο"
           ],
@@ -1001,7 +1017,7 @@
           ]
         },
         {
-          "id": "verb:luo:00e62057dfd5",
+          "id": "verb:luo:0275fbdf574b",
           "variants": [
             "λῡ́ου"
           ],
@@ -1023,7 +1039,7 @@
           ]
         },
         {
-          "id": "verb:luo:bad81f18e552",
+          "id": "verb:luo:cd60313bb490",
           "variants": [
             "λῡέσθω"
           ],
@@ -1045,7 +1061,7 @@
           ]
         },
         {
-          "id": "verb:luo:7d803de5466a",
+          "id": "verb:luo:65e26416c3c7",
           "variants": [
             "λῡ́εσθον"
           ],
@@ -1095,7 +1111,7 @@
           ]
         },
         {
-          "id": "verb:luo:17de92f1c080",
+          "id": "verb:luo:e2c8c3dcd091",
           "variants": [
             "λῡ́εσθε"
           ],
@@ -1131,7 +1147,7 @@
           ]
         },
         {
-          "id": "verb:luo:604aa0c35721",
+          "id": "verb:luo:b2a26a02b257",
           "variants": [
             "λῡέσθων"
           ],
@@ -1167,7 +1183,7 @@
           ]
         },
         {
-          "id": "verb:luo:729f841759aa",
+          "id": "verb:luo:7c68c3fbaa41",
           "variants": [
             "ἔλῡες"
           ],
@@ -1182,7 +1198,7 @@
           ]
         },
         {
-          "id": "verb:luo:a88ded8e7a8e",
+          "id": "verb:luo:cf2fe630f028",
           "variants": [
             "ἔλῡε(ν)"
           ],
@@ -1197,7 +1213,7 @@
           ]
         },
         {
-          "id": "verb:luo:ab4a26e8718f",
+          "id": "verb:luo:844f93b19f05",
           "variants": [
             "ἐλύ̄ετον"
           ],
@@ -1212,7 +1228,7 @@
           ]
         },
         {
-          "id": "verb:luo:19cb2bfc5cc8",
+          "id": "verb:luo:67f150455ccf",
           "variants": [
             "ἐλῡέτην"
           ],
@@ -1227,7 +1243,7 @@
           ]
         },
         {
-          "id": "verb:luo:de62e085104e",
+          "id": "verb:luo:5eb1ed69780d",
           "variants": [
             "ἐλύ̄ομεν"
           ],
@@ -1242,7 +1258,7 @@
           ]
         },
         {
-          "id": "verb:luo:7585ad0c8584",
+          "id": "verb:luo:054f5eb88526",
           "variants": [
             "ἐλύ̄ετε"
           ],
@@ -1257,7 +1273,7 @@
           ]
         },
         {
-          "id": "verb:luo:e123ba3b6719",
+          "id": "verb:luo:8db8ad3ec88b",
           "variants": [
             "ἔλῡον"
           ],
@@ -1279,7 +1295,7 @@
           ]
         },
         {
-          "id": "verb:luo:de7239405dc0",
+          "id": "verb:luo:b29b9017fe38",
           "variants": [
             "ἐλῡόμην"
           ],
@@ -1301,7 +1317,7 @@
           ]
         },
         {
-          "id": "verb:luo:5ca008d27646",
+          "id": "verb:luo:82167f1b1c93",
           "variants": [
             "ἐλύ̄ου"
           ],
@@ -1323,7 +1339,7 @@
           ]
         },
         {
-          "id": "verb:luo:9aae0667d33b",
+          "id": "verb:luo:14ed0cc6ca88",
           "variants": [
             "ἐλύ̄ετο"
           ],
@@ -1345,7 +1361,7 @@
           ]
         },
         {
-          "id": "verb:luo:b77c494fe2e6",
+          "id": "verb:luo:b3d16006e1ae",
           "variants": [
             "ἐλύ̄εσθον"
           ],
@@ -1367,7 +1383,7 @@
           ]
         },
         {
-          "id": "verb:luo:e2a202a32c4e",
+          "id": "verb:luo:60ec4191758d",
           "variants": [
             "ἐλῡέσθην"
           ],
@@ -1389,7 +1405,7 @@
           ]
         },
         {
-          "id": "verb:luo:ab91cb60cd93",
+          "id": "verb:luo:56b3efab5754",
           "variants": [
             "ἐλῡόμεθα"
           ],
@@ -1411,7 +1427,7 @@
           ]
         },
         {
-          "id": "verb:luo:f01491312d81",
+          "id": "verb:luo:0a7eb438e7b2",
           "variants": [
             "ἐλύ̄εσθε"
           ],
@@ -1433,7 +1449,7 @@
           ]
         },
         {
-          "id": "verb:luo:bced47dc4306",
+          "id": "verb:luo:ca0784797b56",
           "variants": [
             "ἐλύ̄οντο"
           ],
@@ -1455,7 +1471,7 @@
           ]
         },
         {
-          "id": "verb:luo:455609146490",
+          "id": "verb:luo:71c92cce1bbf",
           "variants": [
             "λῡ́σεις"
           ],
@@ -1470,7 +1486,22 @@
           ]
         },
         {
-          "id": "verb:luo:865744821bf1",
+          "id": "verb:luo:f54d2ae38d77",
+          "variants": [
+            "λῡ́σει"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "active",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:295d92117385",
           "variants": [
             "λῡ́σετον"
           ],
@@ -1492,7 +1523,7 @@
           ]
         },
         {
-          "id": "verb:luo:1011459c09ae",
+          "id": "verb:luo:e5201c762dad",
           "variants": [
             "λῡ́σομεν"
           ],
@@ -1507,7 +1538,7 @@
           ]
         },
         {
-          "id": "verb:luo:a78bdb697813",
+          "id": "verb:luo:e047c3777f7e",
           "variants": [
             "λῡ́σετε"
           ],
@@ -1522,7 +1553,7 @@
           ]
         },
         {
-          "id": "verb:luo:601003955305",
+          "id": "verb:luo:6d79b2d5d3b5",
           "variants": [
             "λῡ́σουσι(ν)"
           ],
@@ -1537,7 +1568,7 @@
           ]
         },
         {
-          "id": "verb:luo:0d87fe5e4b93",
+          "id": "verb:luo:bc8e42bb6734",
           "variants": [
             "λῡ́σοιμι"
           ],
@@ -1552,7 +1583,7 @@
           ]
         },
         {
-          "id": "verb:luo:c1711f0127de",
+          "id": "verb:luo:7e078b29715f",
           "variants": [
             "λῡ́σοις"
           ],
@@ -1567,7 +1598,7 @@
           ]
         },
         {
-          "id": "verb:luo:026271cd28df",
+          "id": "verb:luo:5a92a5f458ba",
           "variants": [
             "λῡ́σοι"
           ],
@@ -1582,7 +1613,7 @@
           ]
         },
         {
-          "id": "verb:luo:a897facf5fc1",
+          "id": "verb:luo:1004aabb493c",
           "variants": [
             "λῡ́σοιτον"
           ],
@@ -1597,7 +1628,7 @@
           ]
         },
         {
-          "id": "verb:luo:5dd48df59594",
+          "id": "verb:luo:4ceda5b45802",
           "variants": [
             "λῡσοίτην"
           ],
@@ -1612,7 +1643,7 @@
           ]
         },
         {
-          "id": "verb:luo:d6580038cf8f",
+          "id": "verb:luo:ad28c0c759da",
           "variants": [
             "λῡ́σοιμεν"
           ],
@@ -1627,7 +1658,7 @@
           ]
         },
         {
-          "id": "verb:luo:11c7fb5b7c79",
+          "id": "verb:luo:fc47a076d252",
           "variants": [
             "λῡ́σοιτε"
           ],
@@ -1642,7 +1673,7 @@
           ]
         },
         {
-          "id": "verb:luo:70c80a741f9b",
+          "id": "verb:luo:fd5c8024b1c9",
           "variants": [
             "λῡ́σοιεν"
           ],
@@ -1657,7 +1688,7 @@
           ]
         },
         {
-          "id": "verb:luo:5eb6a4464db2",
+          "id": "verb:luo:227380ca6eda",
           "variants": [
             "λῡ́σομαι"
           ],
@@ -1672,7 +1703,23 @@
           ]
         },
         {
-          "id": "verb:luo:8235f238a0ec",
+          "id": "verb:luo:5f2239fd2e45",
+          "variants": [
+            "λῡ́σει",
+            "λῡ́σῃ"
+          ],
+          "analyses": [
+            {
+              "tense": "future",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:079862fa20e4",
           "variants": [
             "λῡ́σεται"
           ],
@@ -1687,7 +1734,7 @@
           ]
         },
         {
-          "id": "verb:luo:3fe5c381e10d",
+          "id": "verb:luo:96a655df19df",
           "variants": [
             "λῡ́σεσθον"
           ],
@@ -1709,7 +1756,7 @@
           ]
         },
         {
-          "id": "verb:luo:bddc47e59610",
+          "id": "verb:luo:e17ea90130bf",
           "variants": [
             "λῡσόμεθα"
           ],
@@ -1724,7 +1771,7 @@
           ]
         },
         {
-          "id": "verb:luo:3d3679ff343b",
+          "id": "verb:luo:150c331a7f60",
           "variants": [
             "λῡ́σεσθε"
           ],
@@ -1739,7 +1786,7 @@
           ]
         },
         {
-          "id": "verb:luo:74d975edaa78",
+          "id": "verb:luo:f6f2c3fa3e4b",
           "variants": [
             "λῡ́σονται"
           ],
@@ -1754,7 +1801,7 @@
           ]
         },
         {
-          "id": "verb:luo:481e9a54d1c7",
+          "id": "verb:luo:b613e50ae754",
           "variants": [
             "λῡσοίμην"
           ],
@@ -1769,7 +1816,7 @@
           ]
         },
         {
-          "id": "verb:luo:da47ba56c5d7",
+          "id": "verb:luo:ec93817b3bff",
           "variants": [
             "λῡ́σοιο"
           ],
@@ -1784,7 +1831,7 @@
           ]
         },
         {
-          "id": "verb:luo:0084142ff005",
+          "id": "verb:luo:250a6e8b7f21",
           "variants": [
             "λῡ́σοιτο"
           ],
@@ -1799,7 +1846,7 @@
           ]
         },
         {
-          "id": "verb:luo:0480a3efa251",
+          "id": "verb:luo:df1bf204b20f",
           "variants": [
             "λῡ́σοισθον"
           ],
@@ -1814,7 +1861,7 @@
           ]
         },
         {
-          "id": "verb:luo:7b196b4fd709",
+          "id": "verb:luo:78b9ac352ded",
           "variants": [
             "λῡσοίσθην"
           ],
@@ -1829,7 +1876,7 @@
           ]
         },
         {
-          "id": "verb:luo:d5b185da914c",
+          "id": "verb:luo:b958a187f4f0",
           "variants": [
             "λῡσοίμεθα"
           ],
@@ -1844,7 +1891,7 @@
           ]
         },
         {
-          "id": "verb:luo:2a8fc0d50922",
+          "id": "verb:luo:c0f4a5165fdc",
           "variants": [
             "λῡ́σοισθε"
           ],
@@ -1859,7 +1906,7 @@
           ]
         },
         {
-          "id": "verb:luo:c5dfceabc0d5",
+          "id": "verb:luo:835a7a11f073",
           "variants": [
             "λῡ́σοιντο"
           ],
@@ -1874,7 +1921,7 @@
           ]
         },
         {
-          "id": "verb:luo:5c84c8e6bce3",
+          "id": "verb:luo:4e8bb1641de1",
           "variants": [
             "λυθήσομαι"
           ],
@@ -1889,7 +1936,7 @@
           ]
         },
         {
-          "id": "verb:luo:21006bd60cfc",
+          "id": "verb:luo:aa8058fba6d7",
           "variants": [
             "λυθήσει",
             "λυθήσῃ"
@@ -1905,7 +1952,7 @@
           ]
         },
         {
-          "id": "verb:luo:81dfad7cee3c",
+          "id": "verb:luo:6e858e436234",
           "variants": [
             "λυθήσεται"
           ],
@@ -1920,7 +1967,7 @@
           ]
         },
         {
-          "id": "verb:luo:aec242d8b1ef",
+          "id": "verb:luo:9e6214abcb3e",
           "variants": [
             "λυθήσεσθον"
           ],
@@ -1942,7 +1989,7 @@
           ]
         },
         {
-          "id": "verb:luo:6b53934682d0",
+          "id": "verb:luo:ad9810410bd5",
           "variants": [
             "λυθησόμεθα"
           ],
@@ -1957,7 +2004,7 @@
           ]
         },
         {
-          "id": "verb:luo:d6f134148fc2",
+          "id": "verb:luo:0d6648ca91ee",
           "variants": [
             "λυθήσεσθε"
           ],
@@ -1972,7 +2019,7 @@
           ]
         },
         {
-          "id": "verb:luo:bb2fc4059a4d",
+          "id": "verb:luo:e7d4b29cc1b6",
           "variants": [
             "λυθήσονται"
           ],
@@ -1987,7 +2034,7 @@
           ]
         },
         {
-          "id": "verb:luo:5ac5ccf4f0a3",
+          "id": "verb:luo:a0d25457edcc",
           "variants": [
             "λυθησοίμην"
           ],
@@ -2002,7 +2049,7 @@
           ]
         },
         {
-          "id": "verb:luo:375dc71dda06",
+          "id": "verb:luo:e84b2c607ba1",
           "variants": [
             "λυθήσοιο"
           ],
@@ -2017,7 +2064,7 @@
           ]
         },
         {
-          "id": "verb:luo:4ab5264645b2",
+          "id": "verb:luo:542be46575e8",
           "variants": [
             "λυθήσοιτο"
           ],
@@ -2032,7 +2079,7 @@
           ]
         },
         {
-          "id": "verb:luo:ae3c06196dfd",
+          "id": "verb:luo:20f2e1e29f43",
           "variants": [
             "λυθήσοισθον"
           ],
@@ -2047,7 +2094,7 @@
           ]
         },
         {
-          "id": "verb:luo:55f277c96949",
+          "id": "verb:luo:c174e331524a",
           "variants": [
             "λυθησοίσθην"
           ],
@@ -2062,7 +2109,7 @@
           ]
         },
         {
-          "id": "verb:luo:fb617625e43d",
+          "id": "verb:luo:bfb804f7a945",
           "variants": [
             "λυθησοίμεθα"
           ],
@@ -2077,7 +2124,7 @@
           ]
         },
         {
-          "id": "verb:luo:0ff188c3d710",
+          "id": "verb:luo:cd591cc755af",
           "variants": [
             "λυθήσοισθε"
           ],
@@ -2092,7 +2139,7 @@
           ]
         },
         {
-          "id": "verb:luo:60bce1657cf3",
+          "id": "verb:luo:6a319bf2e5c3",
           "variants": [
             "λυθήσοιντο"
           ],
@@ -2107,7 +2154,7 @@
           ]
         },
         {
-          "id": "verb:luo:7e903469bf0a",
+          "id": "verb:luo:80001d2d6502",
           "variants": [
             "ἔλῡσα"
           ],
@@ -2122,7 +2169,7 @@
           ]
         },
         {
-          "id": "verb:luo:9280f14ef010",
+          "id": "verb:luo:f1f77d137366",
           "variants": [
             "ἔλῡσας"
           ],
@@ -2137,7 +2184,7 @@
           ]
         },
         {
-          "id": "verb:luo:e52afd2f979a",
+          "id": "verb:luo:a45008ddf6a1",
           "variants": [
             "ἔλῡσε(ν)"
           ],
@@ -2152,7 +2199,7 @@
           ]
         },
         {
-          "id": "verb:luo:6b2388be8c76",
+          "id": "verb:luo:90d3b668e8c8",
           "variants": [
             "ἐλῡ́σατον"
           ],
@@ -2167,7 +2214,7 @@
           ]
         },
         {
-          "id": "verb:luo:c01ea5b7282d",
+          "id": "verb:luo:acbb0b38de05",
           "variants": [
             "ἐλῡσάτην"
           ],
@@ -2182,7 +2229,7 @@
           ]
         },
         {
-          "id": "verb:luo:bea1bec9b3fb",
+          "id": "verb:luo:0e31821272eb",
           "variants": [
             "ἐλῡ́σαμεν"
           ],
@@ -2197,7 +2244,7 @@
           ]
         },
         {
-          "id": "verb:luo:5cd3df3d2216",
+          "id": "verb:luo:326092e65d71",
           "variants": [
             "ἐλῡ́σατε"
           ],
@@ -2212,7 +2259,7 @@
           ]
         },
         {
-          "id": "verb:luo:ba78ed2f4ce1",
+          "id": "verb:luo:74f07d1a814e",
           "variants": [
             "ἔλῡσαν"
           ],
@@ -2227,7 +2274,7 @@
           ]
         },
         {
-          "id": "verb:luo:487c2b9c8b93",
+          "id": "verb:luo:b068ab1e6ae9",
           "variants": [
             "λῡ́σω"
           ],
@@ -2249,7 +2296,7 @@
           ]
         },
         {
-          "id": "verb:luo:33e71771c946",
+          "id": "verb:luo:b4590ea143cb",
           "variants": [
             "λῡ́σῃς"
           ],
@@ -2264,7 +2311,7 @@
           ]
         },
         {
-          "id": "verb:luo:789278f7ae59",
+          "id": "verb:luo:02102799ee0b",
           "variants": [
             "λῡ́σητον"
           ],
@@ -2286,7 +2333,7 @@
           ]
         },
         {
-          "id": "verb:luo:e16a8b1a5944",
+          "id": "verb:luo:ccaf7ba20c54",
           "variants": [
             "λῡ́σωμεν"
           ],
@@ -2301,7 +2348,7 @@
           ]
         },
         {
-          "id": "verb:luo:1a97502719a6",
+          "id": "verb:luo:1344de8d3295",
           "variants": [
             "λῡ́σητε"
           ],
@@ -2316,7 +2363,7 @@
           ]
         },
         {
-          "id": "verb:luo:6d577e244150",
+          "id": "verb:luo:79baf417a5de",
           "variants": [
             "λῡ́σωσι(ν)"
           ],
@@ -2331,7 +2378,7 @@
           ]
         },
         {
-          "id": "verb:luo:20d20815087d",
+          "id": "verb:luo:984e8f02a848",
           "variants": [
             "λῡ́σαιμι"
           ],
@@ -2346,7 +2393,7 @@
           ]
         },
         {
-          "id": "verb:luo:20851ce52895",
+          "id": "verb:luo:bf2c78348309",
           "variants": [
             "λῡ́σαις"
           ],
@@ -2361,7 +2408,7 @@
           ]
         },
         {
-          "id": "verb:luo:addfaadd9851",
+          "id": "verb:luo:00b36d1dfe74",
           "variants": [
             "λῡ́σαι"
           ],
@@ -2376,7 +2423,7 @@
           ]
         },
         {
-          "id": "verb:luo:c9f29e6858f7",
+          "id": "verb:luo:274efb7e15b9",
           "variants": [
             "λῡ́σαιτον"
           ],
@@ -2391,7 +2438,7 @@
           ]
         },
         {
-          "id": "verb:luo:d1b8f1efb6ba",
+          "id": "verb:luo:dde0d86b77af",
           "variants": [
             "λῡσαίτην"
           ],
@@ -2406,7 +2453,7 @@
           ]
         },
         {
-          "id": "verb:luo:3bf001682c58",
+          "id": "verb:luo:0b01fa37d604",
           "variants": [
             "λῡ́σαιμεν"
           ],
@@ -2421,7 +2468,7 @@
           ]
         },
         {
-          "id": "verb:luo:30e87ed3f8f4",
+          "id": "verb:luo:2fe96adf324d",
           "variants": [
             "λῡ́σαιτε"
           ],
@@ -2436,7 +2483,7 @@
           ]
         },
         {
-          "id": "verb:luo:965dabb1daaa",
+          "id": "verb:luo:b9f52f20ca8e",
           "variants": [
             "λῡ́σειαν"
           ],
@@ -2451,7 +2498,7 @@
           ]
         },
         {
-          "id": "verb:luo:1e32bca2238c",
+          "id": "verb:luo:873bec9afff4",
           "variants": [
             "λῦσον"
           ],
@@ -2466,7 +2513,7 @@
           ]
         },
         {
-          "id": "verb:luo:4e1bac628bae",
+          "id": "verb:luo:772c004b4c8a",
           "variants": [
             "λῡσάτω"
           ],
@@ -2481,7 +2528,7 @@
           ]
         },
         {
-          "id": "verb:luo:48f788f8456f",
+          "id": "verb:luo:08c86bb4510b",
           "variants": [
             "λῡ́σατον"
           ],
@@ -2496,7 +2543,7 @@
           ]
         },
         {
-          "id": "verb:luo:6c3f5235124f",
+          "id": "verb:luo:df737e846248",
           "variants": [
             "λῡσάτων"
           ],
@@ -2511,7 +2558,7 @@
           ]
         },
         {
-          "id": "verb:luo:e0b8746710ba",
+          "id": "verb:luo:0e7f7b0ba463",
           "variants": [
             "λῡ́σατε"
           ],
@@ -2526,7 +2573,7 @@
           ]
         },
         {
-          "id": "verb:luo:dcde219d7508",
+          "id": "verb:luo:585c884f5796",
           "variants": [
             "λῡσάντων"
           ],
@@ -2541,7 +2588,7 @@
           ]
         },
         {
-          "id": "verb:luo:b248a0d978f1",
+          "id": "verb:luo:4db4c868437f",
           "variants": [
             "ἐλῡσάμην"
           ],
@@ -2556,7 +2603,7 @@
           ]
         },
         {
-          "id": "verb:luo:9da04f34c7ff",
+          "id": "verb:luo:d5f8792c1223",
           "variants": [
             "ἐλῡ́σω"
           ],
@@ -2571,7 +2618,7 @@
           ]
         },
         {
-          "id": "verb:luo:07dc3f1d0426",
+          "id": "verb:luo:0bbaa2eb9eee",
           "variants": [
             "ἐλῡ́σατο"
           ],
@@ -2586,7 +2633,7 @@
           ]
         },
         {
-          "id": "verb:luo:3fc2141c4830",
+          "id": "verb:luo:a123606b0e7a",
           "variants": [
             "ἐλῡ́σασθον"
           ],
@@ -2601,7 +2648,7 @@
           ]
         },
         {
-          "id": "verb:luo:e4a5b41958cb",
+          "id": "verb:luo:2f4b3d5fbdb3",
           "variants": [
             "ἐλῡσάσθην"
           ],
@@ -2616,7 +2663,7 @@
           ]
         },
         {
-          "id": "verb:luo:3fc9dc6a767a",
+          "id": "verb:luo:0d3a735ed979",
           "variants": [
             "ἐλῡσάμεθα"
           ],
@@ -2631,7 +2678,7 @@
           ]
         },
         {
-          "id": "verb:luo:ae2966372a3d",
+          "id": "verb:luo:c9e557147022",
           "variants": [
             "ἐλῡ́σασθε"
           ],
@@ -2646,7 +2693,7 @@
           ]
         },
         {
-          "id": "verb:luo:fb8bdcbf1157",
+          "id": "verb:luo:758781e69b57",
           "variants": [
             "ἐλῡ́σαντο"
           ],
@@ -2661,7 +2708,7 @@
           ]
         },
         {
-          "id": "verb:luo:b5937edef43a",
+          "id": "verb:luo:2883c4778c9a",
           "variants": [
             "λῡ́σωμαι"
           ],
@@ -2676,26 +2723,11 @@
           ]
         },
         {
-          "id": "verb:luo:639fc4c75890",
+          "id": "verb:luo:4768cbdbfc4f",
           "variants": [
-            "λῡ́σει",
             "λῡ́σῃ"
           ],
           "analyses": [
-            {
-              "tense": "future",
-              "voice": "active",
-              "mood": "indicative",
-              "person": "third",
-              "number": "singular"
-            },
-            {
-              "tense": "future",
-              "voice": "middle",
-              "mood": "indicative",
-              "person": "second",
-              "number": "singular"
-            },
             {
               "tense": "aorist",
               "voice": "active",
@@ -2713,7 +2745,7 @@
           ]
         },
         {
-          "id": "verb:luo:1903a80d20dc",
+          "id": "verb:luo:33199fbc590f",
           "variants": [
             "λῡ́σηται"
           ],
@@ -2728,7 +2760,7 @@
           ]
         },
         {
-          "id": "verb:luo:b260f48bbd60",
+          "id": "verb:luo:4cd8fea4b30c",
           "variants": [
             "λῡ́σησθον"
           ],
@@ -2750,7 +2782,7 @@
           ]
         },
         {
-          "id": "verb:luo:ad32ee94a55a",
+          "id": "verb:luo:37c18bbff1ec",
           "variants": [
             "λῡσώμεθα"
           ],
@@ -2765,7 +2797,7 @@
           ]
         },
         {
-          "id": "verb:luo:35030cb8e968",
+          "id": "verb:luo:5e5b57ce14d5",
           "variants": [
             "λῡ́σησθε"
           ],
@@ -2780,7 +2812,7 @@
           ]
         },
         {
-          "id": "verb:luo:5b629a092c3d",
+          "id": "verb:luo:a7972600e44a",
           "variants": [
             "λῡ́σωνται"
           ],
@@ -2795,7 +2827,7 @@
           ]
         },
         {
-          "id": "verb:luo:836762262dc6",
+          "id": "verb:luo:eafde52a9ea2",
           "variants": [
             "λῡσαίμην"
           ],
@@ -2810,7 +2842,7 @@
           ]
         },
         {
-          "id": "verb:luo:0c8289519234",
+          "id": "verb:luo:77762c6a93d9",
           "variants": [
             "λῡ́σαιο"
           ],
@@ -2825,7 +2857,7 @@
           ]
         },
         {
-          "id": "verb:luo:b8cc7cfbf375",
+          "id": "verb:luo:64d60520fda2",
           "variants": [
             "λῡ́σαιτο"
           ],
@@ -2840,7 +2872,7 @@
           ]
         },
         {
-          "id": "verb:luo:3b8e9eb34010",
+          "id": "verb:luo:69f9e13428b4",
           "variants": [
             "λῡ́σαισθον"
           ],
@@ -2855,7 +2887,7 @@
           ]
         },
         {
-          "id": "verb:luo:dc7a616c876e",
+          "id": "verb:luo:ac8fd1c99bda",
           "variants": [
             "λῡσαίσθην"
           ],
@@ -2870,7 +2902,7 @@
           ]
         },
         {
-          "id": "verb:luo:004a3b5c3136",
+          "id": "verb:luo:4af576d1dedb",
           "variants": [
             "λῡσαίμεθα"
           ],
@@ -2885,7 +2917,7 @@
           ]
         },
         {
-          "id": "verb:luo:255fb0dfb651",
+          "id": "verb:luo:eac8a06c470a",
           "variants": [
             "λῡ́σαισθε"
           ],
@@ -2900,7 +2932,7 @@
           ]
         },
         {
-          "id": "verb:luo:cd90b7da420a",
+          "id": "verb:luo:1c1da894258b",
           "variants": [
             "λῡ́σαιντο"
           ],
@@ -2915,7 +2947,7 @@
           ]
         },
         {
-          "id": "verb:luo:cb15fdfcc86c",
+          "id": "verb:luo:a7e4deef88ec",
           "variants": [
             "λῦσαι"
           ],
@@ -2930,7 +2962,7 @@
           ]
         },
         {
-          "id": "verb:luo:7462932c0aa5",
+          "id": "verb:luo:3c73ded9f10b",
           "variants": [
             "λῡσάσθω"
           ],
@@ -2945,7 +2977,7 @@
           ]
         },
         {
-          "id": "verb:luo:c9062c09c5cf",
+          "id": "verb:luo:4880fc1ad3d8",
           "variants": [
             "λῡ́σασθον"
           ],
@@ -2960,7 +2992,7 @@
           ]
         },
         {
-          "id": "verb:luo:e065dac5a5fc",
+          "id": "verb:luo:ffbc37051d80",
           "variants": [
             "λῡ́σασθε"
           ],
@@ -2975,7 +3007,7 @@
           ]
         },
         {
-          "id": "verb:luo:7b7b12fcaa15",
+          "id": "verb:luo:4fb31cdd3cba",
           "variants": [
             "λῡσάσθων"
           ],
@@ -2997,7 +3029,7 @@
           ]
         },
         {
-          "id": "verb:luo:2846f4244ddf",
+          "id": "verb:luo:b9e22fcbd8a0",
           "variants": [
             "ἐλύθην"
           ],
@@ -3012,7 +3044,7 @@
           ]
         },
         {
-          "id": "verb:luo:0be5d29b69fc",
+          "id": "verb:luo:11588eec70a6",
           "variants": [
             "ἐλύθης"
           ],
@@ -3027,7 +3059,7 @@
           ]
         },
         {
-          "id": "verb:luo:3e6e79828b3d",
+          "id": "verb:luo:59b8eda213bd",
           "variants": [
             "ἐλύθη"
           ],
@@ -3042,7 +3074,7 @@
           ]
         },
         {
-          "id": "verb:luo:a3d55e75a507",
+          "id": "verb:luo:b310392a67c7",
           "variants": [
             "ἐλύθητον"
           ],
@@ -3057,7 +3089,7 @@
           ]
         },
         {
-          "id": "verb:luo:531b0394ef76",
+          "id": "verb:luo:054963ee9719",
           "variants": [
             "ἐλυθήτην"
           ],
@@ -3072,7 +3104,7 @@
           ]
         },
         {
-          "id": "verb:luo:c8f2d3dfac94",
+          "id": "verb:luo:0870e8375b82",
           "variants": [
             "ἐλύθημεν"
           ],
@@ -3087,7 +3119,7 @@
           ]
         },
         {
-          "id": "verb:luo:882870ebbe78",
+          "id": "verb:luo:10e9c8a98fd3",
           "variants": [
             "ἐλύθητε"
           ],
@@ -3102,7 +3134,7 @@
           ]
         },
         {
-          "id": "verb:luo:a9f71ddc2580",
+          "id": "verb:luo:5c9fdc2f5d61",
           "variants": [
             "ἐλύθησαν"
           ],
@@ -3117,7 +3149,7 @@
           ]
         },
         {
-          "id": "verb:luo:313f124cc20d",
+          "id": "verb:luo:46cdcf07f335",
           "variants": [
             "λυθῶ"
           ],
@@ -3132,7 +3164,7 @@
           ]
         },
         {
-          "id": "verb:luo:3c3d8c21fcfd",
+          "id": "verb:luo:aa164ffcd6db",
           "variants": [
             "λυθῇς"
           ],
@@ -3147,7 +3179,7 @@
           ]
         },
         {
-          "id": "verb:luo:6d18c39dc2a0",
+          "id": "verb:luo:7545dc8d440e",
           "variants": [
             "λυθῇ"
           ],
@@ -3162,7 +3194,7 @@
           ]
         },
         {
-          "id": "verb:luo:b5ee4a1a416e",
+          "id": "verb:luo:dbb3ab7aff08",
           "variants": [
             "λυθῆτον"
           ],
@@ -3184,7 +3216,7 @@
           ]
         },
         {
-          "id": "verb:luo:54a1fd58c8d2",
+          "id": "verb:luo:a42308e3b314",
           "variants": [
             "λυθῶμεν"
           ],
@@ -3199,7 +3231,7 @@
           ]
         },
         {
-          "id": "verb:luo:0740aeee35b6",
+          "id": "verb:luo:1b1c64120828",
           "variants": [
             "λυθῆτε"
           ],
@@ -3214,7 +3246,7 @@
           ]
         },
         {
-          "id": "verb:luo:7b3be46b33c6",
+          "id": "verb:luo:f4dee553dd43",
           "variants": [
             "λυθῶσι(ν)"
           ],
@@ -3229,7 +3261,7 @@
           ]
         },
         {
-          "id": "verb:luo:ac9e92666564",
+          "id": "verb:luo:f8d2e5b46452",
           "variants": [
             "λυθείην"
           ],
@@ -3244,7 +3276,7 @@
           ]
         },
         {
-          "id": "verb:luo:6ebf96a8c393",
+          "id": "verb:luo:db2b4e327664",
           "variants": [
             "λυθείης"
           ],
@@ -3259,7 +3291,7 @@
           ]
         },
         {
-          "id": "verb:luo:14df0192224c",
+          "id": "verb:luo:de5f6d663818",
           "variants": [
             "λυθείη"
           ],
@@ -3274,7 +3306,7 @@
           ]
         },
         {
-          "id": "verb:luo:8eaf8c41c7e5",
+          "id": "verb:luo:277c77499677",
           "variants": [
             "λυθεῖτον"
           ],
@@ -3289,7 +3321,7 @@
           ]
         },
         {
-          "id": "verb:luo:31b3c09976c5",
+          "id": "verb:luo:d5a2d8744449",
           "variants": [
             "λυθείτην"
           ],
@@ -3304,7 +3336,7 @@
           ]
         },
         {
-          "id": "verb:luo:25fed03b78de",
+          "id": "verb:luo:8ee0a3036545",
           "variants": [
             "λυθεῖμεν"
           ],
@@ -3319,7 +3351,7 @@
           ]
         },
         {
-          "id": "verb:luo:e27d3bdfcc81",
+          "id": "verb:luo:b3378f43558b",
           "variants": [
             "λυθεῖτε"
           ],
@@ -3334,7 +3366,7 @@
           ]
         },
         {
-          "id": "verb:luo:a834c1978f79",
+          "id": "verb:luo:2c2088b7bd97",
           "variants": [
             "λυθεῖεν"
           ],
@@ -3349,7 +3381,7 @@
           ]
         },
         {
-          "id": "verb:luo:1b2723b08dcf",
+          "id": "verb:luo:403e3114abd9",
           "variants": [
             "λύθητι"
           ],
@@ -3364,7 +3396,7 @@
           ]
         },
         {
-          "id": "verb:luo:dfef74c742da",
+          "id": "verb:luo:2cf82554e872",
           "variants": [
             "λυθήτω"
           ],
@@ -3379,7 +3411,7 @@
           ]
         },
         {
-          "id": "verb:luo:817422c95ae6",
+          "id": "verb:luo:7aac1aa39f4a",
           "variants": [
             "λύθητον"
           ],
@@ -3394,7 +3426,7 @@
           ]
         },
         {
-          "id": "verb:luo:a573689c88d9",
+          "id": "verb:luo:82decd18c96c",
           "variants": [
             "λυθήτων"
           ],
@@ -3409,7 +3441,7 @@
           ]
         },
         {
-          "id": "verb:luo:2ee8d719c08c",
+          "id": "verb:luo:cdf2569f6b9c",
           "variants": [
             "λύθητε"
           ],
@@ -3424,7 +3456,7 @@
           ]
         },
         {
-          "id": "verb:luo:51659656e4fd",
+          "id": "verb:luo:9bb8d8982520",
           "variants": [
             "λυθέντων"
           ],
@@ -3439,7 +3471,7 @@
           ]
         },
         {
-          "id": "verb:luo:f5b645a9f447",
+          "id": "verb:luo:8351495842da",
           "variants": [
             "λέλυκα"
           ],
@@ -3454,7 +3486,7 @@
           ]
         },
         {
-          "id": "verb:luo:ca292501ee83",
+          "id": "verb:luo:0a1281bea237",
           "variants": [
             "λέλυκας"
           ],
@@ -3469,7 +3501,7 @@
           ]
         },
         {
-          "id": "verb:luo:046c97d57ba7",
+          "id": "verb:luo:dfa6d3f59cb5",
           "variants": [
             "λέλυκε(ν)"
           ],
@@ -3484,7 +3516,7 @@
           ]
         },
         {
-          "id": "verb:luo:a1d327423425",
+          "id": "verb:luo:44b038491171",
           "variants": [
             "λελύκατον"
           ],
@@ -3506,7 +3538,7 @@
           ]
         },
         {
-          "id": "verb:luo:78374a8f31df",
+          "id": "verb:luo:824adde254fb",
           "variants": [
             "λελύκαμεν"
           ],
@@ -3521,7 +3553,7 @@
           ]
         },
         {
-          "id": "verb:luo:3d3cd668f21c",
+          "id": "verb:luo:037aa86f15af",
           "variants": [
             "λελύκατε"
           ],
@@ -3536,7 +3568,7 @@
           ]
         },
         {
-          "id": "verb:luo:e0ad01121ea8",
+          "id": "verb:luo:718b32001cb0",
           "variants": [
             "λελύκᾱσι(ν)"
           ],
@@ -3551,7 +3583,7 @@
           ]
         },
         {
-          "id": "verb:luo:c3dbbe61cdd3",
+          "id": "verb:luo:c5e88411f788",
           "variants": [
             "λελυκὼς ὦ"
           ],
@@ -3566,7 +3598,7 @@
           ]
         },
         {
-          "id": "verb:luo:520308a03901",
+          "id": "verb:luo:699b9ddd4481",
           "variants": [
             "λελυκὼς ᾖς"
           ],
@@ -3581,7 +3613,7 @@
           ]
         },
         {
-          "id": "verb:luo:a063711de60a",
+          "id": "verb:luo:0206b59f2ef1",
           "variants": [
             "λελυκὼς ᾖ"
           ],
@@ -3596,7 +3628,7 @@
           ]
         },
         {
-          "id": "verb:luo:dce69e8752dd",
+          "id": "verb:luo:61025b3d7924",
           "variants": [
             "λελυκότε ἦτον"
           ],
@@ -3618,7 +3650,7 @@
           ]
         },
         {
-          "id": "verb:luo:ac3d129e31cb",
+          "id": "verb:luo:bb69d9b2777d",
           "variants": [
             "λελυκότες ὦμεν"
           ],
@@ -3633,7 +3665,7 @@
           ]
         },
         {
-          "id": "verb:luo:74dc50e2169c",
+          "id": "verb:luo:087ddfd743ce",
           "variants": [
             "λελυκότες ἦτε"
           ],
@@ -3648,7 +3680,7 @@
           ]
         },
         {
-          "id": "verb:luo:3bec395bcf4c",
+          "id": "verb:luo:6cc2644ce3f7",
           "variants": [
             "λελυκότες ὦσι(ν)"
           ],
@@ -3663,7 +3695,7 @@
           ]
         },
         {
-          "id": "verb:luo:40499096f80e",
+          "id": "verb:luo:949bffe96f06",
           "variants": [
             "λελυκὼς εἴην"
           ],
@@ -3678,7 +3710,7 @@
           ]
         },
         {
-          "id": "verb:luo:1b3ddcb653ca",
+          "id": "verb:luo:872b8ea79631",
           "variants": [
             "λελυκὼς εἴης"
           ],
@@ -3693,7 +3725,7 @@
           ]
         },
         {
-          "id": "verb:luo:33c0163e7469",
+          "id": "verb:luo:11da54ee0e86",
           "variants": [
             "λελυκὼς εἴη"
           ],
@@ -3708,7 +3740,7 @@
           ]
         },
         {
-          "id": "verb:luo:46578c814e61",
+          "id": "verb:luo:be2a46201a70",
           "variants": [
             "λελυκότε εἶτον"
           ],
@@ -3723,7 +3755,7 @@
           ]
         },
         {
-          "id": "verb:luo:bf7e17df076e",
+          "id": "verb:luo:0b4e95a05072",
           "variants": [
             "λελυκότε εἴτην"
           ],
@@ -3738,7 +3770,7 @@
           ]
         },
         {
-          "id": "verb:luo:5ddb16541b8a",
+          "id": "verb:luo:d5db21940604",
           "variants": [
             "λελυκότες εἶμεν"
           ],
@@ -3753,7 +3785,7 @@
           ]
         },
         {
-          "id": "verb:luo:e60a840485c9",
+          "id": "verb:luo:f0dd76c02801",
           "variants": [
             "λελυκότες εἶτε"
           ],
@@ -3768,7 +3800,7 @@
           ]
         },
         {
-          "id": "verb:luo:b3f16186f773",
+          "id": "verb:luo:06dbcfbe33ae",
           "variants": [
             "λελυκότες εἶεν"
           ],
@@ -3783,7 +3815,7 @@
           ]
         },
         {
-          "id": "verb:luo:da7268374ebd",
+          "id": "verb:luo:1f4eb4a86989",
           "variants": [
             "λελυκὼς ἴσθι"
           ],
@@ -3798,7 +3830,7 @@
           ]
         },
         {
-          "id": "verb:luo:3e5ca42fc924",
+          "id": "verb:luo:498aae50d55c",
           "variants": [
             "λελυκὼς ἔστω"
           ],
@@ -3813,7 +3845,7 @@
           ]
         },
         {
-          "id": "verb:luo:747855b48578",
+          "id": "verb:luo:2431ade385ac",
           "variants": [
             "λελυκότε ἔστον"
           ],
@@ -3828,7 +3860,7 @@
           ]
         },
         {
-          "id": "verb:luo:2e08c12f7225",
+          "id": "verb:luo:2eba22752165",
           "variants": [
             "λελυκότε ἔστων"
           ],
@@ -3843,7 +3875,7 @@
           ]
         },
         {
-          "id": "verb:luo:46f9991d26d9",
+          "id": "verb:luo:59af6ff4b64d",
           "variants": [
             "λελυκότες ἔστε"
           ],
@@ -3858,7 +3890,7 @@
           ]
         },
         {
-          "id": "verb:luo:62841c309c7f",
+          "id": "verb:luo:4118d5320014",
           "variants": [
             "λελυκότες ὄντων"
           ],
@@ -3873,7 +3905,7 @@
           ]
         },
         {
-          "id": "verb:luo:a9752c78bc81",
+          "id": "verb:luo:181771991570",
           "variants": [
             "λέλυμαι"
           ],
@@ -3895,7 +3927,7 @@
           ]
         },
         {
-          "id": "verb:luo:c8b2a744bb05",
+          "id": "verb:luo:3e34a7ebcfdd",
           "variants": [
             "λέλυσαι"
           ],
@@ -3917,7 +3949,7 @@
           ]
         },
         {
-          "id": "verb:luo:2ad64d475ba7",
+          "id": "verb:luo:f25aa1866f26",
           "variants": [
             "λέλυται"
           ],
@@ -3939,7 +3971,7 @@
           ]
         },
         {
-          "id": "verb:luo:21ff779b608b",
+          "id": "verb:luo:341a64c19b58",
           "variants": [
             "λελύμεθα"
           ],
@@ -3961,7 +3993,7 @@
           ]
         },
         {
-          "id": "verb:luo:2ca800f787f1",
+          "id": "verb:luo:dede89bd3859",
           "variants": [
             "λέλυνται"
           ],
@@ -3983,7 +4015,7 @@
           ]
         },
         {
-          "id": "verb:luo:fcf62c40f373",
+          "id": "verb:luo:3ea40570aaa9",
           "variants": [
             "λελυμένος ὦ"
           ],
@@ -4005,7 +4037,7 @@
           ]
         },
         {
-          "id": "verb:luo:246ead51b7d3",
+          "id": "verb:luo:ad43c9ab0b7f",
           "variants": [
             "λελυμένος ᾖς"
           ],
@@ -4027,7 +4059,7 @@
           ]
         },
         {
-          "id": "verb:luo:e19fb6835119",
+          "id": "verb:luo:f87a1158d84b",
           "variants": [
             "λελυμένος ᾖ"
           ],
@@ -4049,7 +4081,7 @@
           ]
         },
         {
-          "id": "verb:luo:f9d1c2464724",
+          "id": "verb:luo:165cca630c4f",
           "variants": [
             "λελυμένω ἦτον"
           ],
@@ -4085,7 +4117,7 @@
           ]
         },
         {
-          "id": "verb:luo:e64ef1e54763",
+          "id": "verb:luo:ad67bf9a2cca",
           "variants": [
             "λελυμένοι ὦμεν"
           ],
@@ -4107,7 +4139,7 @@
           ]
         },
         {
-          "id": "verb:luo:31fd9d84012b",
+          "id": "verb:luo:adc863e6f47a",
           "variants": [
             "λελυμένοι ἦτε"
           ],
@@ -4129,7 +4161,7 @@
           ]
         },
         {
-          "id": "verb:luo:6d9d24f7e6aa",
+          "id": "verb:luo:b6f42bec1672",
           "variants": [
             "λελυμένοι ὦσι(ν)"
           ],
@@ -4151,7 +4183,7 @@
           ]
         },
         {
-          "id": "verb:luo:96b3c4befafa",
+          "id": "verb:luo:3456a3541f57",
           "variants": [
             "λελυμένος"
           ],
@@ -4201,7 +4233,7 @@
           ]
         },
         {
-          "id": "verb:luo:e6704a4608da",
+          "id": "verb:luo:e865fb71773b",
           "variants": [
             "λελυμένω"
           ],
@@ -4237,7 +4269,7 @@
           ]
         },
         {
-          "id": "verb:luo:2690d2e5eab2",
+          "id": "verb:luo:a775a3900883",
           "variants": [
             "λελυμένοι"
           ],
@@ -4287,7 +4319,7 @@
           ]
         },
         {
-          "id": "verb:luo:7b9ced9e95d4",
+          "id": "verb:luo:7985a30fd6e7",
           "variants": [
             "λέλυσο"
           ],
@@ -4309,7 +4341,7 @@
           ]
         },
         {
-          "id": "verb:luo:96efe9fdc8a6",
+          "id": "verb:luo:5bed6cbf4751",
           "variants": [
             "λελύσθω"
           ],
@@ -4331,7 +4363,7 @@
           ]
         },
         {
-          "id": "verb:luo:465a64e50ca3",
+          "id": "verb:luo:ff4270ba9a62",
           "variants": [
             "λέλυσθον"
           ],
@@ -4381,7 +4413,7 @@
           ]
         },
         {
-          "id": "verb:luo:22579fdf966e",
+          "id": "verb:luo:18c1f426422d",
           "variants": [
             "λέλυσθε"
           ],
@@ -4417,7 +4449,7 @@
           ]
         },
         {
-          "id": "verb:luo:732fab35e228",
+          "id": "verb:luo:34ad92323208",
           "variants": [
             "λελύσθων"
           ],
@@ -4453,7 +4485,7 @@
           ]
         },
         {
-          "id": "verb:luo:6411601d4c03",
+          "id": "verb:luo:c47853c359c3",
           "variants": [
             "ἐλελύκειν"
           ],
@@ -4468,7 +4500,7 @@
           ]
         },
         {
-          "id": "verb:luo:a66f8a41eddb",
+          "id": "verb:luo:bbaad656a51e",
           "variants": [
             "ἐλελύκεις"
           ],
@@ -4483,7 +4515,7 @@
           ]
         },
         {
-          "id": "verb:luo:15f60e145ced",
+          "id": "verb:luo:0f7a04cc04b0",
           "variants": [
             "ἐλελύκει(ν)"
           ],
@@ -4498,7 +4530,7 @@
           ]
         },
         {
-          "id": "verb:luo:adad731ec842",
+          "id": "verb:luo:e520e77c5f0b",
           "variants": [
             "ἐλελύκετον"
           ],
@@ -4513,7 +4545,7 @@
           ]
         },
         {
-          "id": "verb:luo:4348e41d5896",
+          "id": "verb:luo:4a426571b074",
           "variants": [
             "ἐλελυκέτην"
           ],
@@ -4528,7 +4560,7 @@
           ]
         },
         {
-          "id": "verb:luo:d4c9818b5370",
+          "id": "verb:luo:dfc6fa852df4",
           "variants": [
             "ἐλελύκεμεν"
           ],
@@ -4543,7 +4575,7 @@
           ]
         },
         {
-          "id": "verb:luo:7fbf51e32a0f",
+          "id": "verb:luo:34d8a8ceef68",
           "variants": [
             "ἐλελύκετε"
           ],
@@ -4558,7 +4590,7 @@
           ]
         },
         {
-          "id": "verb:luo:7ca427430c19",
+          "id": "verb:luo:ec8bf1dc9413",
           "variants": [
             "ἐλελύκεσαν"
           ],
@@ -4573,9 +4605,184 @@
           ]
         },
         {
-          "id": "verb:luo:bc7a38ddda45",
+          "id": "verb:luo:e4b1a5842f95",
           "variants": [
-            "ἐλελύμην",
+            "ἐλελύμην"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "first",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:d7b80dc16ac9",
+          "variants": [
+            "ἐλέλυσο"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:9afa7055fc81",
+          "variants": [
+            "ἐλέλυτο"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "singular"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:ae4adc2d044c",
+          "variants": [
+            "ἐλέλυσθον"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:e9ffff846e63",
+          "variants": [
+            "ἐλελύσθην"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "dual"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:675ad9fc1817",
+          "variants": [
+            "ἐλελύμεθα"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "first",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:fa11ffd9edad",
+          "variants": [
+            "ἐλέλυσθε"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "second",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:6c4eb67fdcde",
+          "variants": [
+            "ἐλέλυντο"
+          ],
+          "analyses": [
+            {
+              "tense": "pluperfect",
+              "voice": "middle",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            },
+            {
+              "tense": "pluperfect",
+              "voice": "passive",
+              "mood": "indicative",
+              "person": "third",
+              "number": "plural"
+            }
+          ]
+        },
+        {
+          "id": "verb:luo:b61ca8ee6235",
+          "variants": [
             "λελύ̄σομαι"
           ],
           "analyses": [
@@ -4596,9 +4803,8 @@
           ]
         },
         {
-          "id": "verb:luo:6d6cba99cfbd",
+          "id": "verb:luo:baef7ab29bbf",
           "variants": [
-            "ἐλέλυσο",
             "λελύ̄σῃ"
           ],
           "analyses": [
@@ -4619,9 +4825,8 @@
           ]
         },
         {
-          "id": "verb:luo:d47560292ebc",
+          "id": "verb:luo:40d6aec2fe92",
           "variants": [
-            "ἐλέλυτο",
             "λελύ̄σεται"
           ],
           "analyses": [
@@ -4642,10 +4847,8 @@
           ]
         },
         {
-          "id": "verb:luo:9918b9e793d5",
+          "id": "verb:luo:17b85ee7bcbc",
           "variants": [
-            "ἐλελύσθην",
-            "ἐλέλυσθον",
             "λελύ̄σεσθον"
           ],
           "analyses": [
@@ -4653,36 +4856,35 @@
               "tense": "pluperfect",
               "voice": "middle",
               "mood": "indicative",
-              "person": "third",
+              "person": "second",
               "number": "dual"
             },
             {
               "tense": "pluperfect",
               "voice": "passive",
               "mood": "indicative",
-              "person": "third",
+              "person": "second",
               "number": "dual"
             },
             {
               "tense": "pluperfect",
               "voice": "middle",
               "mood": "indicative",
-              "person": "second",
+              "person": "third",
               "number": "dual"
             },
             {
               "tense": "pluperfect",
               "voice": "passive",
               "mood": "indicative",
-              "person": "second",
+              "person": "third",
               "number": "dual"
             }
           ]
         },
         {
-          "id": "verb:luo:ae692468b853",
+          "id": "verb:luo:d1b9736cbe84",
           "variants": [
-            "ἐλελύμεθα",
             "λελῡσόμεθα"
           ],
           "analyses": [
@@ -4703,9 +4905,8 @@
           ]
         },
         {
-          "id": "verb:luo:69ebf53392d9",
+          "id": "verb:luo:553099882f4e",
           "variants": [
-            "ἐλέλυσθε",
             "λελύ̄σεσθε"
           ],
           "analyses": [
@@ -4726,9 +4927,8 @@
           ]
         },
         {
-          "id": "verb:luo:27319d66b37f",
+          "id": "verb:luo:767e44ff6322",
           "variants": [
-            "ἐλέλυντο",
             "λελύ̄σονται"
           ],
           "analyses": [
@@ -4749,7 +4949,7 @@
           ]
         },
         {
-          "id": "verb:luo:a30e609ae23c",
+          "id": "verb:luo:0b06b57c2a4b",
           "variants": [
             "λελῡσοίμην"
           ],
@@ -4771,7 +4971,7 @@
           ]
         },
         {
-          "id": "verb:luo:b780267c7b56",
+          "id": "verb:luo:654719c82551",
           "variants": [
             "λελύ̄σοιο"
           ],
@@ -4793,7 +4993,7 @@
           ]
         },
         {
-          "id": "verb:luo:40113627ef3e",
+          "id": "verb:luo:93f4ee8ee21e",
           "variants": [
             "λελύ̄σοιτο"
           ],
@@ -4815,7 +5015,7 @@
           ]
         },
         {
-          "id": "verb:luo:b5cb0985995e",
+          "id": "verb:luo:e7f1c4f70613",
           "variants": [
             "λελύ̄σοισθον"
           ],
@@ -4837,7 +5037,7 @@
           ]
         },
         {
-          "id": "verb:luo:ef493f6d2b45",
+          "id": "verb:luo:d743ae21d57c",
           "variants": [
             "λελῡσοίσθην"
           ],
@@ -4859,7 +5059,7 @@
           ]
         },
         {
-          "id": "verb:luo:605d4902c4d5",
+          "id": "verb:luo:346a7b57a58f",
           "variants": [
             "λελῡσοίμεθα"
           ],
@@ -4881,7 +5081,7 @@
           ]
         },
         {
-          "id": "verb:luo:e0f0a7b13722",
+          "id": "verb:luo:bb840b57c59f",
           "variants": [
             "λελύ̄σοισθε"
           ],
@@ -4903,7 +5103,7 @@
           ]
         },
         {
-          "id": "verb:luo:b522a4b317b2",
+          "id": "verb:luo:ed7b92de0849",
           "variants": [
             "λελύ̄σοιντο"
           ],

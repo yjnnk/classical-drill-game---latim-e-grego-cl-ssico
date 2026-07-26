@@ -68,18 +68,16 @@ function mergeByVariants(items, paradigmId) {
     );
 
   for (const item of items) {
-    const variantKeys = new Set(
-      item.variants.map((variant) => variant.normalize("NFC"))
-    );
-    const analysisKeys = new Set(item.analyses.map(analysisIdentity));
+    const variantIdentity = item.variants
+      .map((variant) => variant.normalize("NFC"))
+      .sort()
+      .join("\u0000");
     const matchingIndexes = groups.flatMap((group, index) => {
-      const sharesVariant = group.variants.some((variant) =>
-        variantKeys.has(variant.normalize("NFC"))
-      );
-      const sharesAnalysis = group.analyses.some((analysis) =>
-        analysisKeys.has(analysisIdentity(analysis))
-      );
-      return sharesVariant || sharesAnalysis ? [index] : [];
+      const groupVariantIdentity = group.variants
+        .map((variant) => variant.normalize("NFC"))
+        .sort()
+        .join("\u0000");
+      return groupVariantIdentity === variantIdentity ? [index] : [];
     });
 
     const matchingGroups = matchingIndexes.map((index) => groups[index]);
@@ -102,10 +100,10 @@ function mergeByVariants(items, paradigmId) {
     });
   }
   return groups.map((item) => {
-    const itemIdentity = item.analyses
-      .map(analysisIdentity)
-      .sort()
-      .join("|");
+    const itemIdentity = JSON.stringify({
+      analyses: item.analyses.map(analysisIdentity).sort(),
+      variants: item.variants.map((variant) => variant.normalize("NFC")).sort()
+    });
     return {
       id: `${paradigmId}:${stableHash(itemIdentity)}`,
       ...item

@@ -7,6 +7,20 @@ export type GrammaticalCase =
   | "acusativo";
 
 export type GrammaticalNumber = "singular" | "dual" | "plural";
+export type GrammaticalTense =
+  | "present"
+  | "imperfect"
+  | "future"
+  | "aorist"
+  | "perfect"
+  | "pluperfect";
+export type GrammaticalVoice = "active" | "middle" | "passive";
+export type GrammaticalMood =
+  | "indicative"
+  | "subjunctive"
+  | "optative"
+  | "imperative";
+export type GrammaticalPerson = "first" | "second" | "third";
 
 export interface NominalAnalysis {
   kind: "nominal";
@@ -16,10 +30,10 @@ export interface NominalAnalysis {
 
 export interface FiniteVerbAnalysis {
   kind: "finite-verb";
-  tense: string;
-  voice: string;
-  mood: string;
-  person: string;
+  tense: GrammaticalTense;
+  voice: GrammaticalVoice;
+  mood: GrammaticalMood;
+  person: GrammaticalPerson;
   grammaticalNumber: GrammaticalNumber;
 }
 
@@ -44,10 +58,10 @@ interface GeneratedNominalAnalysis {
 }
 
 interface GeneratedFiniteVerbAnalysis {
-  tense: string;
-  voice: string;
-  mood: string;
-  person: string;
+  tense: GrammaticalTense;
+  voice: GrammaticalVoice;
+  mood: GrammaticalMood;
+  person: GrammaticalPerson;
   number: "singular" | "dual" | "plural";
 }
 

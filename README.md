@@ -9,7 +9,9 @@ npm install
 npm test
 ```
 
-O build valida o catálogo versionado antes de compilar a PWA.
+O build da PWA valida o catálogo versionado antes de compilar. A geração é uma
+etapa de desenvolvimento separada e reproduzível porque a planilha de referência
+não é distribuída com o jogo.
 
 Para regenerar o catálogo a partir da planilha de referência:
 
