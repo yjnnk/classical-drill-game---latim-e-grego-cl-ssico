@@ -39,7 +39,6 @@ import {
   applyTheme,
   loadTheme,
   saveTheme,
-  type ColorTheme,
 } from "./theme";
 import "./styles.css";
 
@@ -126,7 +125,7 @@ function renderHome(): void {
           <h1 id="page-title">Grego clássico</h1>
           <p class="intro">Monte recortes precisos do que deseja recordar. Tudo fica neste aparelho.</p>
         </div>
-        <div class="header-actions"><button class="quiet" type="button" data-action="switch-language">Trocar idioma</button><button class="primary" type="button" data-action="create" ${active ? "disabled" : ""}>Criar baralho</button></div>
+        <div class="header-actions"><button class="quiet" type="button" data-action="switch-language">Trocar idioma</button><button class="quiet" type="button" data-action="toggle-theme">Usar tema ${theme === "dark" ? "claro" : "escuro"}</button><button class="primary" type="button" data-action="create" ${active ? "disabled" : ""}>Criar baralho</button></div>
       </div>
 
       ${active ? `<section class="active-round" aria-labelledby="active-round-title"><div><p class="deck-label">Rodada em andamento</p><h2 id="active-round-title">${escapeHtml(active.deck.title)}</h2><p>Progresso: ${active.snapshot.masteredIds.length} de ${active.snapshot.total}</p></div><div class="card-actions"><button class="primary" data-action="resume">Retomar rodada</button><button class="quiet danger" data-action="abandon">Abandonar rodada</button></div></section>` : ""}
@@ -135,7 +134,6 @@ function renderHome(): void {
         <div><p class="deck-label">Apoios pedagógicos</p><h2 id="preference-title">Exibição</h2></div>
         <label class="filter-option"><input type="checkbox" data-preference="showTransliteration" ${preferences.showTransliteration ? "checked" : ""}><span>Mostrar transliteração</span></label>
         <label class="filter-option"><input type="checkbox" data-preference="showTranslation" ${preferences.showTranslation ? "checked" : ""}><span>Mostrar tradução</span></label>
-        <fieldset class="theme-options"><legend>Tema</legend><label class="filter-option"><input type="radio" name="color-theme" value="dark" ${theme === "dark" ? "checked" : ""}><span>Escuro</span></label><label class="filter-option"><input type="radio" name="color-theme" value="light" ${theme === "light" ? "checked" : ""}><span>Claro</span></label></fieldset>
       </section>
 
       <section class="backup-panel" aria-labelledby="backup-title"><div><p class="deck-label">Dados locais</p><h2 id="backup-title">Backup</h2></div><div class="card-actions"><button class="quiet" data-action="export">Exportar JSON</button><label class="quiet file-button">Importar JSON<input type="file" accept="application/json,.json" data-action="import"></label></div><div class="import-preview" aria-live="polite"></div></section>
@@ -149,6 +147,12 @@ function renderHome(): void {
   app
     .querySelector<HTMLButtonElement>("[data-action='switch-language']")
     ?.addEventListener("click", renderLanguageSelector);
+  app
+    .querySelector<HTMLButtonElement>("[data-action='toggle-theme']")
+    ?.addEventListener("click", () => {
+      saveTheme(theme === "dark" ? "light" : "dark");
+      renderHome();
+    });
 
   app
     .querySelector<HTMLButtonElement>("[data-action='resume']")
@@ -175,13 +179,6 @@ function renderHome(): void {
       savePreferences(next);
       renderHome();
     }),
-  );
-  app.querySelectorAll<HTMLInputElement>("[name='color-theme']").forEach(
-    (input) =>
-      input.addEventListener("change", () => {
-        saveTheme(input.value as ColorTheme);
-        renderHome();
-      }),
   );
 
   app

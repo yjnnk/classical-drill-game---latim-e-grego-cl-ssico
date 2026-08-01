@@ -37,15 +37,19 @@ test("o tema começa escuro e é compartilhado entre os idiomas", async ({
 
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await page.getByRole("button", { name: "Grego clássico" }).click();
-  await expect(page.getByRole("radio", { name: "Escuro" })).toBeChecked();
+  await expect(
+    page.getByRole("button", { name: "Usar tema claro" }),
+  ).toBeVisible();
 
-  await page.getByRole("radio", { name: "Claro" }).check();
+  await page.getByRole("button", { name: "Usar tema claro" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await page.getByRole("button", { name: "Trocar idioma" }).click();
   await page.getByRole("button", { name: "Latim" }).click();
-  await expect(page.getByRole("radio", { name: "Claro" })).toBeChecked();
+  await expect(
+    page.getByRole("button", { name: "Usar tema escuro" }),
+  ).toBeVisible();
 
-  await page.getByRole("radio", { name: "Escuro" }).check();
+  await page.getByRole("button", { name: "Usar tema escuro" }).click();
   await expect(page.locator("body")).toHaveCSS(
     "background-color",
     "rgb(21, 28, 24)",
@@ -53,10 +57,30 @@ test("o tema começa escuro e é compartilhado entre os idiomas", async ({
   await expect(page.locator(".intro")).toHaveCSS("color", "rgb(211, 221, 213)");
   await page.getByRole("button", { name: "Trocar idioma" }).click();
   await page.getByRole("button", { name: "Grego clássico" }).click();
-  await expect(page.getByRole("radio", { name: "Escuro" })).toBeChecked();
+  await expect(
+    page.getByRole("button", { name: "Usar tema claro" }),
+  ).toBeVisible();
 
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+});
+
+test("o tema pode ser alterado diretamente na área latina", async ({ page }) => {
+  await page.goto("/");
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+  await page.getByRole("button", { name: "Latim" }).click();
+
+  await page.getByRole("button", { name: "Usar tema claro" }).click();
+
+  await expect(
+    page.getByRole("button", { name: "Usar tema escuro" }),
+  ).toBeVisible();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  await expect(page.locator("body")).toHaveCSS(
+    "background-color",
+    "rgb(245, 238, 227)",
+  );
 });
 
 test("migra dados gregos legados somente depois de validar a cópia", async ({

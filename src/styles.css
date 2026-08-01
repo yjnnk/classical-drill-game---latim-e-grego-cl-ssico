@@ -68,6 +68,14 @@ button {
   margin-bottom: 0;
 }
 
+.home > .title-row {
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+.home > .title-row + .preference-panel {
+  margin-top: 0;
+}
+
 .section-title {
   margin: 3rem 0 1rem;
   color: #405249;
@@ -144,21 +152,6 @@ h1 {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.4rem;
   font-weight: 500;
-}
-
-.theme-options {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0;
-  border: 0;
-}
-
-.theme-options legend {
-  margin-right: 0.25rem;
-  color: inherit;
-  font-size: 0.8rem;
-  font-weight: 700;
 }
 
 .active-round {
