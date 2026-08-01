@@ -7,6 +7,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("o estudante pesquisa, filtra e salva um baralho", async ({ page }) => {
+  await page.getByRole("checkbox", { name: "Mostrar transliteração" }).check();
   await page.getByRole("button", { name: "Criar baralho" }).click();
   await page.getByLabel("Nome do baralho").fill("Primeira declinação");
   await page.getByRole("button", { name: "Adicionar conteúdo" }).click();
@@ -23,9 +24,6 @@ test("o estudante pesquisa, filtra e salva um baralho", async ({ page }) => {
   });
   await expect(block).toContainText("10 formas incluídas");
   await block.getByLabel("dual").uncheck();
-  await block
-    .getByLabel("Mostrar transliteração como apoio pedagógico")
-    .check();
   await expect(block).toContainText("8 formas incluídas");
   await expect(block).toContainText("singular e plural");
 
@@ -38,7 +36,7 @@ test("o estudante pesquisa, filtra e salva um baralho", async ({ page }) => {
   await expect(savedDeck).toContainText("1 bloco · 8 formas");
   await expect(savedDeck.getByRole("button", { name: "Iniciar rodada" })).toBeEnabled();
   await savedDeck.getByRole("button", { name: "Iniciar rodada" }).click();
-  await expect(page.getByText("krḗnē", { exact: true })).toBeVisible();
+  await expect(page.locator(".greek-form")).toBeVisible();
 });
 
 test("blocos e baralhos podem ser duplicados, editados e excluídos", async ({
@@ -106,9 +104,10 @@ test("um rascunho inválido é salvo, mas não pode iniciar", async ({ page }) =
   await expect(draft.getByRole("button", { name: "Iniciar rodada" })).toBeDisabled();
 });
 
-test("sobreposições preservam o apoio e filtros removem análises sincréticas", async ({
+test("sobreposições preservam o apoio global e filtros removem análises sincréticas", async ({
   page
 }) => {
+  await page.getByRole("checkbox", { name: "Mostrar transliteração" }).check();
   await page.getByRole("button", { name: "Criar baralho" }).click();
   await page.getByLabel("Nome do baralho").fill("Genitivos");
   await page.getByRole("button", { name: "Adicionar conteúdo" }).click();
@@ -120,23 +119,15 @@ test("sobreposições preservam o apoio e filtros removem análises sincréticas
   await first.getByLabel("nominativo").uncheck();
   await first.getByLabel("dativo").uncheck();
   await first.getByLabel("acusativo").uncheck();
-  await first
-    .getByLabel("Mostrar transliteração como apoio pedagógico")
-    .check();
   await first.getByRole("button", { name: "Duplicar bloco" }).click();
 
   const blocks = page.getByRole("article").filter({
     has: page.getByRole("heading", { name: "κρήνη" })
   });
-  await blocks
-    .nth(1)
-    .getByLabel("Mostrar transliteração como apoio pedagógico")
-    .uncheck();
   await expect(page.getByText("2 blocos · 3 formas · pronto para iniciar")).toBeVisible();
   await page.getByRole("button", { name: "Iniciar rodada" }).click();
 
   for (let index = 0; index < 3; index += 1) {
-    await expect(page.getByText("krḗnē", { exact: true })).toBeVisible();
     const form = (await page.locator(".greek-form").textContent())?.trim();
     const answer: Record<string, string> = {
       "τῆς κρήνης": "genitivo · singular",

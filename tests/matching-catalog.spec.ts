@@ -22,6 +22,7 @@ test("numerais filtram o tipo e funcionam nas duas direções", async ({ page })
   await expect(page.getByRole("group", { name: "Alternativas" }).getByRole("button")).toHaveCount(3);
 
   await page.getByRole("button", { name: "Sair" }).click();
+  await page.getByRole("button", { name: "Abandonar rodada" }).click();
   await page.getByRole("button", { name: "Criar baralho" }).click();
   await page.getByLabel("Nome do baralho").fill("Produção numeral");
   await page.getByRole("button", { name: "Adicionar conteúdo" }).click();

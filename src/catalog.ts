@@ -508,8 +508,8 @@ function mixedDeck(): DrillDeck {
   const verb = verbDeck();
   return {
     id: "deck:mixed-starter",
-    title: "κρήνη + λῡ́ω",
-    description: "Substantivo e verbo · análise e produção",
+    title: "Prática mista",
+    description: "κρήνη + λῡ́ω · substantivo e verbo · análise e produção",
     items: [...nominal.items, ...verb.items]
   };
 }
