@@ -4,6 +4,8 @@ import { pathToFileURL } from "node:url";
 
 const requiredNominalFields = ["case", "number"];
 const requiredFiniteVerbFields = ["tense", "voice", "mood", "person", "number"];
+const requiredInfinitiveFields = ["tense", "voice"];
+const requiredParticipleFields = ["tense", "voice", "gender"];
 const allowedValues = {
   case: new Set(["nominative", "genitive", "dative", "accusative", "vocative"]),
   number: new Set(["singular", "dual", "plural"]),
@@ -13,13 +15,15 @@ const allowedValues = {
     "future",
     "aorist",
     "perfect",
-    "pluperfect"
+    "pluperfect",
+    "future-perfect"
   ]),
   voice: new Set(["active", "middle", "passive"]),
   mood: new Set(["indicative", "subjunctive", "optative", "imperative"]),
   person: new Set(["first", "second", "third"])
   ,
-  gender: new Set(["masculine", "feminine", "neuter"])
+  gender: new Set(["masculine", "feminine", "neuter"]),
+  form: new Set(["finite", "infinitive", "participle"])
 };
 
 function requireNonEmptyString(value, message) {
@@ -29,8 +33,15 @@ function requireNonEmptyString(value, message) {
 }
 
 function validateAnalysis(analysis, kind, itemId) {
-  const fields =
-    kind === "nominal" ? requiredNominalFields : requiredFiniteVerbFields;
+  const fields = kind === "nominal"
+    ? requiredNominalFields
+    : analysis?.form === "finite"
+      ? requiredFiniteVerbFields
+      : analysis?.form === "infinitive"
+        ? requiredInfinitiveFields
+        : analysis?.form === "participle"
+          ? requiredParticipleFields
+          : ["form"];
   for (const field of fields) {
     requireNonEmptyString(
       analysis?.[field],

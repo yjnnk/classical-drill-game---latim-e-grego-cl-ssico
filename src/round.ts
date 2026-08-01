@@ -42,7 +42,8 @@ const labels = {
     future: "futuro",
     aorist: "aoristo",
     perfect: "perfeito",
-    pluperfect: "mais-que-perfeito"
+    pluperfect: "mais-que-perfeito",
+    "future-perfect": "futuro perfeito"
   },
   voice: { active: "ativo", middle: "médio", passive: "passivo" },
   mood: {
@@ -74,6 +75,26 @@ function analysisSetIdentity(analyses: Analysis[]): string {
 
 function paradigmIdentity(item: DrillItem): string {
   return [...(item.sourceParadigmIds ?? [item.id])].sort().join("|");
+}
+
+function displayedForms(item: DrillItem): string[] {
+  return item.forms ?? item.form.split(/\s*\/\s*/u);
+}
+
+function analysesForPrompt(
+  item: DrillItem,
+  prompt: string,
+  eligible: DrillItem[]
+): Analysis[] {
+  const analyses = eligible
+    .filter((candidate) =>
+      paradigmIdentity(candidate) === paradigmIdentity(item) &&
+      displayedForms(candidate).includes(prompt)
+    )
+    .flatMap(({ analyses: candidateAnalyses }) => candidateAnalyses);
+  return [
+    ...new Map(analyses.map((analysis) => [analysisIdentity(analysis), analysis])).values()
+  ];
 }
 
 function productionIdentity(item: DrillItem): string {
@@ -115,6 +136,21 @@ export function formatAnalysis(analysis: Analysis): string {
       analysis.grammaticalNumber,
       analysis.gender
     ].filter(Boolean).join(" · ");
+  }
+  if (analysis.kind === "infinitive") {
+    return [
+      "infinitivo",
+      translated(labels.tense, analysis.tense),
+      translated(labels.voice, analysis.voice)
+    ].join(" · ");
+  }
+  if (analysis.kind === "participle") {
+    return [
+      "particípio",
+      translated(labels.tense, analysis.tense),
+      translated(labels.voice, analysis.voice),
+      analysis.gender
+    ].join(" · ");
   }
   return [
     translated(labels.tense, analysis.tense),
@@ -225,7 +261,10 @@ export class DrillRound {
   }
 
   private analysisQuestion(item: DrillItem): RoundQuestion {
-    const correctIdentity = analysisSetIdentity(item.analyses);
+    const prompt = shuffled(displayedForms(item), this.random)[0] ?? item.form;
+    const displayedAnalyses = analysesForPrompt(item, prompt, this.eligible);
+    const displayedItem = { ...item, analyses: displayedAnalyses };
+    const correctIdentity = analysisSetIdentity(displayedAnalyses);
     const candidates = [
       ...new Map(
         this.eligible.map((candidate) => [
@@ -237,7 +276,7 @@ export class DrillRound {
       .filter(
         ([identity, analyses]) =>
           identity !== correctIdentity &&
-          analyses[0]?.kind === item.analyses[0]?.kind
+          analyses[0]?.kind === displayedAnalyses[0]?.kind
       )
       .sort(
         ([, left], [, right]) => {
@@ -248,12 +287,12 @@ export class DrillRound {
             ({ analyses }) => analysisSetIdentity(analyses) === analysisSetIdentity(right)
           );
           const paradigmPriority =
-            Number(Boolean(rightItem && sharesParadigm(item, rightItem))) -
-            Number(Boolean(leftItem && sharesParadigm(item, leftItem)));
+            Number(Boolean(rightItem && sharesParadigm(displayedItem, rightItem))) -
+            Number(Boolean(leftItem && sharesParadigm(displayedItem, leftItem)));
           return (
             paradigmPriority ||
-            setCloseness(right, item.analyses) -
-              setCloseness(left, item.analyses)
+            setCloseness(right, displayedAnalyses) -
+              setCloseness(left, displayedAnalyses)
           );
         }
       )
@@ -264,7 +303,7 @@ export class DrillRound {
     const choices = [
       {
         id: correctIdentity,
-        label: formatAnalysisSet(item.analyses),
+        label: formatAnalysisSet(displayedAnalyses),
         correct: true
       },
       ...candidates.map(([id, analyses]) => ({
@@ -274,9 +313,9 @@ export class DrillRound {
       }))
     ];
     return {
-      item,
+      item: displayedItem,
       direction: "analysis",
-      prompt: item.form,
+      prompt,
       choices: shuffled(choices, this.random)
     };
   }
@@ -381,23 +420,53 @@ export function roundFeasibilityError(
 ): string | null {
   const directions: RoundDirection[] =
     direction === "mixed" ? ["analysis", "production"] : [direction];
-  try {
-    for (const currentDirection of directions) {
-      const round = new DrillRound(items, {
-        direction: currentDirection,
-        coverage: "all",
-        random: () => 0.5
-      });
-      let question = round.question();
-      while (question) {
-        const correct = question.choices.find(({ correct }) => correct);
-        if (!correct) throw new Error("Pergunta sem resposta correta.");
-        round.answer(correct.id);
-        question = round.question();
+  for (const currentDirection of directions) {
+    if (currentDirection === "analysis") {
+      const setsByKind = new Map<string, Set<string>>();
+      for (const item of items) {
+        const kind = item.analyses[0]?.kind;
+        if (!kind) continue;
+        const identities = setsByKind.get(kind) ?? new Set<string>();
+        identities.add(analysisSetIdentity(item.analyses));
+        setsByKind.set(kind, identities);
+      }
+      if (items.some((item) =>
+        (setsByKind.get(item.analyses[0]?.kind ?? "")?.size ?? 0) < 3
+      )) {
+        return "Este bloco não oferece duas distrações válidas para a direção escolhida.";
+      }
+      continue;
+    }
+
+    const groups = new Map<
+      string,
+      { kind: Analysis["kind"] | undefined; forms: Set<string> }
+    >();
+    for (const item of items) {
+      const identity = productionIdentity(item);
+      const group = groups.get(identity) ?? {
+        kind: item.analyses[0]?.kind,
+        forms: new Set<string>()
+      };
+      group.forms.add(item.form);
+      groups.set(identity, group);
+    }
+    const values = [...groups.values()];
+    for (const correct of values) {
+      const normalizedCorrect = new Set(
+        [...correct.forms].map(withoutDiacritics)
+      );
+      const distractors = values.filter((candidate) =>
+        candidate !== correct &&
+        candidate.kind === correct.kind &&
+        [...candidate.forms].every((form) =>
+          !normalizedCorrect.has(withoutDiacritics(form))
+        )
+      );
+      if (distractors.length < 2) {
+        return "Este bloco não oferece duas distrações válidas para a direção escolhida.";
       }
     }
-    return null;
-  } catch {
-    return "Este bloco não oferece duas distrações válidas para a direção escolhida.";
   }
+  return null;
 }

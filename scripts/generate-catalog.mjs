@@ -479,26 +479,18 @@ function parsePronouns(sheet) {
   return paradigms;
 }
 
-const personAndNumberByColumn = {
-  4: { person: "first", number: "singular" },
-  5: { person: "second", number: "singular" },
-  6: { person: "third", number: "singular" },
-  7: { person: "second", number: "dual" },
-  8: { person: "third", number: "dual" },
-  9: { person: "first", number: "plural" },
-  10: { person: "second", number: "plural" },
-  11: { person: "third", number: "plural" }
-};
-
 function tenseFromHeading(value) {
-  const heading = value.match(/^([A-Z]+):/u)?.[1];
+  const heading = value.match(
+    /^([A-Z]+(?:\s+PERFECT)?)(?::|\s|\(|$)/u
+  )?.[1];
   return {
     PRESENT: "present",
     IMPERFECT: "imperfect",
     FUTURE: "future",
     AORIST: "aorist",
     PERFECT: "perfect",
-    PLUPERFECT: "pluperfect"
+    PLUPERFECT: "pluperfect",
+    "FUTURE PERFECT": "future-perfect"
   }[heading];
 }
 
@@ -532,56 +524,210 @@ function moodFromLabel(value) {
   }[normalized];
 }
 
-function parseLuo(sheet) {
-  if (!sheet) throw new Error("A aba “λῡ́ω” não foi encontrada.");
+const verbSources = [
+  { sheet: "λῡ́ω", slug: "luo", greek: "λῡ́ω", transliteration: "lū́ō", gloss: "soltar" },
+  { sheet: "λείπω", slug: "leipo", greek: "λείπω", transliteration: "leípō", gloss: "deixar" },
+  { sheet: "τῑμάω", slug: "timao", greek: "τῑμάω", transliteration: "tīmáō", gloss: "honrar" },
+  { sheet: "φιλέω", slug: "phileo", greek: "φιλέω", transliteration: "philéō", gloss: "amar" },
+  { sheet: "δηλόω", slug: "deloo", greek: "δηλόω", transliteration: "dēlóō", gloss: "mostrar" },
+  { sheet: "δίδωμι", slug: "didomi", greek: "δίδωμι", transliteration: "dídōmi", gloss: "dar" },
+  { sheet: "τίθημι", slug: "tithemi", greek: "τίθημι", transliteration: "títhēmi", gloss: "colocar" },
+  { sheet: "ἵστημι", slug: "histemi", greek: "ἵστημι", transliteration: "hístēmi", gloss: "pôr de pé" },
+  { sheet: "ἵ̄ημι", slug: "hiemi", greek: "ἵ̄ημι", transliteration: "híēmi", gloss: "enviar" },
+  { sheet: "δύναμαι", slug: "dunamai", greek: "δύναμαι", transliteration: "dýnamai", gloss: "poder" },
+  { sheet: "κεῖμαι", slug: "keimai", greek: "κεῖμαι", transliteration: "keîmai", gloss: "estar deitado" },
+  { sheet: "δείκνῡμι", slug: "deiknumi", greek: "δείκνῡμι", transliteration: "deíknȳmi", gloss: "mostrar" },
+  { sheet: "εἰμί", slug: "eimi", greek: "εἰμί", transliteration: "eimí", gloss: "ser" },
+  { sheet: "ἔρχομαι, εἶμι, ἦλθον", slug: "erchomai", greek: "ἔρχομαι", transliteration: "érkhomai", gloss: "ir ou vir" },
+  { sheet: "φημί", slug: "phemi", greek: "φημί", transliteration: "phēmí", gloss: "dizer" },
+  { sheet: "γιγνώσκω", slug: "gignosko", greek: "γιγνώσκω", transliteration: "gignṓskō", gloss: "conhecer" },
+  { sheet: "βαίνω", slug: "baino", greek: "βαίνω", transliteration: "baínō", gloss: "ir" },
+  { sheet: "φαίνω", slug: "phaino", greek: "φαίνω", transliteration: "phaínō", gloss: "mostrar ou aparecer" },
+  { sheet: "οἶδα", slug: "oida", greek: "οἶδα", transliteration: "oîda", gloss: "saber" },
+  { sheet: "δέδοικα", slug: "dedoika", greek: "δέδοικα", transliteration: "dédoika", gloss: "temer" },
+  { sheet: "οἴομαι", slug: "oiomai", greek: "οἴομαι", transliteration: "oíomai", gloss: "pensar" },
+  { sheet: "γίγνομαι", slug: "gignomai", greek: "γίγνομαι", transliteration: "gígnomai", gloss: "tornar-se" },
+  { sheet: "πλέω", slug: "pleo", greek: "πλέω", transliteration: "pléō", gloss: "navegar" }
+].map(({ sheet, slug, greek, transliteration, gloss }) => ({
+  sheet, id: `verb:${slug}`, lemma: { greek, transliteration, gloss }
+}));
+
+function splitVariants(value) {
+  const trimmed = value.trim().replace(/,\s*$/u, "");
+  if (!trimmed || trimmed.startsWith("-")) return [];
+  const separator = trimmed.includes(",") ? /\s*,\s*/u : /\s*\/\s*/u;
+  const parts = trimmed.split(separator).map((variant) => variant.trim());
+  return parts.length > 1 && parts.every((variant) => variant && !variant.startsWith("-"))
+    ? parts
+    : [trimmed];
+}
+
+function rowTense(row) {
+  for (let column = 1; column <= Math.min(row.cellCount, 4); column += 1) {
+    const tense = tenseFromHeading(textOf(row.getCell(column)));
+    if (tense) return tense;
+  }
+}
+
+function sectionTense(sheet, headerRow, previous) {
+  for (let rowNumber = headerRow - 1; rowNumber >= Math.max(1, headerRow - 4); rowNumber -= 1) {
+    const tense = rowTense(sheet.getRow(rowNumber));
+    if (tense) return tense;
+  }
+  return previous;
+}
+
+function voiceMapFromHeader(row, formStartColumn) {
+  const result = new Map();
+  for (const column of [formStartColumn + 1, formStartColumn + 3, formStartColumn + 5]) {
+    const value = textOf(row.getCell(column)).toLowerCase();
+    if (value.includes("middle/passive")) result.set(column, ["middle", "passive"]);
+    else if (value.includes("active")) result.set(column, ["active"]);
+    else if (value.includes("middle")) result.set(column, ["middle"]);
+    else if (value.includes("passive")) result.set(column, ["passive"]);
+  }
+  return result;
+}
+
+function parseVerb(sheet, source) {
+  if (!sheet) return null;
 
   let tense;
   let voiceState = { voices: [], splitLabel: false };
   const rawItems = [];
+  let formStartColumn;
+  let finiteByColumn = new Map();
+  let continuationMode = new Map();
+  let nonFiniteVoices = new Map();
+  let parsingParticiple = false;
 
   sheet.eachRow((row) => {
-    const headingTense = tenseFromHeading(textOf(row.getCell(2)));
+    const headingTense = rowTense(row);
     if (headingTense) {
       tense = headingTense;
+      parsingParticiple = false;
       return;
     }
 
+    for (let column = 1; column <= row.cellCount; column += 1) {
+      if (textOf(row.getCell(column)).toLowerCase() === "singular") {
+        formStartColumn = column;
+        tense = sectionTense(sheet, row.number, tense);
+        finiteByColumn = new Map();
+        continuationMode = new Map();
+        parsingParticiple = false;
+        return;
+      }
+    }
+    if (!tense || !formStartColumn) return;
+
+    const voiceColumn = formStartColumn - 2;
+    const moodColumn = formStartColumn - 1;
     voiceState = voiceStateFromLabel(
-      textOf(row.getCell(2)),
+      textOf(row.getCell(voiceColumn)),
       voiceState
     );
-    const mood = moodFromLabel(textOf(row.getCell(3)));
-    if (!tense || !mood || voiceState.voices.length === 0) return;
+    const label = textOf(row.getCell(moodColumn)).toLowerCase();
+    const mood = moodFromLabel(label);
 
-    for (let column = 4; column <= 11; column += 1) {
-      const value = textOf(row.getCell(column));
-      const personAndNumber = personAndNumberByColumn[column];
-      if (!value || !personAndNumber) continue;
+    if (mood && voiceState.voices.length > 0) {
+      parsingParticiple = false;
+      finiteByColumn = new Map();
+      continuationMode = new Map();
+      const persons = [
+        ["first", "singular"], ["second", "singular"], ["third", "singular"],
+        ["second", "dual"], ["third", "dual"],
+        ["first", "plural"], ["second", "plural"], ["third", "plural"]
+      ];
+      for (let offset = 0; offset < persons.length; offset += 1) {
+        const column = formStartColumn + offset;
+        const value = textOf(row.getCell(column));
+        if (!value) continue;
+        const variants = splitVariants(value);
+        if (variants.length === 0) continue;
+        const [person, number] = persons[offset];
+        const item = {
+          variants,
+          analyses: voiceState.voices.map((voice) => ({
+            form: "finite", tense, voice, mood, person, number
+          }))
+        };
+        rawItems.push(item);
+        finiteByColumn.set(column, item);
+        continuationMode.set(column, /,\s*$/u.test(value) ? "alternatives" : "join");
+      }
+      return;
+    }
 
-      const variants = value
-        .split(",")
-        .map((variant) => variant.trim())
-        .filter(Boolean);
-      const analyses = voiceState.voices.map((voice) => ({
-        tense,
-        voice,
-        mood,
-        ...personAndNumber
-      }));
-      rawItems.push({ variants, analyses });
+    const headerVoices = voiceMapFromHeader(row, formStartColumn);
+    if (headerVoices.size > 0) {
+      nonFiniteVoices = headerVoices;
+      finiteByColumn = new Map();
+      return;
+    }
+
+    if (label === "infinitive") {
+      parsingParticiple = false;
+      for (const [column, voices] of nonFiniteVoices) {
+        const value = textOf(row.getCell(column));
+        if (!value) continue;
+        const variants = splitVariants(value);
+        if (variants.length === 0) continue;
+        rawItems.push({
+          variants,
+          analyses: voices.map((voice) => ({ form: "infinitive", tense, voice }))
+        });
+      }
+      return;
+    }
+
+    const genderLabel = label === "participle" || parsingParticiple
+      ? textOf(row.getCell(formStartColumn)).toLowerCase()
+      : "";
+    const gender = { m: "masculine", f: "feminine", n: "neuter" }[genderLabel];
+    if (label === "participle") parsingParticiple = true;
+    if (parsingParticiple && gender) {
+      for (const [column, voices] of nonFiniteVoices) {
+        const value = textOf(row.getCell(column));
+        if (!value) continue;
+        const variants = splitVariants(value);
+        if (variants.length === 0) continue;
+        rawItems.push({
+          variants,
+          analyses: voices.map((voice) => ({
+            form: "participle", tense, voice, gender
+          }))
+        });
+      }
+      return;
+    }
+
+    if (!textOf(row.getCell(voiceColumn)) && !label && finiteByColumn.size > 0) {
+      for (const [column, item] of finiteByColumn) {
+        const value = textOf(row.getCell(column));
+        if (!value) continue;
+        const additions = splitVariants(value);
+        if (additions.length === 0) continue;
+        const alternative = continuationMode.get(column) === "alternatives" ||
+          /\([^)]*(?:Ionic|Attic)[^)]*\)/iu.test(value);
+        if (alternative) {
+          item.variants.push(...additions);
+          continuationMode.set(column, "alternatives");
+        } else {
+          item.variants = item.variants.flatMap((variant) =>
+            additions.map((addition) => `${variant} ${addition}`)
+          );
+        }
+      }
     }
   });
 
   return {
-    id: "verb:luo",
-    kind: "finite-verb",
+    id: source.id,
+    kind: "verb",
     category: "verb",
-    lemma: {
-      greek: "λῡ́ω",
-      transliteration: "lū́ō",
-      gloss: "soltar"
-    },
-    items: mergeByVariants(rawItems, "verb:luo")
+    lemma: source.lemma,
+    items: mergeByVariants(rawItems, source.id)
   };
 }
 
@@ -595,13 +741,30 @@ async function readCorrections() {
   }
 }
 
+const availableVerbSources = verbSources.filter(({ sheet }) =>
+  workbook.getWorksheet(sheet)
+);
+if (
+  workbook.getWorksheet("Blank Verb Chart") &&
+  availableVerbSources.length !== verbSources.length
+) {
+  const missing = verbSources
+    .filter(({ sheet }) => !workbook.getWorksheet(sheet))
+    .map(({ sheet }) => sheet)
+    .join(", ");
+  throw new Error(`Abas verbais ausentes na planilha oficial: ${missing}`);
+}
+
 const catalog = {
   schemaVersion: 1,
   catalogVersion: "2026.07.26",
   language: "grc",
   source: {
     workbook: basename(sourcePath),
-    sheets: ["Article", "Pronouns", "1st decl", "2nd decl", "3rd decl", "λῡ́ω"]
+    sheets: [
+      "Article", "Pronouns", "1st decl", "2nd decl", "3rd decl",
+      ...availableVerbSources.map(({ sheet }) => sheet)
+    ]
   },
   corrections: await readCorrections(),
   paradigms: [
@@ -610,7 +773,9 @@ const catalog = {
     ...parseNounSheet(workbook.getWorksheet("1st decl"), "first"),
     ...parseNounSheet(workbook.getWorksheet("2nd decl"), "second"),
     ...parseNounSheet(workbook.getWorksheet("3rd decl"), "third"),
-    parseLuo(workbook.getWorksheet("λῡ́ω"))
+    ...availableVerbSources.map((source) =>
+      parseVerb(workbook.getWorksheet(source.sheet), source)
+    )
   ].filter(Boolean)
 };
 

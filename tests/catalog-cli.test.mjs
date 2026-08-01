@@ -6,7 +6,7 @@ import { join } from "node:path";
 import test from "node:test";
 import ExcelJS from "exceljs";
 
-async function writeKnownWorkbook(path) {
+async function writeKnownWorkbook(path, official = false) {
   const workbook = new ExcelJS.Workbook();
 
   const nouns = workbook.addWorksheet("1st decl");
@@ -120,8 +120,25 @@ async function writeKnownWorkbook(path) {
       "λῡώμεθα",
       "λῡ́ησθε",
       "λῡ́ωνται"
-    ]
+    ],
+    [null, null, null, null, "active", null, "middle/passive"],
+    [null, null, "infinitive", null, "λύ̄ειν", null, "λύ̄εσθαι"],
+    [null, null, "participle", "m", "λύ̄ων", null, "λῡόμενος"],
+    [null, null, null, "f", "λύ̄ουσα", null, "λῡομένη"],
+    [null, null, null, "n", "λῦον", null, "λῡόμενον"]
   ]);
+
+  const irregular = workbook.addWorksheet("εἰμί");
+  irregular.addRows([
+    ["εἰμί \"sum\" am", null, "εἰμί, ἔσομαι"],
+    [], [], ["PRESENT"],
+    [null, null, "singular", null, null, "dual", null, "plural"],
+    ["active", "indicative", "εἰμί", "εἶ", "ἐστί(ν)", "ἐστόν", "ἐστόν", "ἐσμέν", "ἐστέ", "εἰσί(ν)"],
+    ["active", "subjunctive", "ὦ", "ᾖς", "ᾖ", "ἦτον", "ἦτον", "ὦμεν", "ἦτε", "ὦσι(ν)"],
+    ["active", "optative", "εἴην", "εἴης", "εἴη", "εἴητον/εἶτον", "εἰήτην/εἴτην", "εἴημεν/εἶμεν", "εἴητε/εἶτε", "εἴησαν/εἶεν"]
+  ]);
+
+  if (official) workbook.addWorksheet("Blank Verb Chart");
 
   await workbook.xlsx.writeFile(path);
 }
@@ -142,7 +159,7 @@ test("a CLI gera um catálogo versionado com κρήνη e λῡ́ω", async () 
   assert.equal(catalog.language, "grc");
   assert.deepEqual(
     catalog.paradigms.map(({ category }) => category).sort(),
-    ["article", "noun", "noun", "noun", "pronoun", "verb"]
+    ["article", "noun", "noun", "noun", "pronoun", "verb", "verb"]
   );
 
   const krene = catalog.paradigms.find(({ id }) => id === "noun:krene");
@@ -178,6 +195,7 @@ test("a CLI gera um catálogo versionado com κρήνη e λῡ́ω", async () 
   );
   assert.deepEqual(indicativeVariant.analyses, [
     {
+      form: "finite",
       tense: "present",
       voice: "middle",
       mood: "indicative",
@@ -185,6 +203,7 @@ test("a CLI gera um catálogo versionado com κρήνη e λῡ́ω", async () 
       number: "singular"
     },
     {
+      form: "finite",
       tense: "present",
       voice: "passive",
       mood: "indicative",
@@ -206,6 +225,30 @@ test("a CLI gera um catálogo versionado com κρήνη e λῡ́ω", async () 
     presentSubjunctive.analyses.map(({ voice }) => voice),
     ["middle", "passive"]
   );
+  assert.deepEqual(
+    luo.items.find(({ variants }) => variants.includes("λύ̄ειν")).analyses,
+    [{ form: "infinitive", tense: "present", voice: "active" }]
+  );
+  assert.deepEqual(
+    luo.items.find(({ variants }) => variants.includes("λῡομένη")).analyses,
+    [
+      { form: "participle", tense: "present", voice: "middle", gender: "feminine" },
+      { form: "participle", tense: "present", voice: "passive", gender: "feminine" }
+    ]
+  );
+  assert.ok(
+    luo.items.flatMap(({ analyses }) => analyses)
+      .filter(({ form }) => form !== "finite")
+      .every(({ mood, person, number }) =>
+        mood === undefined && person === undefined && number === undefined
+      )
+  );
+  const eimi = catalog.paradigms.find(({ id }) => id === "verb:eimi");
+  assert.ok(eimi.items.some(({ variants, analyses }) =>
+    variants.includes("ἐστί(ν)") && analyses.some(({ form, person, number }) =>
+      form === "finite" && person === "third" && number === "singular"
+    )
+  ));
   assert.deepEqual(catalog.corrections, []);
 
   const relative = catalog.paradigms.find(
@@ -227,6 +270,56 @@ test("a CLI gera um catálogo versionado com κρήνη e λῡ́ω", async () 
         category === "noun" && declension === "third"
     )
   );
+});
+
+test("a geração oficial falha se uma aba verbal estiver ausente", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "greek-catalog-missing-"));
+  const source = join(directory, "known-forms.xlsx");
+  const output = join(directory, "catalog.json");
+  await writeKnownWorkbook(source, true);
+
+  assert.throws(
+    () => execFileSync("node", ["scripts/generate-catalog.mjs", source, output], {
+      cwd: process.cwd(), stdio: "pipe"
+    }),
+    /Abas verbais ausentes/u
+  );
+});
+
+test("o catálogo distribuído contém os 23 paradigmas verbais validados", async () => {
+  const catalog = JSON.parse(
+    await readFile("src/generated/catalog.json", "utf8")
+  );
+  const verbs = catalog.paradigms.filter(({ category }) => category === "verb");
+
+  assert.equal(verbs.length, 23);
+  for (const id of [
+    "verb:luo",
+    "verb:timao",
+    "verb:didomi",
+    "verb:dunamai",
+    "verb:eimi",
+    "verb:erchomai"
+  ]) {
+    assert.ok(verbs.some((paradigm) => paradigm.id === id), id);
+  }
+  assert.ok(
+    verbs.some(({ items }) => items.some(({ variants }) =>
+      variants.some((variant) => variant.includes("(ν)"))
+    ))
+  );
+  assert.ok(
+    verbs.every(({ items }) => items.every(({ variants }) =>
+      variants.every((variant) => !variant.trim().startsWith("-"))
+    ))
+  );
+  const nonFinite = verbs.flatMap(({ items }) => items)
+    .flatMap(({ analyses }) => analyses)
+    .filter(({ form }) => form === "infinitive" || form === "participle");
+  assert.ok(nonFinite.length > 0);
+  assert.ok(nonFinite.every(({ person, number, mood }) =>
+    person === undefined && number === undefined && mood === undefined
+  ));
 });
 
 test("o validador rejeita identificadores duplicados", async () => {

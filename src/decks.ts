@@ -102,20 +102,37 @@ function analysisMatches(
   return Object.entries(selected).every(([field, values]) => {
     if (!values) return false;
     const value = analysisValue(analysis, field as FilterField);
-    return value !== null && values.includes(value);
+    return value === null || values.includes(value);
   });
 }
 
 function analysisValue(analysis: Analysis, field: FilterField): string | null {
   switch (field) {
+    case "form":
+      return analysis.kind === "finite-verb"
+        ? "finite"
+        : analysis.kind === "infinitive"
+          ? "infinitive"
+          : analysis.kind === "participle"
+            ? "participle"
+            : null;
     case "number":
-      return analysis.grammaticalNumber;
+      return analysis.kind === "nominal" || analysis.kind === "finite-verb"
+        ? analysis.grammaticalNumber
+        : null;
     case "grammaticalCase":
       return analysis.kind === "nominal" ? analysis.grammaticalCase : null;
     case "gender":
-      return analysis.kind === "nominal" ? analysis.gender ?? null : null;
+      return analysis.kind === "nominal" || analysis.kind === "participle"
+        ? analysis.gender ?? null
+        : null;
     case "tense":
     case "voice":
+      return analysis.kind === "finite-verb" ||
+        analysis.kind === "infinitive" ||
+        analysis.kind === "participle"
+        ? analysis[field]
+        : null;
     case "mood":
     case "person":
       return analysis.kind === "finite-verb" ? analysis[field] : null;

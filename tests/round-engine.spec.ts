@@ -46,6 +46,78 @@ test("produção assistida oferece três formas e agrupa variantes corretas", ()
   ]);
 });
 
+test("análise apresenta uma variante equivalente de cada vez", () => {
+  const variantItems = items.map((item) =>
+    item.id === "a3"
+      ? { ...item, forms: ["λῡ́ει", "λῡ́ῃ"] }
+      : item
+  );
+  const round = new DrillRound(variantItems, {
+    direction: "analysis",
+    coverage: "all",
+    random: () => 0.5
+  });
+
+  let question = round.question();
+  while (question && question.item.id !== "a3") {
+    const correct = question.choices.find(({ correct }) => correct);
+    if (!correct) throw new Error("Pergunta sem resposta correta.");
+    round.answer(correct.id);
+    question = round.question();
+  }
+
+  expect(["λῡ́ει", "λῡ́ῃ"]).toContain(question?.prompt);
+  expect(question?.prompt).not.toContain("/");
+});
+
+test("análise reúne todas as leituras da variante sincrética", () => {
+  const syncreticItems: DrillItem[] = [
+    {
+      id: "indicative",
+      form: "λῡ́ει / λῡ́ῃ",
+      forms: ["λῡ́ει", "λῡ́ῃ"],
+      sourceParadigmIds: ["verb:luo"],
+      analyses: [{
+        kind: "finite-verb", tense: "present", voice: "middle",
+        mood: "indicative", person: "second", grammaticalNumber: "singular"
+      }]
+    },
+    {
+      id: "subjunctive",
+      form: "λῡ́ῃ",
+      forms: ["λῡ́ῃ"],
+      sourceParadigmIds: ["verb:luo"],
+      analyses: [{
+        kind: "finite-verb", tense: "present", voice: "middle",
+        mood: "subjunctive", person: "second", grammaticalNumber: "singular"
+      }]
+    },
+    ...items.slice(0, 3).map((item, index) => ({
+      ...item,
+      id: `distractor:${index}`,
+      sourceParadigmIds: ["verb:luo"]
+    }))
+  ];
+  const round = new DrillRound(syncreticItems, {
+    direction: "analysis",
+    coverage: "all",
+    random: () => 0
+  });
+
+  let question = round.question();
+  while (question && !(question.item.id === "indicative" && question.prompt === "λῡ́ῃ")) {
+    const correct = question.choices.find(({ correct }) => correct);
+    if (!correct) throw new Error("Pergunta sem resposta correta.");
+    round.answer(correct.id);
+    question = round.question();
+  }
+
+  const correct = question?.choices.find(({ correct }) => correct)?.label;
+  expect(correct).toContain("indicativo");
+  expect(correct).toContain("subjuntivo");
+  expect(roundFeasibilityError(syncreticItems, "analysis")).toBeNull();
+});
+
 test("produção separa paradigmas com a mesma análise e informa o lema", () => {
   const nominalItems: DrillItem[] = [
     ["a-nom", "κρήνη", "nominativo", "paradigm:krene"],

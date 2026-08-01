@@ -9,7 +9,8 @@ export type GrammaticalCase =
 export type GrammaticalNumber = "singular" | "dual" | "plural";
 export type GrammaticalGender = "masculino" | "feminino" | "neutro";
 export type GrammaticalTense =
-  | "present" | "imperfect" | "future" | "aorist" | "perfect" | "pluperfect";
+  | "present" | "imperfect" | "future" | "aorist" | "perfect" | "pluperfect"
+  | "future-perfect";
 export type GrammaticalVoice = "active" | "middle" | "passive";
 export type GrammaticalMood = "indicative" | "subjunctive" | "optative" | "imperative";
 export type GrammaticalPerson = "first" | "second" | "third";
@@ -30,11 +31,29 @@ export interface FiniteVerbAnalysis {
   grammaticalNumber: GrammaticalNumber;
 }
 
-export type Analysis = NominalAnalysis | FiniteVerbAnalysis;
+export interface InfinitiveAnalysis {
+  kind: "infinitive";
+  tense: GrammaticalTense;
+  voice: GrammaticalVoice;
+}
+
+export interface ParticipleAnalysis {
+  kind: "participle";
+  tense: GrammaticalTense;
+  voice: GrammaticalVoice;
+  gender: GrammaticalGender;
+}
+
+export type Analysis =
+  | NominalAnalysis
+  | FiniteVerbAnalysis
+  | InfinitiveAnalysis
+  | ParticipleAnalysis;
 
 export interface DrillItem {
   id: string;
   form: string;
+  forms?: string[];
   bareForm?: string;
   analyses: Analysis[];
   support?: string;
@@ -53,7 +72,7 @@ export interface DrillDeck {
 
 export type FilterField =
   | "grammaticalCase" | "number" | "gender"
-  | "tense" | "voice" | "mood" | "person";
+  | "form" | "tense" | "voice" | "mood" | "person";
 
 export interface CatalogFilter {
   field: FilterField;
@@ -79,21 +98,38 @@ interface GeneratedNominalAnalysis {
   gender?: "masculine" | "feminine" | "neuter";
 }
 interface GeneratedFiniteVerbAnalysis {
+  form: "finite";
   tense: GrammaticalTense;
   voice: GrammaticalVoice;
   mood: GrammaticalMood;
   person: GrammaticalPerson;
   number: GrammaticalNumber;
 }
+interface GeneratedInfinitiveAnalysis {
+  form: "infinitive";
+  tense: GrammaticalTense;
+  voice: GrammaticalVoice;
+}
+interface GeneratedParticipleAnalysis {
+  form: "participle";
+  tense: GrammaticalTense;
+  voice: GrammaticalVoice;
+  gender: "masculine" | "feminine" | "neuter";
+}
 interface GeneratedItem {
   id: string;
   variants: string[];
   bareVariants?: string[];
-  analyses: Array<GeneratedNominalAnalysis | GeneratedFiniteVerbAnalysis>;
+  analyses: Array<
+    | GeneratedNominalAnalysis
+    | GeneratedFiniteVerbAnalysis
+    | GeneratedInfinitiveAnalysis
+    | GeneratedParticipleAnalysis
+  >;
 }
 interface GeneratedParadigm {
   id: string;
-  kind: "nominal" | "finite-verb";
+  kind: "nominal" | "verb";
   category: "noun" | "pronoun" | "article" | "verb";
   declension?: "first" | "second" | "third";
   lemma: { greek: string; transliteration: string; gloss: string };
@@ -130,10 +166,12 @@ const optionLabels: Record<string, string> = {
   masculine: "masculino", feminine: "feminino", neuter: "neutro",
   present: "presente", imperfect: "imperfeito", future: "futuro",
   aorist: "aoristo", perfect: "perfeito", pluperfect: "mais-que-perfeito",
+  "future-perfect": "futuro perfeito",
   active: "ativo", middle: "médio", passive: "passivo",
   indicative: "indicativo", subjunctive: "subjuntivo",
   optative: "optativo", imperative: "imperativo",
-  first: "1ª pessoa", second: "2ª pessoa", third: "3ª pessoa"
+  first: "1ª pessoa", second: "2ª pessoa", third: "3ª pessoa",
+  finite: "forma finita", infinitive: "infinitivo", participle: "particípio"
 };
 
 function filter(field: FilterField, label: string, values: string[]): CatalogFilter {
@@ -192,7 +230,11 @@ function nominalParadigm(source: GeneratedParadigm): CatalogParadigm {
 
 function verbParadigm(source: GeneratedParadigm): CatalogParadigm {
   const analyses = source.items.flatMap((item) =>
-    item.analyses as GeneratedFiniteVerbAnalysis[]
+    item.analyses as Array<
+      | GeneratedFiniteVerbAnalysis
+      | GeneratedInfinitiveAnalysis
+      | GeneratedParticipleAnalysis
+    >
   );
   return {
     id: source.id,
@@ -201,22 +243,66 @@ function verbParadigm(source: GeneratedParadigm): CatalogParadigm {
     items: source.items.map((item) => ({
       id: item.id,
       form: item.variants.join(" / "),
-      analyses: (item.analyses as GeneratedFiniteVerbAnalysis[]).map((analysis) => ({
-        kind: "finite-verb",
-        tense: analysis.tense,
-        voice: analysis.voice,
-        mood: analysis.mood,
-        person: analysis.person,
-        grammaticalNumber: analysis.number
-      }))
+      forms: item.variants,
+      analyses: (item.analyses as typeof analyses).map((analysis) =>
+        analysis.form === "finite"
+          ? {
+              kind: "finite-verb",
+              tense: analysis.tense,
+              voice: analysis.voice,
+              mood: analysis.mood,
+              person: analysis.person,
+              grammaticalNumber: analysis.number
+            }
+          : analysis.form === "infinitive"
+            ? {
+                kind: "infinitive",
+                tense: analysis.tense,
+                voice: analysis.voice
+              }
+            : {
+                kind: "participle",
+                tense: analysis.tense,
+                voice: analysis.voice,
+                gender: genderLabels[analysis.gender]
+              }
+      )
     })),
     filters: [
+      filter("form", "Forma", analyses.map(({ form }) => form)),
       filter("tense", "Tempo", analyses.map(({ tense }) => tense)),
       filter("voice", "Voz", analyses.map(({ voice }) => voice)),
-      filter("mood", "Modo", analyses.map(({ mood }) => mood)),
-      filter("person", "Pessoa", analyses.map(({ person }) => person)),
-      filter("number", "Número", analyses.map(({ number }) => number))
-    ],
+      filter(
+        "mood",
+        "Modo",
+        analyses.flatMap((analysis) =>
+          analysis.form === "finite" ? [analysis.mood] : []
+        )
+      ),
+      filter(
+        "person",
+        "Pessoa",
+        analyses.flatMap((analysis) =>
+          analysis.form === "finite" ? [analysis.person] : []
+        )
+      ),
+      filter(
+        "number",
+        "Número",
+        analyses.flatMap((analysis) =>
+          analysis.form === "finite" ? [analysis.number] : []
+        )
+      ),
+      filter(
+        "gender",
+        "Gênero",
+        analyses.flatMap((analysis) =>
+          analysis.form === "participle"
+            ? [genderLabels[analysis.gender]]
+            : []
+        )
+      )
+    ].filter(({ options }) => options.length > 0),
     supportsArticleMode: false
   };
 }
