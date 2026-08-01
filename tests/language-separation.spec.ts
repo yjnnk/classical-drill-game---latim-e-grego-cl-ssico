@@ -28,6 +28,37 @@ test("a abertura sempre oferece áreas independentes para grego e latim", async 
   await expect(page.getByText("κρήνη", { exact: true })).toHaveCount(0);
 });
 
+test("o tema começa escuro e é compartilhado entre os idiomas", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await page.getByRole("button", { name: "Grego clássico" }).click();
+  await expect(page.getByRole("radio", { name: "Escuro" })).toBeChecked();
+
+  await page.getByRole("radio", { name: "Claro" }).check();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  await page.getByRole("button", { name: "Trocar idioma" }).click();
+  await page.getByRole("button", { name: "Latim" }).click();
+  await expect(page.getByRole("radio", { name: "Claro" })).toBeChecked();
+
+  await page.getByRole("radio", { name: "Escuro" }).check();
+  await expect(page.locator("body")).toHaveCSS(
+    "background-color",
+    "rgb(21, 28, 24)",
+  );
+  await expect(page.locator(".intro")).toHaveCSS("color", "rgb(211, 221, 213)");
+  await page.getByRole("button", { name: "Trocar idioma" }).click();
+  await page.getByRole("button", { name: "Grego clássico" }).click();
+  await expect(page.getByRole("radio", { name: "Escuro" })).toBeChecked();
+
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+});
+
 test("migra dados gregos legados somente depois de validar a cópia", async ({
   page,
 }) => {

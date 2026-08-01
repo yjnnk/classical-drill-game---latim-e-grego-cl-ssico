@@ -35,12 +35,19 @@ import {
 } from "./backup";
 import { migrateGreekLegacyStorage, type StudyLanguage } from "./language";
 import { createLatinApp } from "./latin-app";
+import {
+  applyTheme,
+  loadTheme,
+  saveTheme,
+  type ColorTheme,
+} from "./theme";
 import "./styles.css";
 
 const root = document.querySelector<HTMLElement>("#app");
 if (!root) throw new Error("Elemento raiz da aplicação não encontrado.");
 const app = root;
 let currentLanguage: StudyLanguage | null = null;
+applyTheme(loadTheme());
 
 function renderLanguageSelector(): void {
   currentLanguage = null;
@@ -109,6 +116,7 @@ function renderHome(): void {
   document.onkeydown = null;
   const saved = loadDecks();
   const preferences = loadPreferences();
+  const theme = loadTheme();
   const active = loadActiveRound();
   app.innerHTML = `
     <section class="home" aria-labelledby="page-title">
@@ -127,6 +135,7 @@ function renderHome(): void {
         <div><p class="deck-label">Apoios pedagógicos</p><h2 id="preference-title">Exibição</h2></div>
         <label class="filter-option"><input type="checkbox" data-preference="showTransliteration" ${preferences.showTransliteration ? "checked" : ""}><span>Mostrar transliteração</span></label>
         <label class="filter-option"><input type="checkbox" data-preference="showTranslation" ${preferences.showTranslation ? "checked" : ""}><span>Mostrar tradução</span></label>
+        <fieldset class="theme-options"><legend>Tema</legend><label class="filter-option"><input type="radio" name="color-theme" value="dark" ${theme === "dark" ? "checked" : ""}><span>Escuro</span></label><label class="filter-option"><input type="radio" name="color-theme" value="light" ${theme === "light" ? "checked" : ""}><span>Claro</span></label></fieldset>
       </section>
 
       <section class="backup-panel" aria-labelledby="backup-title"><div><p class="deck-label">Dados locais</p><h2 id="backup-title">Backup</h2></div><div class="card-actions"><button class="quiet" data-action="export">Exportar JSON</button><label class="quiet file-button">Importar JSON<input type="file" accept="application/json,.json" data-action="import"></label></div><div class="import-preview" aria-live="polite"></div></section>
@@ -166,6 +175,13 @@ function renderHome(): void {
       savePreferences(next);
       renderHome();
     }),
+  );
+  app.querySelectorAll<HTMLInputElement>("[name='color-theme']").forEach(
+    (input) =>
+      input.addEventListener("change", () => {
+        saveTheme(input.value as ColorTheme);
+        renderHome();
+      }),
   );
 
   app

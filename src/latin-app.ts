@@ -28,6 +28,7 @@ import {
   savePreferences,
   type Preferences,
 } from "./preferences";
+import { loadTheme, saveTheme, type ColorTheme } from "./theme";
 import { DrillRound, type RoundConfig, type RoundQuestion } from "./round";
 
 type SwitchLanguage = () => void;
@@ -74,11 +75,12 @@ export function createLatinApp(
     document.onkeydown = null;
     const saved = decks();
     const preferences = prefs();
+    const theme = loadTheme();
     const active = loadActiveRound("latin");
     root.innerHTML = `<section class="home latin-home" aria-labelledby="page-title">
       <div class="title-row"><div><p class="eyebrow">Recuperação ativa · sem pressa</p><h1 id="page-title">Latim</h1><p class="intro">Monte recortes precisos do que deseja recordar. Tudo fica neste aparelho.</p></div><div class="header-actions"><button class="quiet" data-action="switch">Trocar idioma</button><button class="primary" data-action="create" ${active ? "disabled" : ""}>Criar baralho</button></div></div>
       ${active ? `<section class="active-round"><div><p class="deck-label">Rodada em andamento</p><h2>${esc(active.deck.title)}</h2><p>Progresso: ${active.snapshot.masteredIds.length} de ${active.snapshot.total}</p></div><div class="card-actions"><button class="primary" data-action="resume">Retomar rodada</button><button class="quiet danger" data-action="abandon">Abandonar rodada</button></div></section>` : ""}
-      <section class="preference-panel"><div><p class="deck-label">Apoios pedagógicos</p><h2>Exibição</h2></div><label class="filter-option"><input type="checkbox" data-pref="showTransliteration" ${preferences.showTransliteration ? "checked" : ""}><span>Mostrar forma sem mácrons</span></label><label class="filter-option"><input type="checkbox" data-pref="showTranslation" ${preferences.showTranslation ? "checked" : ""}><span>Mostrar tradução</span></label></section>
+      <section class="preference-panel"><div><p class="deck-label">Apoios pedagógicos</p><h2>Exibição</h2></div><label class="filter-option"><input type="checkbox" data-pref="showTransliteration" ${preferences.showTransliteration ? "checked" : ""}><span>Mostrar forma sem mácrons</span></label><label class="filter-option"><input type="checkbox" data-pref="showTranslation" ${preferences.showTranslation ? "checked" : ""}><span>Mostrar tradução</span></label><fieldset class="theme-options"><legend>Tema</legend><label class="filter-option"><input type="radio" name="color-theme" value="dark" ${theme === "dark" ? "checked" : ""}><span>Escuro</span></label><label class="filter-option"><input type="radio" name="color-theme" value="light" ${theme === "light" ? "checked" : ""}><span>Claro</span></label></fieldset></section>
       <section class="backup-panel"><div><p class="deck-label">Dados locais do latim</p><h2>Backup</h2></div><div class="card-actions"><button class="quiet" data-action="export">Exportar JSON</button><label class="quiet file-button">Importar JSON<input type="file" accept="application/json,.json" data-action="import"></label></div><div class="import-preview" aria-live="polite"></div></section>
       ${saved.length ? `<h2 class="section-title">Meus baralhos</h2><div class="deck-list">${saved.map(deckCard).join("")}</div>` : ""}
       <h2 class="section-title">Modelos para começar</h2><div class="deck-list">${latinBuiltInDecks.map(modelCard).join("")}</div>
@@ -122,6 +124,13 @@ export function createLatinApp(
         savePreferences(value, "latin");
         renderHome();
       }),
+    );
+    root.querySelectorAll<HTMLInputElement>("[name=color-theme]").forEach(
+      (input) =>
+        input.addEventListener("change", () => {
+          saveTheme(input.value as ColorTheme);
+          renderHome();
+        }),
     );
     root
       .querySelectorAll<HTMLButtonElement>("[data-model]")
