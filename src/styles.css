@@ -115,6 +115,25 @@ h1 {
   gap: 1rem;
 }
 
+.preference-panel {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid rgb(55 79 66 / 18%);
+  border-radius: 1rem;
+  background: rgb(255 253 247 / 65%);
+}
+
+.preference-panel h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
 .deck-card h2,
 .deck-card h3,
 .catalog-card h3 {
@@ -611,6 +630,36 @@ legend {
 
 .feedback-copy span {
   color: #617067;
+}
+
+.feedback-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.paradigm-context {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  background: #edf0e8;
+}
+
+.paradigm-context > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+
+.paradigm-form {
+  padding: 0.25rem 0.45rem;
+  border-radius: 0.35rem;
+  background: #fffdf7;
+}
+
+.paradigm-form.current {
+  outline: 2px solid #315e42;
+  font-weight: 750;
 }
 
 .complete {

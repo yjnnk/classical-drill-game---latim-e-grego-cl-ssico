@@ -75,6 +75,7 @@ export interface DrillItem {
   analyses: Analysis[];
   support?: string;
   context?: string;
+  contextSupport?: string;
   productionContext?: string;
   sourceBlockIds?: string[];
   sourceParadigmIds?: string[];

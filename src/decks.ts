@@ -12,6 +12,7 @@ import {
   type DirectionMode,
   type RoundConfig
 } from "./round";
+import { loadPreferences, type Preferences } from "./preferences";
 
 export interface ContentBlock {
   id: string;
@@ -200,7 +201,10 @@ export function deckError(deck: SavedDeck): string | null {
   );
 }
 
-export function playableDeck(deck: SavedDeck): DrillDeck {
+export function playableDeck(
+  deck: SavedDeck,
+  preferences: Preferences = loadPreferences()
+): DrillDeck {
   const deduplicated = new Map<string, DrillItem>();
   for (const block of deck.blocks) {
     for (const item of itemsForBlock(block)) {
@@ -226,11 +230,6 @@ export function playableDeck(deck: SavedDeck): DrillDeck {
             paradigm.id
           ])
         ],
-        support:
-          existing?.support ??
-          (block.showTransliteration
-            ? paradigm.lemma.transliteration
-            : undefined),
         productionContext: paradigm.lemma.greek
       });
     }
@@ -256,8 +255,18 @@ export function playableDeck(deck: SavedDeck): DrillDeck {
         ?.map((id) => catalogParadigms.find((paradigm) => paradigm.id === id)?.lemma.greek)
         .filter(Boolean)
         .join(" / ");
+      item.contextSupport = item.sourceParadigmIds
+        ?.map((id) => catalogParadigms.find((paradigm) => paradigm.id === id))
+        .filter((paradigm): paradigm is CatalogParadigm => Boolean(paradigm))
+        .map((paradigm) => [
+          preferences.showTransliteration ? paradigm.lemma.transliteration : "",
+          preferences.showTranslation ? paradigm.lemma.gloss : ""
+        ].filter(Boolean).join(" · "))
+        .filter(Boolean)
+        .join(" / ");
     } else {
       delete item.context;
+      delete item.contextSupport;
     }
   }
   return {

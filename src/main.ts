@@ -20,7 +20,8 @@ import {
   type ContentBlock,
   type SavedDeck
 } from "./decks";
-import { DrillRound, type RoundConfig } from "./round";
+import { DrillRound, type RoundConfig, type RoundQuestion } from "./round";
+import { loadPreferences, savePreferences } from "./preferences";
 import "./styles.css";
 
 const root = document.querySelector<HTMLElement>("#app");
@@ -49,6 +50,7 @@ function joinPortuguese(values: string[]): string {
 
 function renderHome(): void {
   const saved = loadDecks();
+  const preferences = loadPreferences();
   app.innerHTML = `
     <section class="home" aria-labelledby="page-title">
       <div class="title-row">
@@ -60,11 +62,26 @@ function renderHome(): void {
         <button class="primary" type="button" data-action="create">Criar baralho</button>
       </div>
 
+      <section class="preference-panel" aria-labelledby="preference-title">
+        <div><p class="deck-label">Apoios pedagógicos</p><h2 id="preference-title">Exibição</h2></div>
+        <label class="filter-option"><input type="checkbox" data-preference="showTransliteration" ${preferences.showTransliteration ? "checked" : ""}><span>Mostrar transliteração</span></label>
+        <label class="filter-option"><input type="checkbox" data-preference="showTranslation" ${preferences.showTranslation ? "checked" : ""}><span>Mostrar tradução</span></label>
+      </section>
+
       ${saved.length ? `<h2 class="section-title">Meus baralhos</h2><div class="deck-list">${saved.map(savedDeckCard).join("")}</div>` : ""}
       <h2 class="section-title">Modelos para começar</h2>
       <div class="deck-list">${builtInDecks.map(builtInDeckCard).join("")}</div>
     </section>
   `;
+
+  app.querySelectorAll<HTMLInputElement>("[data-preference]").forEach((input) =>
+    input.addEventListener("change", () => {
+      const next = loadPreferences();
+      next[input.dataset.preference as keyof typeof next] = input.checked;
+      savePreferences(next);
+      renderHome();
+    })
+  );
 
   app.querySelector<HTMLButtonElement>("[data-action='create']")?.addEventListener(
     "click",
@@ -226,6 +243,11 @@ function blockCard(
   direction: SavedDeck["direction"]
 ): string {
   const paradigm = paradigmFor(block);
+  const preferences = loadPreferences();
+  const supports = [
+    preferences.showTransliteration ? paradigm.lemma.transliteration : "",
+    preferences.showTranslation ? paradigm.lemma.gloss : ""
+  ].filter(Boolean).join(" · ");
   const items = itemsForBlock(block);
   const error = blockError(block, direction);
   const summary = paradigm.filters
@@ -242,14 +264,13 @@ function blockCard(
     .join(" · ") || "todas as formas";
   return `<article class="content-block" data-block="${block.id}">
     <header class="block-header">
-      <div><p class="deck-label">Bloco ${index + 1} · ${paradigm.category}</p><h2 lang="grc">${paradigm.lemma.greek}</h2><p>${paradigm.lemma.transliteration} · ${paradigm.lemma.gloss}</p></div>
+      <div><p class="deck-label">Bloco ${index + 1} · ${paradigm.category}</p><h2 lang="grc">${paradigm.lemma.greek}</h2>${supports ? `<p>${supports}</p>` : ""}</div>
       <div class="inline-actions"><button class="quiet compact" data-block-action="duplicate">Duplicar bloco</button><button class="quiet compact danger" data-block-action="remove">Remover bloco</button></div>
     </header>
     <div class="filter-grid">${paradigm.filters.map((filter) => `
       <fieldset><legend>${filter.label}</legend>${filter.options.map((option) => `
         <label class="filter-option"><input type="checkbox" data-field="${filter.field}" value="${option.value}" aria-label="${option.label}" ${(block.selected[filter.field] ?? []).includes(option.value) ? "checked" : ""}><span>${option.label}</span></label>`).join("")}
       </fieldset>`).join("")}</div>
-    <label class="pedagogy-option"><input type="checkbox" data-presentation="transliteration" ${block.showTransliteration ? "checked" : ""}> Mostrar transliteração como apoio pedagógico</label>
     ${paradigm.supportsArticleMode ? `<fieldset class="article-mode"><legend>Apresentação nominal</legend>
       <label class="filter-option"><input type="radio" name="article-${block.id}" value="with" ${block.articleMode === "with" ? "checked" : ""}><span>Com artigo</span></label>
       <label class="filter-option"><input type="radio" name="article-${block.id}" value="without" ${block.articleMode === "without" ? "checked" : ""}><span>Sem artigo</span></label>
@@ -272,9 +293,6 @@ function wireBlocks(deck: SavedDeck): void {
         block.selected[field] = [...values];
         renderEditor(deck);
       });
-    });
-    element.querySelector<HTMLInputElement>("[data-presentation]")?.addEventListener("change", (event) => {
-      block.showTransliteration = (event.currentTarget as HTMLInputElement).checked;
     });
     element.querySelectorAll<HTMLInputElement>(`[name='article-${block.id}']`).forEach((input) =>
       input.addEventListener("change", () => {
@@ -324,7 +342,12 @@ function catalogPicker(query: string, category: string): string {
 }
 
 function catalogResult(paradigm: CatalogParadigm): string {
-  return `<article class="catalog-card"><div><p class="deck-label">${paradigm.category}</p><h3 lang="grc">${paradigm.lemma.greek}</h3><p>${paradigm.lemma.transliteration} · ${paradigm.lemma.gloss}</p></div><button class="primary" data-add-paradigm="${paradigm.id}">Adicionar ${paradigm.lemma.greek}</button></article>`;
+  const preferences = loadPreferences();
+  const supports = [
+    preferences.showTransliteration ? paradigm.lemma.transliteration : "",
+    preferences.showTranslation ? paradigm.lemma.gloss : ""
+  ].filter(Boolean).join(" · ");
+  return `<article class="catalog-card"><div><p class="deck-label">${paradigm.category}</p><h3 lang="grc">${paradigm.lemma.greek}</h3>${supports ? `<p>${supports}</p>` : ""}</div><button class="primary" data-add-paradigm="${paradigm.id}">Adicionar ${paradigm.lemma.greek}</button></article>`;
 }
 
 function wireCatalog(deck: SavedDeck, query: string, category: string): void {
@@ -354,16 +377,16 @@ function startRound(
     const isAnalysis = question.direction === "analysis";
     app.innerHTML = `<section class="round" aria-labelledby="question-title">
       <header class="round-header"><button class="quiet" data-action="exit">Sair</button><p aria-live="polite">Progresso: ${round.masteredCount} de ${round.total}</p></header>
-      <div class="prompt"><p id="question-title">${isAnalysis ? "Qual é a análise desta forma?" : "Qual forma corresponde a esta análise?"}</p><p class="${isAnalysis ? "greek-form" : "analysis-prompt"}" ${isAnalysis ? 'lang="grc"' : ""}>${question.prompt}</p>${question.context ? `<p class="form-context">Lema: <span lang="grc">${question.context}</span></p>` : ""}${isAnalysis && question.item.support ? `<p class="pedagogical-support">${question.item.support}</p>` : ""}</div>
+      <div class="prompt"><p id="question-title">${isAnalysis ? "Qual é a análise desta forma?" : "Qual forma corresponde a esta análise?"}</p><p class="${isAnalysis ? "greek-form" : "analysis-prompt"}" ${isAnalysis ? 'lang="grc"' : ""}>${question.prompt}</p>${question.context ? `<p class="form-context">Lema: <span lang="grc">${question.context}</span>${question.item.contextSupport ? ` · ${question.item.contextSupport}` : ""}</p>` : ""}</div>
       <div class="options" role="group" aria-label="Alternativas">${question.choices.map((choice, index) => `<button class="option"><span class="option-number">${index + 1}</span><span>${choice.label}</span></button>`).join("")}</div><div class="feedback" aria-live="polite"></div></section>`;
     app.querySelector<HTMLButtonElement>("[data-action='exit']")?.addEventListener("click", renderHome);
     const buttons = [...app.querySelectorAll<HTMLButtonElement>(".option")];
     buttons.forEach((button, index) => {
       const selected = question.choices[index];
-      if (selected) button.addEventListener("click", () => answer(buttons, button, selected.id));
+      if (selected) button.addEventListener("click", () => answer(question, buttons, button, selected.id));
     });
   }
-  function answer(buttons: HTMLButtonElement[], selectedButton: HTMLButtonElement, selected: string): void {
+  function answer(question: RoundQuestion, buttons: HTMLButtonElement[], selectedButton: HTMLButtonElement, selected: string): void {
     const result = round.answer(selected);
     const correct = result.correctLabel;
     buttons.forEach((button) => {
@@ -373,7 +396,17 @@ function startRound(
     if (!result.isCorrect) selectedButton.classList.add("incorrect");
     const feedback = app.querySelector<HTMLElement>(".feedback");
     if (feedback) {
-      feedback.innerHTML = `<div class="feedback-copy ${result.isCorrect ? "success" : "error"}"><strong>${result.isCorrect ? "Correto" : "Ainda não"}</strong><span>${result.isCorrect ? "Você reconheceu a forma." : `A resposta é ${correct}. Esta forma voltará.`}</span></div><button class="primary" data-action="continue">Continuar</button>`;
+      feedback.innerHTML = `<div class="feedback-copy ${result.isCorrect ? "success" : "error"}"><strong>${result.isCorrect ? "Correto" : "Ainda não"}</strong><span>${result.isCorrect ? "Você reconheceu a forma." : `A resposta é ${correct}. Esta forma voltará.`}</span></div><div class="feedback-actions"><button class="quiet" data-action="paradigm">Ver no paradigma</button><button class="primary" data-action="continue">Continuar</button></div><div class="paradigm-context" hidden></div>`;
+      feedback.querySelector<HTMLButtonElement>("[data-action='paradigm']")?.addEventListener("click", () => {
+        const panel = feedback.querySelector<HTMLElement>(".paradigm-context");
+        if (!panel) return;
+        const sourceParadigmIds = question.item.sourceParadigmIds;
+        const related = sourceParadigmIds?.length
+          ? deck.items.filter((item) => item.sourceParadigmIds?.some((id) => sourceParadigmIds.includes(id)))
+          : deck.items;
+        panel.hidden = !panel.hidden;
+        panel.innerHTML = `<strong>Contexto do paradigma</strong><div>${related.slice(0, 40).map((item) => `<span class="paradigm-form ${item.id === question.item.id ? "current" : ""}" lang="grc">${item.form}</span>`).join("")}</div>`;
+      });
       feedback.querySelector<HTMLButtonElement>("[data-action='continue']")?.addEventListener("click", renderQuestion);
     }
   }
