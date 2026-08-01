@@ -47,6 +47,28 @@ test("o estudante pesquisa, filtra e salva um baralho", async ({ page }) => {
   await expect(page.locator(".greek-form")).toBeVisible();
 });
 
+test("cada bloco pode ter todas as formas desselecionadas de uma vez", async ({
+  page,
+}) => {
+  await page.getByRole("button", { name: "Criar baralho" }).click();
+  await page.getByRole("button", { name: "Adicionar conteúdo" }).click();
+  await page.getByRole("button", { name: "Adicionar κρήνη" }).click();
+
+  const block = page.getByRole("article").filter({
+    has: page.getByRole("heading", { name: "κρήνη" }),
+  });
+  await block.getByRole("button", { name: "Desselecionar tudo" }).click();
+
+  expect(
+    await block
+      .getByRole("checkbox")
+      .evaluateAll((inputs) =>
+        inputs.every((input) => !(input as HTMLInputElement).checked),
+      ),
+  ).toBe(true);
+  await expect(block).toContainText("0 formas incluídas");
+});
+
 test("blocos e baralhos podem ser duplicados, editados e excluídos", async ({
   page,
 }) => {

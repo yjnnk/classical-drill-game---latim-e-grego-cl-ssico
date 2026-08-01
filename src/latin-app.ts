@@ -313,7 +313,7 @@ export function createLatinApp(
       .filter(Boolean)
       .join(" · ");
     const issue = blockError(block, direction, latinCatalogParadigms);
-    return `<article class="content-block" data-block="${block.id}"><header class="block-header"><div><p class="deck-label">Bloco ${index + 1} · ${paradigm.category}</p><h2 lang="la">${paradigm.lemma.form}</h2>${support ? `<p>${support}</p>` : ""}</div><button class="quiet compact danger" data-remove>Remover bloco</button></header><div class="filter-grid">${paradigm.filters.map((filter) => `<fieldset><legend>${filter.label}</legend>${filter.options.map((option) => `<label class="filter-option"><input type="checkbox" data-field="${filter.field}" value="${option.value}" aria-label="${option.label}" ${(block.selected[filter.field] ?? []).includes(option.value) ? "checked" : ""}><span>${option.label}</span></label>`).join("")}</fieldset>`).join("")}</div><div class="block-summary"><strong>${blockItems(block).length} formas incluídas</strong></div>${issue ? `<p class="validation-message">${issue}</p>` : ""}</article>`;
+    return `<article class="content-block" data-block="${block.id}"><header class="block-header"><div><p class="deck-label">Bloco ${index + 1} · ${paradigm.category}</p><h2 lang="la">${paradigm.lemma.form}</h2>${support ? `<p>${support}</p>` : ""}</div><div class="inline-actions"><button class="quiet compact" data-clear>Desselecionar tudo</button><button class="quiet compact danger" data-remove>Remover bloco</button></div></header><div class="filter-grid">${paradigm.filters.map((filter) => `<fieldset><legend>${filter.label}</legend>${filter.options.map((option) => `<label class="filter-option"><input type="checkbox" data-field="${filter.field}" value="${option.value}" aria-label="${option.label}" ${(block.selected[filter.field] ?? []).includes(option.value) ? "checked" : ""}><span>${option.label}</span></label>`).join("")}</fieldset>`).join("")}</div><div class="block-summary"><strong>${blockItems(block).length} formas incluídas</strong></div>${issue ? `<p class="validation-message">${issue}</p>` : ""}</article>`;
   };
   const wireBlocks = (deck: SavedDeck) =>
     root.querySelectorAll<HTMLElement>("[data-block]").forEach((element) => {
@@ -333,6 +333,15 @@ export function createLatinApp(
           }),
         );
       element
+        .querySelector<HTMLButtonElement>("[data-clear]")
+        ?.addEventListener("click", () => {
+          const paradigm = paradigmFor(block, latinCatalogParadigms);
+          paradigm.filters.forEach((filter) => {
+            block.selected[filter.field] = [];
+          });
+          renderEditor(deck);
+        });
+      element
         .querySelector<HTMLButtonElement>("[data-remove]")
         ?.addEventListener("click", () => {
           deck.blocks = deck.blocks.filter(({ id }) => id !== block.id);
@@ -340,6 +349,9 @@ export function createLatinApp(
         });
     });
   const catalogPicker = (query: string, category: string) => {
+    return `<section class="catalog"><div class="catalog-header"><div><p class="eyebrow">Catálogo latino</p><h2>Escolha um paradigma</h2></div><button class="quiet" data-close>Fechar</button></div><input class="search" type="search" aria-label="Pesquisar paradigmas" value="${esc(query)}" placeholder="Latim ou português"><div class="category-tabs">${["Todos", "Substantivo", "Pronome", "Adjetivo", "Verbo"].map((value) => `<button class="quiet compact" data-category="${value}">${value}${value === "Verbo" ? "s" : value === "Substantivo" ? "s" : value === "Pronome" ? "s" : value === "Adjetivo" ? "s" : ""}</button>`).join("")}</div><div class="catalog-results">${catalogResults(query, category)}</div></section>`;
+  };
+  const catalogResults = (query: string, category: string) => {
     const normalized = withoutMarks(query).toLocaleLowerCase("pt-BR");
     const results = latinCatalogParadigms.filter(
       (p) =>
@@ -350,29 +362,38 @@ export function createLatinApp(
           .toLocaleLowerCase("pt-BR")
           .includes(normalized),
     );
-    return `<section class="catalog"><div class="catalog-header"><div><p class="eyebrow">Catálogo latino</p><h2>Escolha um paradigma</h2></div><button class="quiet" data-close>Fechar</button></div><input class="search" type="search" aria-label="Pesquisar paradigmas" value="${esc(query)}" placeholder="Latim ou português"><div class="category-tabs">${["Todos", "Substantivo", "Pronome", "Adjetivo", "Verbo"].map((value) => `<button class="quiet compact" data-category="${value}">${value}${value === "Verbo" ? "s" : value === "Substantivo" ? "s" : value === "Pronome" ? "s" : value === "Adjetivo" ? "s" : ""}</button>`).join("")}</div><div class="catalog-results">${results.map(catalogCard).join("") || "<p>Nenhum paradigma encontrado.</p>"}</div></section>`;
+    return (
+      results.map(catalogCard).join("") ||
+      "<p>Nenhum paradigma encontrado.</p>"
+    );
   };
   const wireCatalog = (deck: SavedDeck, query: string, category: string) => {
     root
       .querySelector<HTMLButtonElement>("[data-close]")
       ?.addEventListener("click", () => renderEditor(deck));
-    root
-      .querySelector<HTMLInputElement>("[aria-label='Pesquisar paradigmas']")
-      ?.addEventListener("input", (event) =>
-        renderEditor(
-          deck,
-          true,
-          (event.currentTarget as HTMLInputElement).value,
-          category,
-        ),
-      );
+    const search = root.querySelector<HTMLInputElement>(
+      "[aria-label='Pesquisar paradigmas']",
+    );
+    search?.addEventListener("input", () => {
+      const results = root.querySelector<HTMLElement>(".catalog-results");
+      if (results) results.innerHTML = catalogResults(search.value, category);
+      wireCatalogAddButtons(deck);
+    });
     root
       .querySelectorAll<HTMLButtonElement>("[data-category]")
       .forEach((button) =>
         button.addEventListener("click", () =>
-          renderEditor(deck, true, query, button.dataset.category),
+          renderEditor(
+            deck,
+            true,
+            search?.value ?? query,
+            button.dataset.category,
+          ),
         ),
       );
+    wireCatalogAddButtons(deck);
+  };
+  const wireCatalogAddButtons = (deck: SavedDeck) => {
     root.querySelectorAll<HTMLButtonElement>("[data-add]").forEach((button) => {
       const paradigm = latinCatalogParadigms.find(
         ({ id }) => id === button.dataset.add,

@@ -490,7 +490,7 @@ function blockCard(
   return `<article class="content-block" data-block="${block.id}">
     <header class="block-header">
       <div><p class="deck-label">Bloco ${index + 1} · ${paradigm.category}</p><h2 lang="grc">${paradigm.lemma.form}</h2>${supports ? `<p>${supports}</p>` : ""}</div>
-      <div class="inline-actions"><button class="quiet compact" data-block-action="duplicate">Duplicar bloco</button><button class="quiet compact danger" data-block-action="remove">Remover bloco</button></div>
+      <div class="inline-actions"><button class="quiet compact" data-block-action="clear">Desselecionar tudo</button><button class="quiet compact" data-block-action="duplicate">Duplicar bloco</button><button class="quiet compact danger" data-block-action="remove">Remover bloco</button></div>
     </header>
     <div class="filter-grid">${paradigm.filters
       .map(
@@ -542,6 +542,15 @@ function wireBlocks(deck: SavedDeck): void {
         }),
       );
     element
+      .querySelector<HTMLButtonElement>("[data-block-action='clear']")
+      ?.addEventListener("click", () => {
+        const paradigm = paradigmFor(block);
+        paradigm.filters.forEach((filter) => {
+          block.selected[filter.field] = [];
+        });
+        renderEditor(deck);
+      });
+    element
       .querySelector<HTMLButtonElement>("[data-block-action='duplicate']")
       ?.addEventListener("click", () => {
         const copy = structuredClone(block);
@@ -559,20 +568,6 @@ function wireBlocks(deck: SavedDeck): void {
 }
 
 function catalogPicker(query: string, category: string): string {
-  const normalized = query.normalize("NFC").toLocaleLowerCase("pt-BR");
-  const results = catalogParadigms.filter((paradigm) => {
-    const matchesCategory =
-      category === "Todos" || paradigm.category === category;
-    const searchable = [
-      paradigm.lemma.form,
-      paradigm.lemma.transliteration,
-      paradigm.lemma.gloss,
-    ]
-      .join(" ")
-      .normalize("NFC")
-      .toLocaleLowerCase("pt-BR");
-    return matchesCategory && searchable.includes(normalized);
-  });
   return `<aside class="catalog" aria-labelledby="catalog-title">
     <div class="catalog-header"><div><p class="eyebrow">Catálogo</p><h2 id="catalog-title">Escolha um paradigma</h2></div><button class="quiet" data-action="close-catalog">Fechar</button></div>
     <input class="search" type="search" aria-label="Pesquisar paradigmas" value="${escapeHtml(query)}" placeholder="Grego, transliteração ou português">
@@ -592,8 +587,29 @@ function catalogPicker(query: string, category: string): string {
           `<button class="${category === value ? "active" : ""}" data-category="${value}">${label}</button>`,
       )
       .join("")}</div>
-    <div class="catalog-results">${results.map(catalogResult).join("") || "<p>Nenhum paradigma encontrado.</p>"}</div>
+    <div class="catalog-results">${catalogResults(query, category)}</div>
   </aside>`;
+}
+
+function catalogResults(query: string, category: string): string {
+  const normalized = query.normalize("NFC").toLocaleLowerCase("pt-BR");
+  const results = catalogParadigms.filter((paradigm) => {
+    const matchesCategory =
+      category === "Todos" || paradigm.category === category;
+    const searchable = [
+      paradigm.lemma.form,
+      paradigm.lemma.transliteration,
+      paradigm.lemma.gloss,
+    ]
+      .join(" ")
+      .normalize("NFC")
+      .toLocaleLowerCase("pt-BR");
+    return matchesCategory && searchable.includes(normalized);
+  });
+  return (
+    results.map(catalogResult).join("") ||
+    "<p>Nenhum paradigma encontrado.</p>"
+  );
 }
 
 function catalogResult(paradigm: CatalogParadigm): string {
@@ -614,16 +630,22 @@ function wireCatalog(deck: SavedDeck, query: string, category: string): void {
   const search = app.querySelector<HTMLInputElement>(
     "[aria-label='Pesquisar paradigmas']",
   );
-  search?.addEventListener("input", () =>
-    renderEditor(deck, true, search.value, category),
-  );
+  search?.addEventListener("input", () => {
+    const results = app.querySelector<HTMLElement>(".catalog-results");
+    if (results) results.innerHTML = catalogResults(search.value, category);
+    wireCatalogAddButtons(deck);
+  });
   app
     .querySelectorAll<HTMLButtonElement>("[data-category]")
     .forEach((button) =>
       button.addEventListener("click", () =>
-        renderEditor(deck, true, query, button.dataset.category),
+        renderEditor(deck, true, search?.value ?? query, button.dataset.category),
       ),
     );
+  wireCatalogAddButtons(deck);
+}
+
+function wireCatalogAddButtons(deck: SavedDeck): void {
   app
     .querySelectorAll<HTMLButtonElement>("[data-add-paradigm]")
     .forEach((button) => {

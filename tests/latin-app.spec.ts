@@ -149,6 +149,46 @@ test("catálogo latino contém substantivos, pronomes, adjetivos e verbos curado
   }
 });
 
+test("a busca latina aceita uma palavra inteira sem perder o foco", async ({
+  page,
+}) => {
+  await openLatin(page);
+  await page.getByRole("button", { name: "Criar baralho" }).click();
+  await page.getByRole("button", { name: "Adicionar conteúdo" }).click();
+
+  const search = page.getByLabel("Pesquisar paradigmas");
+  await search.pressSequentially("porta");
+
+  await expect(search).toBeFocused();
+  await expect(search).toHaveValue("porta");
+  await expect(
+    page.getByRole("heading", { name: "porta", exact: true }),
+  ).toBeVisible();
+});
+
+test("um bloco latino pode ter todas as formas desselecionadas", async ({
+  page,
+}) => {
+  await openLatin(page);
+  await page.getByRole("button", { name: "Criar baralho" }).click();
+  await page.getByRole("button", { name: "Adicionar conteúdo" }).click();
+  await page.getByRole("button", { name: "Adicionar porta" }).click();
+
+  const block = page.getByRole("article").filter({
+    has: page.getByRole("heading", { name: "porta", exact: true }),
+  });
+  await block.getByRole("button", { name: "Desselecionar tudo" }).click();
+
+  expect(
+    await block
+      .getByRole("checkbox")
+      .evaluateAll((inputs) =>
+        inputs.every((input) => !(input as HTMLInputElement).checked),
+      ),
+  ).toBe(true);
+  await expect(block).toContainText("0 formas incluídas");
+});
+
 test("apoios latinos de tradução e forma sem mácrons são independentes", async ({
   page,
 }) => {

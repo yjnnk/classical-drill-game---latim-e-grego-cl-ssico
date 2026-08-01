@@ -35,6 +35,17 @@ test("as três declinações, o artigo e os pronomes são encontráveis", async 
   ).toBeVisible();
 });
 
+test("a busca aceita uma palavra inteira sem perder o foco", async ({ page }) => {
+  const search = page.getByLabel("Pesquisar paradigmas");
+  await search.pressSequentially("fonte");
+
+  await expect(search).toBeFocused();
+  await expect(search).toHaveValue("fonte");
+  await expect(
+    page.getByRole("heading", { name: "κρήνη", exact: true }),
+  ).toBeVisible();
+});
+
 test("substantivo sem artigo e sem dual respeita o recorte na rodada", async ({
   page,
 }) => {
