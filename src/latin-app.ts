@@ -471,7 +471,7 @@ export function createLatinApp(
     const complete = () => {
       clearActiveRound("latin");
       document.onkeydown = null;
-      root.innerHTML = `<section class="complete"><p class="completion-mark">✓</p><p class="eyebrow">Rodada concluída</p><h1>Você reconheceu todas as formas.</h1><p>Sem nota e sem pressa. Apenas a prática feita.</p><button class="primary" data-home>Voltar ao início</button></section>`;
+      root.innerHTML = `<section class="complete"><p class="completion-mark">✓</p><p class="eyebrow">Rodada concluída</p><h1>Você reconheceu todas as formas.</h1><button class="primary" data-home>Voltar ao início</button></section>`;
       root
         .querySelector<HTMLButtonElement>("[data-home]")
         ?.addEventListener("click", renderHome);

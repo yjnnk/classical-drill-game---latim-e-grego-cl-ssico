@@ -727,7 +727,7 @@ function startRound(
   function renderComplete(): void {
     document.onkeydown = null;
     clearActiveRound();
-    app.innerHTML = `<section class="complete"><p class="completion-mark">✓</p><p class="eyebrow">Rodada concluída</p><h1>Você reconheceu todas as formas.</h1><p>Sem nota e sem pressa. Apenas a prática feita.</p><button class="primary" data-action="home">Voltar ao início</button></section>`;
+    app.innerHTML = `<section class="complete"><p class="completion-mark">✓</p><p class="eyebrow">Rodada concluída</p><h1>Você reconheceu todas as formas.</h1><button class="primary" data-action="home">Voltar ao início</button></section>`;
     app
       .querySelector<HTMLButtonElement>("[data-action='home']")
       ?.addEventListener("click", renderHome);

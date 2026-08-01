@@ -118,9 +118,7 @@ test("a rodada termina depois de acertar todas as formas", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: "Você reconheceu todas as formas." }),
   ).toBeVisible();
-  await expect(
-    page.getByText("Sem nota e sem pressa. Apenas a prática feita."),
-  ).toBeVisible();
+  await expect(page.getByText("Sem nota e sem pressa.")).toHaveCount(0);
 });
 
 test("a rodada completa continua disponível offline", async ({
