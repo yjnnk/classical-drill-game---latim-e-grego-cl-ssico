@@ -799,6 +799,8 @@ html[data-language="latin"] {
   --accent: #7b2635;
   --accent-dark: #551a25;
   --wash: #f7f0e6;
+  color: #3f302b;
+  background: #f5eee3;
 }
 
 html[data-language="latin"] body {
@@ -821,10 +823,44 @@ html[data-language="latin"] .section-title {
 }
 
 html[data-language="latin"] .deck-card,
-html[data-language="latin"] .preference-panel {
+html[data-language="latin"] .preference-panel,
+html[data-language="latin"] .backup-panel,
+html[data-language="latin"] .active-round,
+html[data-language="latin"] .content-block,
+html[data-language="latin"] .catalog,
+html[data-language="latin"] .round-settings,
+html[data-language="latin"] .option,
+html[data-language="latin"] input[type="text"],
+html[data-language="latin"] .name-field input,
+html[data-language="latin"] .search,
+html[data-language="latin"] .paradigm-form {
   border-color: rgb(112 55 55 / 20%);
   background: rgb(255 251 243 / 86%);
+  color: #3f302b;
   box-shadow: 0 1.25rem 3rem rgb(82 42 34 / 9%);
+}
+
+html[data-language="latin"] .intro,
+html[data-language="latin"] .round-header,
+html[data-language="latin"] .prompt > p:first-child,
+html[data-language="latin"] .feedback-copy span,
+html[data-language="latin"] .form-context {
+  color: #5e5049;
+}
+
+html[data-language="latin"] .preference-panel h2,
+html[data-language="latin"] .backup-panel h2,
+html[data-language="latin"] .active-round h2,
+html[data-language="latin"] .latin-form,
+html[data-language="latin"] .analysis-prompt {
+  color: #401a21;
+}
+
+.latin-form {
+  margin: 0;
+  font-family: "Noto Serif Local", Georgia, serif;
+  font-size: clamp(3rem, 13vw, 6.5rem);
+  line-height: 1.2;
 }
 
 .language-gate {

@@ -47,6 +47,31 @@ test("porta oferece uma rodada latina completa com três alternativas", async ({
   ).toHaveCount(3);
 });
 
+test("mantém legíveis os textos latinos quando o sistema usa tema escuro", async ({
+  page,
+}) => {
+  await page.emulateMedia({ colorScheme: "dark" });
+  await openLatin(page);
+  await expect(page.locator(".intro")).toHaveText("Monte práticas latinas precisas.");
+  await expect(page.locator(".intro")).toHaveCSS("color", "rgb(94, 80, 73)");
+  await expect(page.getByRole("heading", { name: "Exibição" })).toHaveCSS(
+    "color",
+    "rgb(64, 26, 33)",
+  );
+  const model = page
+    .getByRole("article")
+    .filter({ has: page.getByRole("heading", { name: "porta", exact: true }) });
+  await model.getByRole("button", { name: "Iniciar rodada" }).click();
+  await expect(page.getByText("Qual é a análise desta forma?")).toHaveCSS(
+    "color",
+    "rgb(94, 80, 73)",
+  );
+  await expect(page.locator(".latin-form")).toHaveCSS(
+    "color",
+    "rgb(64, 26, 33)",
+  );
+});
+
 test("permite repetir uma sessão latina concluída com progresso zerado", async ({
   page,
 }) => {
