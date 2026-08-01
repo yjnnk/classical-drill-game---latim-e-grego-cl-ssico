@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
+  base: process.env.GITHUB_ACTIONS ? "/classical-drill-game---latim-e-grego-cl-ssico/" : "/",
   plugins: [
     VitePWA({
       registerType: "autoUpdate",
@@ -12,10 +13,10 @@ export default defineConfig({
         theme_color: "#21352b",
         background_color: "#f6f1e7",
         display: "standalone",
-        start_url: "/",
+        start_url: ".",
         icons: [
           {
-            src: "/icon.svg",
+            src: "icon.svg",
             sizes: "any",
             type: "image/svg+xml",
             purpose: "any maskable"

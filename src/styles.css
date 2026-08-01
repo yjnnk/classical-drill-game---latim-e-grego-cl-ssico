@@ -1,4 +1,7 @@
 :root {
+  --paper: #fffdf7;
+  --line: rgb(55 79 66 / 18%);
+  --accent: #315e42;
   color: #26332d;
   background: #f6f1e7;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -20,6 +23,7 @@ body {
 
 button {
   font: inherit;
+  min-height: 2.75rem;
 }
 
 #app {
@@ -758,4 +762,27 @@ legend {
       border-color 160ms ease,
       transform 160ms ease;
   }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #202923;
+    --line: rgb(224 234 225 / 18%);
+    --accent: #8fbea0;
+    color: #e4ebe5;
+    background: #151c18;
+  }
+
+  body { background: #151c18; }
+  .deck-card, .preference-panel, .backup-panel, .active-round, .content-block, .catalog, .round-settings, .option, input[type="text"], .name-field input, .search, .paradigm-form { background: #202923; color: #e4ebe5; }
+  h1, .deck-card h2, .deck-card h3, .catalog-card h3, .block-header h2, .catalog h2, .round-settings h2, .greek-form, .analysis-prompt { color: #f1f4ef; }
+  .intro, .deck-card p:last-child, .catalog-card p, .round-header, .prompt > p:first-child, .feedback-copy span, .form-context { color: #b6c2b9; }
+  .editor-footer { background: rgb(21 28 24 / 94%); }
+  .paradigm-context, .filter-option span, .option-number, .category-tabs button { background: #29362e; color: #d6e0d8; }
+  .option.correct { background: #203c2b; }
+  .option.incorrect { background: #482b28; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }

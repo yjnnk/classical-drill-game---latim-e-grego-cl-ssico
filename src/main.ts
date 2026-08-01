@@ -51,6 +51,7 @@ function joinPortuguese(values: string[]): string {
 }
 
 function renderHome(): void {
+  document.onkeydown = null;
   const saved = loadDecks();
   const preferences = loadPreferences();
   const active = loadActiveRound();
@@ -136,6 +137,14 @@ function renderHome(): void {
     button.disabled = Boolean(active);
     if (deck) button.addEventListener("click", () => startRound(deck));
   });
+  app.querySelectorAll<HTMLButtonElement>("[data-copy-built-in]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const template = savedTemplate(button.dataset.copyBuiltIn ?? "");
+      if (!template) return;
+      saveDecks([...saved, template]);
+      renderEditor(structuredClone(template));
+    });
+  });
   app.querySelectorAll<HTMLButtonElement>("[data-deck-action]").forEach((button) => {
     const deck = saved.find(({ id }) => id === button.dataset.deckId);
     if (!deck) return;
@@ -182,8 +191,23 @@ function renderImportPreview(preview: HTMLElement, backup: BackupFile, current: 
 function builtInDeckCard(deck: DrillDeck): string {
   return `<article class="deck-card">
     <div><p class="deck-label">Baralho inicial</p><h3 lang="grc">${deck.title}</h3><p>${deck.description}</p></div>
-    <button class="primary" type="button" data-built-in="${deck.id}">Iniciar rodada</button>
+    <div class="card-actions"><button class="primary" type="button" data-built-in="${deck.id}">Iniciar rodada</button><button class="quiet compact" type="button" data-copy-built-in="${deck.id}">Usar como modelo</button></div>
   </article>`;
+}
+
+function savedTemplate(id: string): SavedDeck | null {
+  const krene = createBlock(catalogParadigms.find(({ id }) => id === "noun:krene")!);
+  krene.selected.number = ["singular", "plural"];
+  const luo = createBlock(catalogParadigms.find(({ id }) => id === "verb:luo")!);
+  luo.selected.form = ["finite"];
+  luo.selected.tense = ["present"];
+  luo.selected.voice = ["active"];
+  luo.selected.mood = ["indicative"];
+  const common = { id: createId("deck"), coverage: "all" as const, quantity: 10 };
+  if (id === "deck:krene") return { ...common, name: "κρήνη sem dual", blocks: [krene], direction: "analysis" };
+  if (id === "deck:luo-present-active-indicative") return { ...common, name: "λῡ́ω — presente ativo indicativo", blocks: [luo], direction: "analysis" };
+  if (id === "deck:mixed-starter") return { ...common, name: "κρήνη + λῡ́ω — misto", blocks: [krene, luo], direction: "mixed" };
+  return null;
 }
 
 function savedDeckCard(deck: SavedDeck): string {
@@ -203,6 +227,7 @@ function savedDeckCard(deck: SavedDeck): string {
 }
 
 function renderEditor(deck: SavedDeck, catalogOpen = false, query = "", category = "Todos"): void {
+  document.onkeydown = null;
   const invalid = deckError(deck);
   app.innerHTML = `
     <section class="editor" aria-labelledby="editor-title">
@@ -443,6 +468,10 @@ function startRound(
       const selected = question.choices[index];
       if (selected) button.addEventListener("click", () => answer(question, buttons, button, selected.id));
     });
+    document.onkeydown = (event) => {
+      if (["1", "2", "3"].includes(event.key)) buttons[Number(event.key) - 1]?.click();
+      if (event.key === "Enter") app.querySelector<HTMLButtonElement>("[data-action='continue']")?.click();
+    };
   }
   function answer(question: RoundQuestion, buttons: HTMLButtonElement[], selectedButton: HTMLButtonElement, selected: string): void {
     const result = round.answer(selected);
@@ -455,7 +484,7 @@ function startRound(
     if (!result.isCorrect) selectedButton.classList.add("incorrect");
     const feedback = app.querySelector<HTMLElement>(".feedback");
     if (feedback) {
-      feedback.innerHTML = `<div class="feedback-copy ${result.isCorrect ? "success" : "error"}"><strong>${result.isCorrect ? "Correto" : "Ainda não"}</strong><span>${result.isCorrect ? "Você reconheceu a forma." : `A resposta é ${correct}. Esta forma voltará.`}</span></div><div class="feedback-actions"><button class="quiet" data-action="paradigm">Ver no paradigma</button><button class="primary" data-action="continue">Continuar</button></div><div class="paradigm-context" hidden></div>`;
+      feedback.innerHTML = `<div class="feedback-copy ${result.isCorrect ? "success" : "error"}"><strong>${result.isCorrect ? "✓ Correto" : "↻ Ainda não"}</strong><span>${result.isCorrect ? "Você reconheceu a forma." : `A resposta é ${correct}. Esta forma voltará.`}</span></div><div class="feedback-actions"><button class="quiet" data-action="paradigm">Ver no paradigma</button><button class="primary" data-action="continue">Continuar</button></div><div class="paradigm-context" hidden></div>`;
       feedback.querySelector<HTMLButtonElement>("[data-action='paradigm']")?.addEventListener("click", () => {
         const panel = feedback.querySelector<HTMLElement>(".paradigm-context");
         if (!panel) return;
@@ -470,6 +499,7 @@ function startRound(
     }
   }
   function renderComplete(): void {
+    document.onkeydown = null;
     clearActiveRound();
     app.innerHTML = `<section class="complete"><p class="completion-mark">✓</p><p class="eyebrow">Rodada concluída</p><h1>Você reconheceu todas as formas.</h1><p>Sem nota e sem pressa. Apenas a prática feita.</p><button class="primary" data-action="home">Voltar ao início</button></section>`;
     app.querySelector<HTMLButtonElement>("[data-action='home']")?.addEventListener("click", renderHome);

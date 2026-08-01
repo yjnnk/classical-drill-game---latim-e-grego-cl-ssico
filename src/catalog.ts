@@ -503,4 +503,15 @@ function verbDeck(): DrillDeck {
   };
 }
 
-export const builtInDecks: DrillDeck[] = [nominalDeck(), verbDeck()];
+function mixedDeck(): DrillDeck {
+  const nominal = nominalDeck();
+  const verb = verbDeck();
+  return {
+    id: "deck:mixed-starter",
+    title: "κρήνη + λῡ́ω",
+    description: "Substantivo e verbo · análise e produção",
+    items: [...nominal.items, ...verb.items]
+  };
+}
+
+export const builtInDecks: DrillDeck[] = [nominalDeck(), verbDeck(), mixedDeck()];
