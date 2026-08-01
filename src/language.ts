@@ -47,9 +47,13 @@ export function migrateGreekLegacyStorage(): void {
     [StoredArea, string]
   >) {
     const destination = storageKey("greek", area);
-    if (localStorage.getItem(destination) !== null) continue;
     const raw = localStorage.getItem(legacyKey);
     if (raw === null || !isValidLegacy(area, raw)) continue;
+    const existing = localStorage.getItem(destination);
+    if (existing !== null) {
+      if (existing === raw) localStorage.removeItem(legacyKey);
+      continue;
+    }
     localStorage.setItem(destination, raw);
     if (localStorage.getItem(destination) === raw)
       localStorage.removeItem(legacyKey);

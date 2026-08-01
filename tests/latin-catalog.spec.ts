@@ -79,3 +79,29 @@ test("loquor é exclusivamente depoente e cobre os tempos finitos validados", ()
   ).toBe(true);
   expect(items.flatMap(({ forms }) => forms ?? [])).toContain("locūta sum");
 });
+
+test("cada paradigma e forma latina carregam proveniência auditável", () => {
+  for (const value of latinCatalogParadigms) {
+    expect(
+      value.sources?.every(({ consultedAt }) => consultedAt === "2026-08-01"),
+    ).toBe(true);
+    expect(
+      value.items.every(({ sources }) => (sources?.length ?? 0) >= 3),
+    ).toBe(true);
+  }
+  expect(paradigm("latin:verb:loquor").sources?.map(({ id }) => id)).toEqual(
+    expect.arrayContaining(["dcc-loquor", "kenyon-latin-202"]),
+  );
+});
+
+test("pronomes pessoais não inventam gênero gramatical", () => {
+  for (const id of ["ego", "tu", "se"]) {
+    expect(
+      paradigm(`latin:pronoun:${id}`).items.every(({ analyses }) =>
+        analyses.every((analysis) =>
+          analysis.kind === "nominal" ? analysis.gender === undefined : true,
+        ),
+      ),
+    ).toBe(true);
+  }
+});

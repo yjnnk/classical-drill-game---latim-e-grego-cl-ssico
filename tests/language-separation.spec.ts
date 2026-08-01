@@ -82,3 +82,29 @@ test("preserva dados legados inválidos para recuperação manual", async ({
     .toBe("{inválido");
   await expect(page.getByLabel("Mostrar transliteração")).not.toBeChecked();
 });
+
+test("conclui uma migração interrompida sem sobrescrever o destino", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.evaluate(() => {
+    localStorage.clear();
+    const value = JSON.stringify({
+      showTransliteration: true,
+      showTranslation: false,
+    });
+    localStorage.setItem("classical-drill-preferences:v1", value);
+    localStorage.setItem("classical-drill:greek:preferences:v1", value);
+  });
+  await page.reload();
+  await page.getByRole("button", { name: "Grego clássico" }).click();
+
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        localStorage.getItem("classical-drill-preferences:v1"),
+      ),
+    )
+    .toBeNull();
+  await expect(page.getByLabel("Mostrar transliteração")).toBeChecked();
+});

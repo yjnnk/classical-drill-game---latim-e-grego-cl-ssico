@@ -260,13 +260,19 @@ export function playableDeck(
         ...item,
         id: presentationId,
         analyses: [...analyses.values()],
+        support: [
+          preferences.showTransliteration ? item.bareForm : "",
+          preferences.showTranslation ? paradigm.lemma.gloss : "",
+        ]
+          .filter(Boolean)
+          .join(" · "),
         sourceBlockIds: [
           ...new Set([...(existing?.sourceBlockIds ?? []), block.id]),
         ],
         sourceParadigmIds: [
           ...new Set([...(existing?.sourceParadigmIds ?? []), paradigm.id]),
         ],
-        productionContext: paradigm.lemma.greek,
+        productionContext: paradigm.lemma.form,
       });
     }
   }
@@ -289,7 +295,7 @@ export function playableDeck(
     ) {
       item.context = item.sourceParadigmIds
         ?.map(
-          (id) => paradigms.find((paradigm) => paradigm.id === id)?.lemma.greek,
+          (id) => paradigms.find((paradigm) => paradigm.id === id)?.lemma.form,
         )
         .filter(Boolean)
         .join(" / ");

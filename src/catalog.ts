@@ -93,6 +93,15 @@ export interface DrillItem {
   productionContext?: string;
   sourceBlockIds?: string[];
   sourceParadigmIds?: string[];
+  sources?: CatalogSource[];
+}
+
+export interface CatalogSource {
+  id: string;
+  title: string;
+  url?: string;
+  consultedAt: string;
+  role: string;
 }
 
 export interface DrillDeck {
@@ -135,10 +144,11 @@ export interface CatalogParadigm {
   id: string;
   category: CatalogCategory;
   declension?: "first" | "second" | "third" | "fourth" | "fifth";
-  lemma: { greek: string; transliteration: string; gloss: string };
+  lemma: { form: string; transliteration: string; gloss: string };
   items: DrillItem[];
   filters: CatalogFilter[];
   supportsArticleMode: boolean;
+  sources?: CatalogSource[];
 }
 
 interface GeneratedNominalAnalysis {
@@ -300,6 +310,14 @@ function filter(
   };
 }
 
+function mappedLemma(source: GeneratedParadigm): CatalogParadigm["lemma"] {
+  return {
+    form: source.lemma.greek,
+    transliteration: source.lemma.transliteration,
+    gloss: source.lemma.gloss,
+  };
+}
+
 function nominalParadigm(source: GeneratedParadigm): CatalogParadigm {
   const analyses = source.items.flatMap(
     (item) => item.analyses as GeneratedNominalAnalysis[],
@@ -346,7 +364,7 @@ function nominalParadigm(source: GeneratedParadigm): CatalogParadigm {
     id: source.id,
     category: categoryLabels[source.category],
     declension: source.declension,
-    lemma: source.lemma,
+    lemma: mappedLemma(source),
     items,
     filters,
     supportsArticleMode: source.category === "noun",
@@ -360,7 +378,7 @@ function adjectiveParadigm(source: GeneratedParadigm): CatalogParadigm {
   return {
     id: source.id,
     category: "Adjetivo",
-    lemma: source.lemma,
+    lemma: mappedLemma(source),
     items: source.items.map((item) => ({
       id: item.id,
       form: item.variants.join(" / "),
@@ -420,7 +438,7 @@ function participleParadigm(source: GeneratedParadigm): CatalogParadigm {
   return {
     id: source.id,
     category: "Particípio",
-    lemma: source.lemma,
+    lemma: mappedLemma(source),
     items: source.items.map((item) => ({
       id: item.id,
       form: item.variants.join(" / "),
@@ -480,7 +498,7 @@ function matchingParadigm(source: GeneratedParadigm): CatalogParadigm {
     return {
       id: source.id,
       category: "Numeral",
-      lemma: source.lemma,
+      lemma: mappedLemma(source),
       items: source.items.map((item) => ({
         id: item.id,
         form: item.variants.join(" / "),
@@ -509,7 +527,7 @@ function matchingParadigm(source: GeneratedParadigm): CatalogParadigm {
   return {
     id: source.id,
     category: categoryLabels[source.category],
-    lemma: source.lemma,
+    lemma: mappedLemma(source),
     items: source.items.map((item) => ({
       id: item.id,
       form: item.variants.join(" / "),
@@ -545,7 +563,7 @@ function verbParadigm(source: GeneratedParadigm): CatalogParadigm {
   return {
     id: source.id,
     category: "Verbo",
-    lemma: source.lemma,
+    lemma: mappedLemma(source),
     items: source.items.map((item) => ({
       id: item.id,
       form: item.variants.join(" / "),
@@ -653,7 +671,7 @@ function nominalDeck(): DrillDeck {
   );
   return {
     id: "deck:krene",
-    title: paradigm.lemma.greek,
+    title: paradigm.lemma.form,
     description: "Primeira declinação · singular e plural · 8 formas",
     items,
   };
@@ -672,7 +690,7 @@ function verbDeck(): DrillDeck {
   );
   return {
     id: "deck:luo-present-active-indicative",
-    title: paradigm.lemma.greek,
+    title: paradigm.lemma.form,
     description: `Presente · ativo · indicativo · ${items.length} formas`,
     items,
   };

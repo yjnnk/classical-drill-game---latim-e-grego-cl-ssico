@@ -482,7 +482,7 @@ function blockCard(
       .join(" · ") || "todas as formas";
   return `<article class="content-block" data-block="${block.id}">
     <header class="block-header">
-      <div><p class="deck-label">Bloco ${index + 1} · ${paradigm.category}</p><h2 lang="grc">${paradigm.lemma.greek}</h2>${supports ? `<p>${supports}</p>` : ""}</div>
+      <div><p class="deck-label">Bloco ${index + 1} · ${paradigm.category}</p><h2 lang="grc">${paradigm.lemma.form}</h2>${supports ? `<p>${supports}</p>` : ""}</div>
       <div class="inline-actions"><button class="quiet compact" data-block-action="duplicate">Duplicar bloco</button><button class="quiet compact danger" data-block-action="remove">Remover bloco</button></div>
     </header>
     <div class="filter-grid">${paradigm.filters
@@ -557,7 +557,7 @@ function catalogPicker(query: string, category: string): string {
     const matchesCategory =
       category === "Todos" || paradigm.category === category;
     const searchable = [
-      paradigm.lemma.greek,
+      paradigm.lemma.form,
       paradigm.lemma.transliteration,
       paradigm.lemma.gloss,
     ]
@@ -597,7 +597,7 @@ function catalogResult(paradigm: CatalogParadigm): string {
   ]
     .filter(Boolean)
     .join(" · ");
-  return `<article class="catalog-card"><div><p class="deck-label">${paradigm.category}</p><h3 lang="grc">${paradigm.lemma.greek}</h3>${supports ? `<p>${supports}</p>` : ""}</div><button class="primary" data-add-paradigm="${paradigm.id}">Adicionar ${paradigm.lemma.greek}</button></article>`;
+  return `<article class="catalog-card"><div><p class="deck-label">${paradigm.category}</p><h3 lang="grc">${paradigm.lemma.form}</h3>${supports ? `<p>${supports}</p>` : ""}</div><button class="primary" data-add-paradigm="${paradigm.id}">Adicionar ${paradigm.lemma.form}</button></article>`;
 }
 
 function wireCatalog(deck: SavedDeck, query: string, category: string): void {

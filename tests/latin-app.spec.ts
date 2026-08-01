@@ -49,6 +49,11 @@ test("apoios latinos de tradução e forma sem mácrons são independentes", asy
   await page.reload();
   await page.getByRole("button", { name: "Latim" }).click();
   await expect(page.getByLabel("Mostrar forma sem mácrons")).toBeChecked();
+  const model = page
+    .getByRole("article")
+    .filter({ has: page.getByRole("heading", { name: "porta", exact: true }) });
+  await model.getByRole("button", { name: "Iniciar rodada" }).click();
+  await expect(page.locator(".form-support")).toBeVisible();
 });
 
 test("latim mantém baralhos e rodada ativa em chaves próprias", async ({
@@ -95,4 +100,84 @@ test("a área latina e uma rodada continuam disponíveis offline", async ({
   await expect(
     page.getByRole("group", { name: "Alternativas" }).getByRole("button"),
   ).toHaveCount(3);
+  const prompt = await page.locator(".latin-form").textContent();
+  await page.getByRole("button", { name: "Sair" }).click();
+  await page.reload();
+  await page.getByRole("button", { name: "Latim" }).click();
+  await page.getByRole("button", { name: "Retomar rodada" }).click();
+  await expect(page.locator(".latin-form")).toHaveText(prompt ?? "");
+});
+
+test("mantém uma rodada ativa em cada idioma ao mesmo tempo", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+  await page.getByRole("button", { name: "Grego clássico" }).click();
+  await page.getByRole("button", { name: "Iniciar rodada" }).first().click();
+  await page.getByRole("button", { name: "Sair" }).click();
+  await page.getByRole("button", { name: "Trocar idioma" }).click();
+  await page.getByRole("button", { name: "Latim" }).click();
+  await page.getByRole("button", { name: "Iniciar rodada" }).first().click();
+  await page.getByRole("button", { name: "Sair" }).click();
+
+  await expect(
+    page.getByText("Rodada em andamento", { exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Trocar idioma" }).click();
+  await page.getByRole("button", { name: "Grego clássico" }).click();
+  await expect(
+    page.getByText("Rodada em andamento", { exact: true }),
+  ).toBeVisible();
+});
+
+test("oferece produção assistida e alterna as direções no modelo misto", async ({
+  page,
+}) => {
+  await openLatin(page);
+  const laudo = page.getByRole("article").filter({
+    has: page.getByRole("heading", {
+      name: "laudō — presente indicativo ativo",
+    }),
+  });
+  await laudo.getByRole("button", { name: "Usar como modelo" }).click();
+  await page.getByLabel("Produção assistida").check();
+  await page.getByRole("button", { name: "Iniciar rodada" }).click();
+  await expect(
+    page.getByText("Qual forma corresponde a esta análise?"),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Sair" }).click();
+  await page.getByRole("button", { name: "Abandonar rodada" }).click();
+
+  const mixed = page.getByRole("article").filter({
+    has: page.getByRole("heading", { name: "porta + rēx + laudō + hic" }),
+  });
+  await mixed.getByRole("button", { name: "Iniciar rodada" }).click();
+  await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
+  await page
+    .getByRole("group", { name: "Alternativas" })
+    .getByRole("button")
+    .first()
+    .click();
+  await page.getByRole("button", { name: "Continuar" }).click();
+  await expect(
+    page.getByText("Qual forma corresponde a esta análise?"),
+  ).toBeVisible();
+});
+
+test("recusa um backup grego na área latina", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Grego clássico" }).click();
+  const downloadPromise = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Exportar JSON" }).click();
+  const download = await downloadPromise;
+  const path = await download.path();
+  if (!path) throw new Error("Download indisponível.");
+  await page.getByRole("button", { name: "Trocar idioma" }).click();
+  await page.getByRole("button", { name: "Latim" }).click();
+  await page.locator("input[data-action='import']").setInputFiles(path);
+  await expect(
+    page.getByText("Este arquivo não é um backup latino compatível."),
+  ).toBeVisible();
 });

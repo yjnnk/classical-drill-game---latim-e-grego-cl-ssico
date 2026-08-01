@@ -3,6 +3,7 @@
 Jogo offline de navegador para praticar formas do grego clássico e do latim por meio de baralhos altamente configuráveis. As duas línguas funcionam como áreas independentes: catálogos, preferências, baralhos, backups e rodadas nunca são misturados.
 
 O catálogo latino documenta sua política editorial e suas fontes em [docs/latin-sources.md](docs/latin-sources.md).
+Sua validação versionada faz parte do build. Quando a planilha estrutural mudar, audite as quatro abas esperadas com `npm run latin:source:audit -- "/caminho/Latinae Tabulae Complete.xlsx"` antes de revisar as formas editoriais.
 
 ## Desenvolvimento
 

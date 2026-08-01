@@ -11,6 +11,7 @@ import type {
   GrammaticalPerson,
   GrammaticalTense,
   GrammaticalVoice,
+  CatalogSource,
 } from "./catalog";
 
 type NominalCell = [
@@ -121,7 +122,7 @@ function nominal(
     id: `latin:${id}`,
     category,
     declension,
-    lemma: { greek: lemma, transliteration: withoutMacrons(lemma), gloss },
+    lemma: { form: lemma, transliteration: withoutMacrons(lemma), gloss },
     filters: [...filters.nominal, makeFilter("gender", "Gênero", [gender])],
     supportsArticleMode: false,
     items: cells.map(([form, grammaticalCase, grammaticalNumber], index) => ({
@@ -370,12 +371,29 @@ function pronoun(
   gloss: string,
   forms: string[],
 ): CatalogParadigm {
-  const cells: NominalCell[] = forms.map((form, index) => [
-    form,
-    caseOrder[index % 6]!,
-    index < 6 ? "singular" : "plural",
-  ]);
-  return nominal(`pronoun:${id}`, lemma, gloss, "masculino", cells, "Pronome");
+  return {
+    id: `latin:pronoun:${id}`,
+    category: "Pronome",
+    lemma: {
+      form: lemma,
+      transliteration: withoutMacrons(lemma),
+      gloss,
+    },
+    filters: filters.nominal,
+    supportsArticleMode: false,
+    items: forms.map((form, index) => ({
+      id: `latin:pronoun:${id}:${index}`,
+      form,
+      bareForm: withoutMacrons(form),
+      analyses: [
+        {
+          kind: "nominal",
+          grammaticalCase: caseOrder[index % 6]!,
+          grammaticalNumber: index < 6 ? "singular" : "plural",
+        },
+      ],
+    })),
+  };
 }
 
 function genderedPronoun(
@@ -404,7 +422,7 @@ function genderedPronoun(
   return {
     id: `latin:pronoun:${id}`,
     category: "Pronome",
-    lemma: { greek: lemma, transliteration: withoutMacrons(lemma), gloss },
+    lemma: { form: lemma, transliteration: withoutMacrons(lemma), gloss },
     filters: [
       ...filters.nominal,
       makeFilter("gender", "Gênero", ["masculino", "feminino", "neutro"]),
@@ -745,7 +763,7 @@ function adjective(
   return {
     id: `latin:adjective:${id}`,
     category: "Adjetivo",
-    lemma: { greek: lemma, transliteration: withoutMacrons(lemma), gloss },
+    lemma: { form: lemma, transliteration: withoutMacrons(lemma), gloss },
     supportsArticleMode: false,
     filters: filters.adjective,
     items: genderForms.flatMap(([gender, cells]) =>
@@ -785,7 +803,7 @@ function thirdAdjective(
   return {
     id: `latin:adjective:${id}`,
     category: "Adjetivo",
-    lemma: { greek: lemma, transliteration: withoutMacrons(lemma), gloss },
+    lemma: { form: lemma, transliteration: withoutMacrons(lemma), gloss },
     supportsArticleMode: false,
     filters: filters.adjective,
     items: genderForms.flatMap(([gender, cells]) =>
@@ -1239,7 +1257,7 @@ function regularVerb(lexeme: VerbLexeme): CatalogParadigm {
     id: `latin:verb:${lexeme.id}`,
     category: "Verbo",
     lemma: {
-      greek: lexeme.lemma,
+      form: lexeme.lemma,
       transliteration: withoutMacrons(lexeme.lemma),
       gloss: lexeme.gloss,
     },
@@ -1373,7 +1391,7 @@ function deponent(): CatalogParadigm {
   return {
     id: "latin:verb:loquor",
     category: "Verbo",
-    lemma: { greek: "loquor", transliteration: "loquor", gloss: "falar" },
+    lemma: { form: "loquor", transliteration: "loquor", gloss: "falar" },
     items,
     filters: filters.verb,
     supportsArticleMode: false,
@@ -1381,13 +1399,68 @@ function deponent(): CatalogParadigm {
 }
 
 export const latinCatalogVersion = "latin-1.0.0";
-export const latinCatalogParadigms: CatalogParadigm[] = [
+const sharedLatinSources: CatalogSource[] = [
+  {
+    id: "dowling-wheel",
+    title: "Dowling's Wheel — Take a peek at the answers",
+    url: "https://www.jonathanaquino.com/latin/index.php",
+    consultedAt: "2026-08-01",
+    role: "Sequências e análises dos substantivos, adjetivos e verbos curados",
+  },
+  {
+    id: "latinae-tabulae",
+    title: "Latinae Tabulae Complete.xlsx",
+    consultedAt: "2026-08-01",
+    role: "Estrutura das declinações, pronomes e sistema verbal",
+  },
+];
+const externalValidationSources: CatalogSource[] = [
+  {
+    id: "dcc-allen-greenough",
+    title:
+      "Allen and Greenough's New Latin Grammar — Dickinson College Commentaries",
+    url: "https://dcc.dickinson.edu/grammar/latin/",
+    consultedAt: "2026-08-01",
+    role: "Conferência acadêmica de flexão, vocativos e quantidade vocálica",
+  },
+];
+const loquorSources: CatalogSource[] = [
+  {
+    id: "dcc-loquor",
+    title: "LOQVOR — Dickinson College Commentaries",
+    url: "https://dcc.dickinson.edu/latin-core/loqvor",
+    consultedAt: "2026-08-01",
+    role: "Lema, principais partes, quantidade vocálica e classificação depoente",
+  },
+  {
+    id: "kenyon-latin-202",
+    title: "Latin 202 Word List — Kenyon College",
+    url: "https://documents.kenyon.edu/classics/current/2099.wordlistforlatn202alphabetical.pdf",
+    consultedAt: "2026-08-01",
+    role: "Segunda validação acadêmica independente de loquor, loquī, locūtus sum",
+  },
+];
+
+const latinParadigmsWithoutSources: CatalogParadigm[] = [
   ...nouns,
   ...pronouns,
   ...adjectives,
   ...verbLexemes.map(regularVerb),
   deponent(),
 ];
+export const latinCatalogParadigms: CatalogParadigm[] =
+  latinParadigmsWithoutSources.map((paradigm) => {
+    const sources = [
+      ...sharedLatinSources,
+      ...externalValidationSources,
+      ...(paradigm.id === "latin:verb:loquor" ? loquorSources : []),
+    ];
+    return {
+      ...paradigm,
+      sources,
+      items: paradigm.items.map((item) => ({ ...item, sources })),
+    };
+  });
 
 function modelDeck(
   id: string,
@@ -1408,7 +1481,7 @@ function modelDeck(
         p.items.map((item) => ({
           ...item,
           sourceParadigmIds: [p.id],
-          productionContext: p.lemma.greek,
+          productionContext: p.lemma.form,
         })),
       ),
   };

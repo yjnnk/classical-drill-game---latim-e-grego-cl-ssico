@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc --noEmit && vite build",
     "catalog:generate": "node scripts/generate-catalog.mjs",
-    "catalog:validate": "node scripts/validate-catalog.mjs src/generated/catalog.json",
+    "catalog:validate": "node scripts/validate-catalog.mjs src/generated/catalog.json && node scripts/validate-latin-catalog.mjs",
+    "latin:source:audit": "node scripts/audit-latin-workbook.mjs",
     "dev": "vite",
     "prebuild": "npm run catalog:validate",
     "preview": "vite preview",

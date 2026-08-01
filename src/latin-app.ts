@@ -125,12 +125,13 @@ export function createLatinApp(
           (value) => value.id === button.dataset.model,
         );
         if (deck)
-          button.addEventListener("click", () =>
-            startRound(deck, {
-              direction: deck.id.endsWith("mixed") ? "mixed" : "analysis",
+          button.addEventListener("click", () => {
+            const model = template(deck.id);
+            startRound(playable(model), {
+              direction: model.direction,
               coverage: "all",
-            }),
-          );
+            });
+          });
       });
     root
       .querySelectorAll<HTMLButtonElement>("[data-copy-model]")
@@ -307,7 +308,7 @@ export function createLatinApp(
       .filter(Boolean)
       .join(" · ");
     const issue = blockError(block, direction, latinCatalogParadigms);
-    return `<article class="content-block" data-block="${block.id}"><header class="block-header"><div><p class="deck-label">Bloco ${index + 1} · ${paradigm.category}</p><h2 lang="la">${paradigm.lemma.greek}</h2>${support ? `<p>${support}</p>` : ""}</div><button class="quiet compact danger" data-remove>Remover bloco</button></header><div class="filter-grid">${paradigm.filters.map((filter) => `<fieldset><legend>${filter.label}</legend>${filter.options.map((option) => `<label class="filter-option"><input type="checkbox" data-field="${filter.field}" value="${option.value}" aria-label="${option.label}" ${(block.selected[filter.field] ?? []).includes(option.value) ? "checked" : ""}><span>${option.label}</span></label>`).join("")}</fieldset>`).join("")}</div><div class="block-summary"><strong>${blockItems(block).length} formas incluídas</strong></div>${issue ? `<p class="validation-message">${issue}</p>` : ""}</article>`;
+    return `<article class="content-block" data-block="${block.id}"><header class="block-header"><div><p class="deck-label">Bloco ${index + 1} · ${paradigm.category}</p><h2 lang="la">${paradigm.lemma.form}</h2>${support ? `<p>${support}</p>` : ""}</div><button class="quiet compact danger" data-remove>Remover bloco</button></header><div class="filter-grid">${paradigm.filters.map((filter) => `<fieldset><legend>${filter.label}</legend>${filter.options.map((option) => `<label class="filter-option"><input type="checkbox" data-field="${filter.field}" value="${option.value}" aria-label="${option.label}" ${(block.selected[filter.field] ?? []).includes(option.value) ? "checked" : ""}><span>${option.label}</span></label>`).join("")}</fieldset>`).join("")}</div><div class="block-summary"><strong>${blockItems(block).length} formas incluídas</strong></div>${issue ? `<p class="validation-message">${issue}</p>` : ""}</article>`;
   };
   const wireBlocks = (deck: SavedDeck) =>
     root.querySelectorAll<HTMLElement>("[data-block]").forEach((element) => {
@@ -339,7 +340,7 @@ export function createLatinApp(
       (p) =>
         (category === "Todos" || p.category === category) &&
         withoutMarks(
-          [p.lemma.greek, p.lemma.transliteration, p.lemma.gloss].join(" "),
+          [p.lemma.form, p.lemma.transliteration, p.lemma.gloss].join(" "),
         )
           .toLocaleLowerCase("pt-BR")
           .includes(normalized),
@@ -379,7 +380,7 @@ export function createLatinApp(
     });
   };
   const catalogCard = (paradigm: CatalogParadigm) =>
-    `<article class="catalog-card"><div><p class="deck-label">${paradigm.category}</p><h3 lang="la">${paradigm.lemma.greek}</h3><p>${paradigm.lemma.gloss}</p></div><button class="primary" data-add="${paradigm.id}">Adicionar ${paradigm.lemma.greek}</button></article>`;
+    `<article class="catalog-card"><div><p class="deck-label">${paradigm.category}</p><h3 lang="la">${paradigm.lemma.form}</h3><p>${paradigm.lemma.gloss}</p></div><button class="primary" data-add="${paradigm.id}">Adicionar ${paradigm.lemma.form}</button></article>`;
 
   const startRound = (
     deck: DrillDeck,
@@ -407,7 +408,7 @@ export function createLatinApp(
       if (!question) return complete();
       persistRound();
       const analysis = question.direction === "analysis";
-      root.innerHTML = `<section class="round latin-round"><header class="round-header"><button class="quiet" data-exit>Sair</button><p>Progresso: ${round.masteredCount} de ${round.total}</p></header><div class="prompt"><p>${analysis ? "Qual é a análise desta forma?" : "Qual forma corresponde a esta análise?"}</p><p class="${analysis ? "latin-form" : "analysis-prompt"}" ${analysis ? 'lang="la"' : ""}>${question.prompt}</p>${question.context ? `<p class="form-context">Lema: <span lang="la">${question.context}</span></p>` : ""}</div><div class="options" role="group" aria-label="Alternativas">${question.choices.map((choice, index) => `<button class="option"><span class="option-number">${index + 1}</span><span>${choice.label}</span></button>`).join("")}</div><div class="feedback" aria-live="polite"></div></section>`;
+      root.innerHTML = `<section class="round latin-round"><header class="round-header"><button class="quiet" data-exit>Sair</button><p>Progresso: ${round.masteredCount} de ${round.total}</p></header><div class="prompt"><p>${analysis ? "Qual é a análise desta forma?" : "Qual forma corresponde a esta análise?"}</p><p class="${analysis ? "latin-form" : "analysis-prompt"}" ${analysis ? 'lang="la"' : ""}>${question.prompt}</p>${question.item.support ? `<p class="form-support">${question.item.support}</p>` : ""}${question.context ? `<p class="form-context">Lema: <span lang="la">${question.context}</span></p>` : ""}</div><div class="options" role="group" aria-label="Alternativas">${question.choices.map((choice, index) => `<button class="option"><span class="option-number">${index + 1}</span><span>${choice.label}</span></button>`).join("")}</div><div class="feedback" aria-live="polite"></div></section>`;
       root
         .querySelector<HTMLButtonElement>("[data-exit]")
         ?.addEventListener("click", renderHome);
