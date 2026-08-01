@@ -4,7 +4,7 @@ import {
   type Analysis,
   type CatalogParadigm,
   type DrillDeck,
-  type FilterField
+  type FilterField,
 } from "./catalog";
 import {
   blockError,
@@ -18,25 +18,71 @@ import {
   roundConfig,
   saveDecks,
   type ContentBlock,
-  type SavedDeck
+  type SavedDeck,
 } from "./decks";
 import { DrillRound, type RoundConfig, type RoundQuestion } from "./round";
 import { loadPreferences, savePreferences } from "./preferences";
-import { clearActiveRound, loadActiveRound, saveActiveRound } from "./active-round";
-import { createBackup, mergeDecks, parseBackup, type BackupFile } from "./backup";
+import {
+  clearActiveRound,
+  loadActiveRound,
+  saveActiveRound,
+} from "./active-round";
+import {
+  createBackup,
+  mergeDecks,
+  parseBackup,
+  type BackupFile,
+} from "./backup";
+import { migrateGreekLegacyStorage, type StudyLanguage } from "./language";
+import { createLatinApp } from "./latin-app";
 import "./styles.css";
 
 const root = document.querySelector<HTMLElement>("#app");
 if (!root) throw new Error("Elemento raiz da aplicação não encontrado.");
 const app = root;
+let currentLanguage: StudyLanguage | null = null;
+
+function renderLanguageSelector(): void {
+  currentLanguage = null;
+  document.documentElement.dataset.language = "neutral";
+  document.onkeydown = null;
+  app.innerHTML = `<main class="language-gate" aria-labelledby="language-title">
+    <p class="eyebrow">Classical Drill Game: Grego e Latim</p>
+    <h1 id="language-title">O que você quer praticar?</h1>
+    <p>Escolha uma área. Baralhos, preferências e rodadas permanecem separados.</p>
+    <div class="language-options">
+      <button class="language-card greek-choice" data-language="greek"><span lang="grc">Ἑλληνική</span><strong>Grego clássico</strong><small>Continuar para a área grega</small></button>
+      <button class="language-card latin-choice" data-language="latin"><span lang="la">Latīna</span><strong>Latim</strong><small>Continuar para a área latina</small></button>
+    </div>
+  </main>`;
+  app.querySelectorAll<HTMLButtonElement>("[data-language]").forEach((button) =>
+    button.addEventListener("click", () => {
+      currentLanguage = button.dataset.language as StudyLanguage;
+      if (currentLanguage === "greek") {
+        migrateGreekLegacyStorage();
+        renderHome();
+      } else {
+        renderLatinHome();
+      }
+    }),
+  );
+}
+
+function renderLatinHome(): void {
+  createLatinApp(app, renderLanguageSelector);
+}
 
 function escapeHtml(value: string): string {
   return value.replace(
     /[&<>"']/g,
     (character) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[
-        character
-      ] ?? character
+      ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;",
+      })[character] ?? character,
   );
 }
 
@@ -51,6 +97,8 @@ function joinPortuguese(values: string[]): string {
 }
 
 function renderHome(): void {
+  currentLanguage = "greek";
+  document.documentElement.dataset.language = "greek";
   document.onkeydown = null;
   const saved = loadDecks();
   const preferences = loadPreferences();
@@ -60,10 +108,10 @@ function renderHome(): void {
       <div class="title-row">
         <div>
           <p class="eyebrow">Recuperação ativa · sem pressa</p>
-          <h1 id="page-title">Classical Drill Game: Grego e Latim</h1>
+          <h1 id="page-title">Grego clássico</h1>
           <p class="intro">Monte recortes precisos do que deseja recordar. Tudo fica neste aparelho.</p>
         </div>
-        <button class="primary" type="button" data-action="create" ${active ? "disabled" : ""}>Criar baralho</button>
+        <div class="header-actions"><button class="quiet" type="button" data-action="switch-language">Trocar idioma</button><button class="primary" type="button" data-action="create" ${active ? "disabled" : ""}>Criar baralho</button></div>
       </div>
 
       ${active ? `<section class="active-round" aria-labelledby="active-round-title"><div><p class="deck-label">Rodada em andamento</p><h2 id="active-round-title">${escapeHtml(active.deck.title)}</h2><p>Progresso: ${active.snapshot.masteredIds.length} de ${active.snapshot.total}</p></div><div class="card-actions"><button class="primary" data-action="resume">Retomar rodada</button><button class="quiet danger" data-action="abandon">Abandonar rodada</button></div></section>` : ""}
@@ -82,14 +130,27 @@ function renderHome(): void {
     </section>
   `;
 
-  app.querySelector<HTMLButtonElement>("[data-action='resume']")?.addEventListener("click", () => {
-    const current = loadActiveRound();
-    if (current) startRound(current.deck, current.config, DrillRound.restore(current.snapshot));
-  });
-  app.querySelector<HTMLButtonElement>("[data-action='abandon']")?.addEventListener("click", () => {
-    clearActiveRound();
-    renderHome();
-  });
+  app
+    .querySelector<HTMLButtonElement>("[data-action='switch-language']")
+    ?.addEventListener("click", renderLanguageSelector);
+
+  app
+    .querySelector<HTMLButtonElement>("[data-action='resume']")
+    ?.addEventListener("click", () => {
+      const current = loadActiveRound();
+      if (current)
+        startRound(
+          current.deck,
+          current.config,
+          DrillRound.restore(current.snapshot),
+        );
+    });
+  app
+    .querySelector<HTMLButtonElement>("[data-action='abandon']")
+    ?.addEventListener("click", () => {
+      clearActiveRound();
+      renderHome();
+    });
 
   app.querySelectorAll<HTMLInputElement>("[data-preference]").forEach((input) =>
     input.addEventListener("change", () => {
@@ -97,95 +158,122 @@ function renderHome(): void {
       next[input.dataset.preference as keyof typeof next] = input.checked;
       savePreferences(next);
       renderHome();
-    })
+    }),
   );
 
-  app.querySelector<HTMLButtonElement>("[data-action='export']")?.addEventListener("click", () => {
-    const blob = new Blob([JSON.stringify(createBackup(loadDecks(), loadPreferences()), null, 2)], { type: "application/json" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "grego-classico-backup.json";
-    link.click();
-    URL.revokeObjectURL(link.href);
-  });
-  app.querySelector<HTMLInputElement>("[data-action='import']")?.addEventListener("change", async (event) => {
-    const file = (event.currentTarget as HTMLInputElement).files?.[0];
-    const preview = app.querySelector<HTMLElement>(".import-preview");
-    if (!file || !preview) return;
-    try {
-      const backup = parseBackup(await file.text());
-      renderImportPreview(preview, backup, loadDecks());
-    } catch (error) {
-      preview.innerHTML = `<p class="validation-message">${escapeHtml(error instanceof Error ? error.message : "Backup inválido.")}</p>`;
-    }
-  });
+  app
+    .querySelector<HTMLButtonElement>("[data-action='export']")
+    ?.addEventListener("click", () => {
+      const blob = new Blob(
+        [JSON.stringify(createBackup(loadDecks(), loadPreferences()), null, 2)],
+        { type: "application/json" },
+      );
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "grego-classico-backup.json";
+      link.click();
+      URL.revokeObjectURL(link.href);
+    });
+  app
+    .querySelector<HTMLInputElement>("[data-action='import']")
+    ?.addEventListener("change", async (event) => {
+      const file = (event.currentTarget as HTMLInputElement).files?.[0];
+      const preview = app.querySelector<HTMLElement>(".import-preview");
+      if (!file || !preview) return;
+      try {
+        const backup = parseBackup(await file.text());
+        renderImportPreview(preview, backup, loadDecks());
+      } catch (error) {
+        preview.innerHTML = `<p class="validation-message">${escapeHtml(error instanceof Error ? error.message : "Backup inválido.")}</p>`;
+      }
+    });
 
-  app.querySelector<HTMLButtonElement>("[data-action='create']")?.addEventListener(
-    "click",
-    () =>
+  app
+    .querySelector<HTMLButtonElement>("[data-action='create']")
+    ?.addEventListener("click", () =>
       renderEditor({
         id: createId("deck"),
         name: "",
         blocks: [],
         direction: "analysis",
         coverage: "all",
-        quantity: 10
-      })
-  );
-  app.querySelectorAll<HTMLButtonElement>("[data-built-in]").forEach((button) => {
-    const deck = builtInDecks.find(({ id }) => id === button.dataset.builtIn);
-    button.disabled = Boolean(active);
-    if (deck) button.addEventListener("click", () => startRound(deck));
-  });
-  app.querySelectorAll<HTMLButtonElement>("[data-copy-built-in]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const template = savedTemplate(button.dataset.copyBuiltIn ?? "");
-      if (!template) return;
-      saveDecks([...saved, template]);
-      renderEditor(structuredClone(template));
+        quantity: 10,
+      }),
+    );
+  app
+    .querySelectorAll<HTMLButtonElement>("[data-built-in]")
+    .forEach((button) => {
+      const deck = builtInDecks.find(({ id }) => id === button.dataset.builtIn);
+      button.disabled = Boolean(active);
+      if (deck) button.addEventListener("click", () => startRound(deck));
     });
-  });
-  app.querySelectorAll<HTMLButtonElement>("[data-deck-action]").forEach((button) => {
-    const deck = saved.find(({ id }) => id === button.dataset.deckId);
-    if (!deck) return;
-    if (button.dataset.deckAction === "start") button.disabled = button.disabled || Boolean(active);
-    button.addEventListener("click", () => {
-      switch (button.dataset.deckAction) {
-        case "start":
-          if (!deckError(deck)) startRound(playableDeck(deck), roundConfig(deck));
-          break;
-        case "edit":
-          renderEditor(structuredClone(deck));
-          break;
-        case "duplicate": {
-          const copy = structuredClone(deck);
-          copy.id = createId("deck");
-          copy.name = `${deck.name} (cópia)`;
-          copy.blocks = copy.blocks.map((block) => ({
-            ...block,
-            id: createId("block")
-          }));
-          saveDecks([...saved, copy]);
-          renderHome();
-          break;
+  app
+    .querySelectorAll<HTMLButtonElement>("[data-copy-built-in]")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        const template = savedTemplate(button.dataset.copyBuiltIn ?? "");
+        if (!template) return;
+        saveDecks([...saved, template]);
+        renderEditor(structuredClone(template));
+      });
+    });
+  app
+    .querySelectorAll<HTMLButtonElement>("[data-deck-action]")
+    .forEach((button) => {
+      const deck = saved.find(({ id }) => id === button.dataset.deckId);
+      if (!deck) return;
+      if (button.dataset.deckAction === "start")
+        button.disabled = button.disabled || Boolean(active);
+      button.addEventListener("click", () => {
+        switch (button.dataset.deckAction) {
+          case "start":
+            if (!deckError(deck))
+              startRound(playableDeck(deck), roundConfig(deck));
+            break;
+          case "edit":
+            renderEditor(structuredClone(deck));
+            break;
+          case "duplicate": {
+            const copy = structuredClone(deck);
+            copy.id = createId("deck");
+            copy.name = `${deck.name} (cópia)`;
+            copy.blocks = copy.blocks.map((block) => ({
+              ...block,
+              id: createId("block"),
+            }));
+            saveDecks([...saved, copy]);
+            renderHome();
+            break;
+          }
+          case "delete":
+            saveDecks(saved.filter(({ id }) => id !== deck.id));
+            renderHome();
         }
-        case "delete":
-          saveDecks(saved.filter(({ id }) => id !== deck.id));
-          renderHome();
-      }
+      });
     });
-  });
 }
 
-function renderImportPreview(preview: HTMLElement, backup: BackupFile, current: SavedDeck[]): void {
+function renderImportPreview(
+  preview: HTMLElement,
+  backup: BackupFile,
+  current: SavedDeck[],
+): void {
   const currentIds = new Set(current.map(({ id }) => id));
   const conflicts = backup.decks.filter(({ id }) => currentIds.has(id));
   preview.innerHTML = `<div class="import-summary"><p><strong>Prévia:</strong> ${backup.decks.length} baralho(s), preferências de exibição.</p>${conflicts.length ? `<p>${conflicts.length} conflito(s): ao mesclar, ambos serão mantidos e a cópia importada será renomeada.</p>` : ""}<div class="card-actions"><button class="quiet" data-import-mode="merge">Mesclar mantendo ambos</button><button class="primary" data-import-mode="replace">Substituir dados locais</button></div></div>`;
-  preview.querySelectorAll<HTMLButtonElement>("[data-import-mode]").forEach((button) => button.addEventListener("click", () => {
-    saveDecks(button.dataset.importMode === "merge" ? mergeDecks(current, backup.decks) : backup.decks);
-    savePreferences(backup.preferences);
-    renderHome();
-  }));
+  preview
+    .querySelectorAll<HTMLButtonElement>("[data-import-mode]")
+    .forEach((button) =>
+      button.addEventListener("click", () => {
+        saveDecks(
+          button.dataset.importMode === "merge"
+            ? mergeDecks(current, backup.decks)
+            : backup.decks,
+        );
+        savePreferences(backup.preferences);
+        renderHome();
+      }),
+    );
 }
 
 function builtInDeckCard(deck: DrillDeck): string {
@@ -196,17 +284,43 @@ function builtInDeckCard(deck: DrillDeck): string {
 }
 
 function savedTemplate(id: string): SavedDeck | null {
-  const krene = createBlock(catalogParadigms.find(({ id }) => id === "noun:krene")!);
+  const krene = createBlock(
+    catalogParadigms.find(({ id }) => id === "noun:krene")!,
+  );
   krene.selected.number = ["singular", "plural"];
-  const luo = createBlock(catalogParadigms.find(({ id }) => id === "verb:luo")!);
+  const luo = createBlock(
+    catalogParadigms.find(({ id }) => id === "verb:luo")!,
+  );
   luo.selected.form = ["finite"];
   luo.selected.tense = ["present"];
   luo.selected.voice = ["active"];
   luo.selected.mood = ["indicative"];
-  const common = { id: createId("deck"), coverage: "all" as const, quantity: 10 };
-  if (id === "deck:krene") return { ...common, name: "κρήνη sem dual", blocks: [krene], direction: "analysis" };
-  if (id === "deck:luo-present-active-indicative") return { ...common, name: "λῡ́ω — presente ativo indicativo", blocks: [luo], direction: "analysis" };
-  if (id === "deck:mixed-starter") return { ...common, name: "κρήνη + λῡ́ω — misto", blocks: [krene, luo], direction: "mixed" };
+  const common = {
+    id: createId("deck"),
+    coverage: "all" as const,
+    quantity: 10,
+  };
+  if (id === "deck:krene")
+    return {
+      ...common,
+      name: "κρήνη sem dual",
+      blocks: [krene],
+      direction: "analysis",
+    };
+  if (id === "deck:luo-present-active-indicative")
+    return {
+      ...common,
+      name: "λῡ́ω — presente ativo indicativo",
+      blocks: [luo],
+      direction: "analysis",
+    };
+  if (id === "deck:mixed-starter")
+    return {
+      ...common,
+      name: "κρήνη + λῡ́ω — misto",
+      blocks: [krene, luo],
+      direction: "mixed",
+    };
   return null;
 }
 
@@ -226,7 +340,12 @@ function savedDeckCard(deck: SavedDeck): string {
   </article>`;
 }
 
-function renderEditor(deck: SavedDeck, catalogOpen = false, query = "", category = "Todos"): void {
+function renderEditor(
+  deck: SavedDeck,
+  catalogOpen = false,
+  query = "",
+  category = "Todos",
+): void {
   document.onkeydown = null;
   const invalid = deckError(deck);
   app.innerHTML = `
@@ -250,8 +369,13 @@ function renderEditor(deck: SavedDeck, catalogOpen = false, query = "", category
           ${[
             ["analysis", "Análise"],
             ["production", "Produção assistida"],
-            ["mixed", "Misto"]
-          ].map(([value, label]) => `<label class="filter-option"><input type="radio" name="direction" value="${value}" ${deck.direction === value ? "checked" : ""}><span>${label}</span></label>`).join("")}
+            ["mixed", "Misto"],
+          ]
+            .map(
+              ([value, label]) =>
+                `<label class="filter-option"><input type="radio" name="direction" value="${value}" ${deck.direction === value ? "checked" : ""}><span>${label}</span></label>`,
+            )
+            .join("")}
         </fieldset>
         <fieldset><legend>Cobertura</legend>
           <label class="filter-option"><input type="radio" name="coverage" value="all" ${deck.coverage === "all" ? "checked" : ""}><span>Todas as formas</span></label>
@@ -268,37 +392,51 @@ function renderEditor(deck: SavedDeck, catalogOpen = false, query = "", category
       </footer>
     </section>`;
 
-  const nameInput = app.querySelector<HTMLInputElement>("[aria-label='Nome do baralho']");
+  const nameInput = app.querySelector<HTMLInputElement>(
+    "[aria-label='Nome do baralho']",
+  );
   nameInput?.addEventListener("input", () => {
     deck.name = nameInput.value;
   });
-  app.querySelector<HTMLButtonElement>("[data-action='cancel']")?.addEventListener("click", renderHome);
-  app.querySelector<HTMLButtonElement>("[data-action='catalog']")?.addEventListener("click", () => renderEditor(deck, true));
-  app.querySelector<HTMLButtonElement>("[data-action='save']")?.addEventListener("click", () => {
-    persistDeck(deck);
-    renderHome();
-  });
-  app.querySelector<HTMLButtonElement>("[data-action='start']")?.addEventListener("click", () => {
-    if (!deckError(deck)) {
+  app
+    .querySelector<HTMLButtonElement>("[data-action='cancel']")
+    ?.addEventListener("click", renderHome);
+  app
+    .querySelector<HTMLButtonElement>("[data-action='catalog']")
+    ?.addEventListener("click", () => renderEditor(deck, true));
+  app
+    .querySelector<HTMLButtonElement>("[data-action='save']")
+    ?.addEventListener("click", () => {
       persistDeck(deck);
-      startRound(playableDeck(deck), roundConfig(deck));
-    }
-  });
-  app.querySelectorAll<HTMLInputElement>("[name='direction']").forEach((input) =>
-    input.addEventListener("change", () => {
-      deck.direction = input.value as SavedDeck["direction"];
-      renderEditor(deck);
-    })
-  );
+      renderHome();
+    });
+  app
+    .querySelector<HTMLButtonElement>("[data-action='start']")
+    ?.addEventListener("click", () => {
+      if (!deckError(deck)) {
+        persistDeck(deck);
+        startRound(playableDeck(deck), roundConfig(deck));
+      }
+    });
+  app
+    .querySelectorAll<HTMLInputElement>("[name='direction']")
+    .forEach((input) =>
+      input.addEventListener("change", () => {
+        deck.direction = input.value as SavedDeck["direction"];
+        renderEditor(deck);
+      }),
+    );
   app.querySelectorAll<HTMLInputElement>("[name='coverage']").forEach((input) =>
     input.addEventListener("change", () => {
       deck.coverage = input.value as SavedDeck["coverage"];
       renderEditor(deck);
-    })
+    }),
   );
-  app.querySelector<HTMLInputElement>("[aria-label='Quantidade de formas']")?.addEventListener("change", (event) => {
-    deck.quantity = Number((event.currentTarget as HTMLInputElement).value);
-  });
+  app
+    .querySelector<HTMLInputElement>("[aria-label='Quantidade de formas']")
+    ?.addEventListener("change", (event) => {
+      deck.quantity = Number((event.currentTarget as HTMLInputElement).value);
+    });
   wireBlocks(deck);
   if (catalogOpen) wireCatalog(deck, query, category);
 }
@@ -314,41 +452,59 @@ function persistDeck(deck: SavedDeck): void {
 function blockCard(
   block: ContentBlock,
   index: number,
-  direction: SavedDeck["direction"]
+  direction: SavedDeck["direction"],
 ): string {
   const paradigm = paradigmFor(block);
   const preferences = loadPreferences();
   const supports = [
     preferences.showTransliteration ? paradigm.lemma.transliteration : "",
-    preferences.showTranslation ? paradigm.lemma.gloss : ""
-  ].filter(Boolean).join(" · ");
+    preferences.showTranslation ? paradigm.lemma.gloss : "",
+  ]
+    .filter(Boolean)
+    .join(" · ");
   const items = itemsForBlock(block);
   const error = blockError(block, direction);
-  const summary = paradigm.filters
-    .map((filter) => {
-      const chosen = block.selected[filter.field] ?? [];
-      if (chosen.length === filter.options.length) return null;
-      return joinPortuguese(
-        chosen
-          .map((value) => filter.options.find((option) => option.value === value)?.label)
-          .filter((value): value is string => Boolean(value))
-      );
-    })
-    .filter(Boolean)
-    .join(" · ") || "todas as formas";
+  const summary =
+    paradigm.filters
+      .map((filter) => {
+        const chosen = block.selected[filter.field] ?? [];
+        if (chosen.length === filter.options.length) return null;
+        return joinPortuguese(
+          chosen
+            .map(
+              (value) =>
+                filter.options.find((option) => option.value === value)?.label,
+            )
+            .filter((value): value is string => Boolean(value)),
+        );
+      })
+      .filter(Boolean)
+      .join(" · ") || "todas as formas";
   return `<article class="content-block" data-block="${block.id}">
     <header class="block-header">
-      <div><p class="deck-label">Bloco ${index + 1} · ${paradigm.category}</p><h2 lang="grc">${paradigm.lemma.greek}</h2>${supports ? `<p>${supports}</p>` : ""}</div>
+      <div><p class="deck-label">Bloco ${index + 1} · ${paradigm.category}</p><h2 lang="grc">${paradigm.lemma.form}</h2>${supports ? `<p>${supports}</p>` : ""}</div>
       <div class="inline-actions"><button class="quiet compact" data-block-action="duplicate">Duplicar bloco</button><button class="quiet compact danger" data-block-action="remove">Remover bloco</button></div>
     </header>
-    <div class="filter-grid">${paradigm.filters.map((filter) => `
-      <fieldset><legend>${filter.label}</legend>${filter.options.map((option) => `
-        <label class="filter-option"><input type="checkbox" data-field="${filter.field}" value="${option.value}" aria-label="${option.label}" ${(block.selected[filter.field] ?? []).includes(option.value) ? "checked" : ""}><span>${option.label}</span></label>`).join("")}
-      </fieldset>`).join("")}</div>
-    ${paradigm.supportsArticleMode ? `<fieldset class="article-mode"><legend>Apresentação nominal</legend>
+    <div class="filter-grid">${paradigm.filters
+      .map(
+        (filter) => `
+      <fieldset><legend>${filter.label}</legend>${filter.options
+        .map(
+          (option) => `
+        <label class="filter-option"><input type="checkbox" data-field="${filter.field}" value="${option.value}" aria-label="${option.label}" ${(block.selected[filter.field] ?? []).includes(option.value) ? "checked" : ""}><span>${option.label}</span></label>`,
+        )
+        .join("")}
+      </fieldset>`,
+      )
+      .join("")}</div>
+    ${
+      paradigm.supportsArticleMode
+        ? `<fieldset class="article-mode"><legend>Apresentação nominal</legend>
       <label class="filter-option"><input type="radio" name="article-${block.id}" value="with" ${block.articleMode === "with" ? "checked" : ""}><span>Com artigo</span></label>
       <label class="filter-option"><input type="radio" name="article-${block.id}" value="without" ${block.articleMode === "without" ? "checked" : ""}><span>Sem artigo</span></label>
-    </fieldset>` : ""}
+    </fieldset>`
+        : ""
+    }
     <div class="block-summary"><strong>${items.length} formas incluídas</strong><span>${summary}</span></div>
     ${error ? `<p class="validation-message">${error}</p>` : ""}
   </article>`;
@@ -358,40 +514,53 @@ function wireBlocks(deck: SavedDeck): void {
   app.querySelectorAll<HTMLElement>("[data-block]").forEach((element) => {
     const block = deck.blocks.find(({ id }) => id === element.dataset.block);
     if (!block) return;
-    element.querySelectorAll<HTMLInputElement>("[data-field]").forEach((input) => {
-      input.addEventListener("change", () => {
-        const field = input.dataset.field as FilterField;
-        const values = new Set(block.selected[field] ?? []);
-        if (input.checked) values.add(input.value);
-        else values.delete(input.value);
-        block.selected[field] = [...values];
+    element
+      .querySelectorAll<HTMLInputElement>("[data-field]")
+      .forEach((input) => {
+        input.addEventListener("change", () => {
+          const field = input.dataset.field as FilterField;
+          const values = new Set(block.selected[field] ?? []);
+          if (input.checked) values.add(input.value);
+          else values.delete(input.value);
+          block.selected[field] = [...values];
+          renderEditor(deck);
+        });
+      });
+    element
+      .querySelectorAll<HTMLInputElement>(`[name='article-${block.id}']`)
+      .forEach((input) =>
+        input.addEventListener("change", () => {
+          block.articleMode = input.value as ContentBlock["articleMode"];
+          renderEditor(deck);
+        }),
+      );
+    element
+      .querySelector<HTMLButtonElement>("[data-block-action='duplicate']")
+      ?.addEventListener("click", () => {
+        const copy = structuredClone(block);
+        copy.id = createId("block");
+        deck.blocks.splice(deck.blocks.indexOf(block) + 1, 0, copy);
         renderEditor(deck);
       });
-    });
-    element.querySelectorAll<HTMLInputElement>(`[name='article-${block.id}']`).forEach((input) =>
-      input.addEventListener("change", () => {
-        block.articleMode = input.value as ContentBlock["articleMode"];
+    element
+      .querySelector<HTMLButtonElement>("[data-block-action='remove']")
+      ?.addEventListener("click", () => {
+        deck.blocks = deck.blocks.filter(({ id }) => id !== block.id);
         renderEditor(deck);
-      })
-    );
-    element.querySelector<HTMLButtonElement>("[data-block-action='duplicate']")?.addEventListener("click", () => {
-      const copy = structuredClone(block);
-      copy.id = createId("block");
-      deck.blocks.splice(deck.blocks.indexOf(block) + 1, 0, copy);
-      renderEditor(deck);
-    });
-    element.querySelector<HTMLButtonElement>("[data-block-action='remove']")?.addEventListener("click", () => {
-      deck.blocks = deck.blocks.filter(({ id }) => id !== block.id);
-      renderEditor(deck);
-    });
+      });
   });
 }
 
 function catalogPicker(query: string, category: string): string {
   const normalized = query.normalize("NFC").toLocaleLowerCase("pt-BR");
   const results = catalogParadigms.filter((paradigm) => {
-    const matchesCategory = category === "Todos" || paradigm.category === category;
-    const searchable = [paradigm.lemma.greek, paradigm.lemma.transliteration, paradigm.lemma.gloss]
+    const matchesCategory =
+      category === "Todos" || paradigm.category === category;
+    const searchable = [
+      paradigm.lemma.form,
+      paradigm.lemma.transliteration,
+      paradigm.lemma.gloss,
+    ]
       .join(" ")
       .normalize("NFC")
       .toLocaleLowerCase("pt-BR");
@@ -409,8 +578,13 @@ function catalogPicker(query: string, category: string): string {
       ["Adjetivo", "Adjetivos"],
       ["Particípio", "Particípios"],
       ["Numeral", "Numerais"],
-      ["Terminologia", "Terminologia"]
-    ].map(([value, label]) => `<button class="${category === value ? "active" : ""}" data-category="${value}">${label}</button>`).join("")}</div>
+      ["Terminologia", "Terminologia"],
+    ]
+      .map(
+        ([value, label]) =>
+          `<button class="${category === value ? "active" : ""}" data-category="${value}">${label}</button>`,
+      )
+      .join("")}</div>
     <div class="catalog-results">${results.map(catalogResult).join("") || "<p>Nenhum paradigma encontrado.</p>"}</div>
   </aside>`;
 }
@@ -419,40 +593,62 @@ function catalogResult(paradigm: CatalogParadigm): string {
   const preferences = loadPreferences();
   const supports = [
     preferences.showTransliteration ? paradigm.lemma.transliteration : "",
-    preferences.showTranslation ? paradigm.lemma.gloss : ""
-  ].filter(Boolean).join(" · ");
-  return `<article class="catalog-card"><div><p class="deck-label">${paradigm.category}</p><h3 lang="grc">${paradigm.lemma.greek}</h3>${supports ? `<p>${supports}</p>` : ""}</div><button class="primary" data-add-paradigm="${paradigm.id}">Adicionar ${paradigm.lemma.greek}</button></article>`;
+    preferences.showTranslation ? paradigm.lemma.gloss : "",
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  return `<article class="catalog-card"><div><p class="deck-label">${paradigm.category}</p><h3 lang="grc">${paradigm.lemma.form}</h3>${supports ? `<p>${supports}</p>` : ""}</div><button class="primary" data-add-paradigm="${paradigm.id}">Adicionar ${paradigm.lemma.form}</button></article>`;
 }
 
 function wireCatalog(deck: SavedDeck, query: string, category: string): void {
-  app.querySelector<HTMLButtonElement>("[data-action='close-catalog']")?.addEventListener("click", () => renderEditor(deck));
-  const search = app.querySelector<HTMLInputElement>("[aria-label='Pesquisar paradigmas']");
-  search?.addEventListener("input", () => renderEditor(deck, true, search.value, category));
-  app.querySelectorAll<HTMLButtonElement>("[data-category]").forEach((button) =>
-    button.addEventListener("click", () => renderEditor(deck, true, query, button.dataset.category))
+  app
+    .querySelector<HTMLButtonElement>("[data-action='close-catalog']")
+    ?.addEventListener("click", () => renderEditor(deck));
+  const search = app.querySelector<HTMLInputElement>(
+    "[aria-label='Pesquisar paradigmas']",
   );
-  app.querySelectorAll<HTMLButtonElement>("[data-add-paradigm]").forEach((button) => {
-    const paradigm = catalogParadigms.find(({ id }) => id === button.dataset.addParadigm);
-    if (paradigm) button.addEventListener("click", () => {
-      deck.blocks.push(createBlock(paradigm));
-      renderEditor(deck);
+  search?.addEventListener("input", () =>
+    renderEditor(deck, true, search.value, category),
+  );
+  app
+    .querySelectorAll<HTMLButtonElement>("[data-category]")
+    .forEach((button) =>
+      button.addEventListener("click", () =>
+        renderEditor(deck, true, query, button.dataset.category),
+      ),
+    );
+  app
+    .querySelectorAll<HTMLButtonElement>("[data-add-paradigm]")
+    .forEach((button) => {
+      const paradigm = catalogParadigms.find(
+        ({ id }) => id === button.dataset.addParadigm,
+      );
+      if (paradigm)
+        button.addEventListener("click", () => {
+          deck.blocks.push(createBlock(paradigm));
+          renderEditor(deck);
+        });
     });
-  });
 }
 
 function startRound(
   deck: DrillDeck,
   config: RoundConfig = { direction: "analysis", coverage: "all" },
-  restoredRound?: DrillRound
+  restoredRound?: DrillRound,
 ): void {
   if (!restoredRound && loadActiveRound()) return renderHome();
   const round = restoredRound ?? new DrillRound(deck.items, config);
-  const persist = (): void => saveActiveRound({
-    version: 1,
-    deck,
-    config: { direction: config.direction, coverage: config.coverage, quantity: config.quantity },
-    snapshot: round.snapshot()
-  });
+  const persist = (): void =>
+    saveActiveRound({
+      version: 1,
+      deck,
+      config: {
+        direction: config.direction,
+        coverage: config.coverage,
+        quantity: config.quantity,
+      },
+      snapshot: round.snapshot(),
+    });
   function renderQuestion(): void {
     const question = round.question();
     if (!question) return renderComplete();
@@ -462,49 +658,84 @@ function startRound(
       <header class="round-header"><button class="quiet" data-action="exit">Sair</button><p aria-live="polite">Progresso: ${round.masteredCount} de ${round.total}</p></header>
       <div class="prompt"><p id="question-title">${isAnalysis ? "Qual é a análise desta forma?" : "Qual forma corresponde a esta análise?"}</p><p class="${isAnalysis ? "greek-form" : "analysis-prompt"}" ${isAnalysis ? 'lang="grc"' : ""}>${question.prompt}</p>${question.context ? `<p class="form-context">Lema: <span lang="grc">${question.context}</span>${question.item.contextSupport ? ` · ${question.item.contextSupport}` : ""}</p>` : ""}</div>
       <div class="options" role="group" aria-label="Alternativas">${question.choices.map((choice, index) => `<button class="option"><span class="option-number">${index + 1}</span><span>${choice.label}</span></button>`).join("")}</div><div class="feedback" aria-live="polite"></div></section>`;
-    app.querySelector<HTMLButtonElement>("[data-action='exit']")?.addEventListener("click", renderHome);
+    app
+      .querySelector<HTMLButtonElement>("[data-action='exit']")
+      ?.addEventListener("click", renderHome);
     const buttons = [...app.querySelectorAll<HTMLButtonElement>(".option")];
     buttons.forEach((button, index) => {
       const selected = question.choices[index];
-      if (selected) button.addEventListener("click", () => answer(question, buttons, button, selected.id));
+      if (selected)
+        button.addEventListener("click", () =>
+          answer(question, buttons, button, selected.id),
+        );
     });
     document.onkeydown = (event) => {
-      if (["1", "2", "3"].includes(event.key)) buttons[Number(event.key) - 1]?.click();
-      if (event.key === "Enter") app.querySelector<HTMLButtonElement>("[data-action='continue']")?.click();
+      if (["1", "2", "3"].includes(event.key))
+        buttons[Number(event.key) - 1]?.click();
+      if (event.key === "Enter")
+        app
+          .querySelector<HTMLButtonElement>("[data-action='continue']")
+          ?.click();
     };
   }
-  function answer(question: RoundQuestion, buttons: HTMLButtonElement[], selectedButton: HTMLButtonElement, selected: string): void {
+  function answer(
+    question: RoundQuestion,
+    buttons: HTMLButtonElement[],
+    selectedButton: HTMLButtonElement,
+    selected: string,
+  ): void {
     const result = round.answer(selected);
     persist();
     const correct = result.correctLabel;
     buttons.forEach((button) => {
       button.disabled = true;
-      if (button.textContent?.includes(correct)) button.classList.add("correct");
+      if (button.textContent?.includes(correct))
+        button.classList.add("correct");
     });
     if (!result.isCorrect) selectedButton.classList.add("incorrect");
     const feedback = app.querySelector<HTMLElement>(".feedback");
     if (feedback) {
       feedback.innerHTML = `<div class="feedback-copy ${result.isCorrect ? "success" : "error"}"><strong>${result.isCorrect ? "✓ Correto" : "↻ Ainda não"}</strong><span>${result.isCorrect ? "Você reconheceu a forma." : `A resposta é ${correct}. Esta forma voltará.`}</span></div><div class="feedback-actions"><button class="quiet" data-action="paradigm">Ver no paradigma</button><button class="primary" data-action="continue">Continuar</button></div><div class="paradigm-context" hidden></div>`;
-      feedback.querySelector<HTMLButtonElement>("[data-action='paradigm']")?.addEventListener("click", () => {
-        const panel = feedback.querySelector<HTMLElement>(".paradigm-context");
-        if (!panel) return;
-        const sourceParadigmIds = question.item.sourceParadigmIds;
-        const related = sourceParadigmIds?.length
-          ? deck.items.filter((item) => item.sourceParadigmIds?.some((id) => sourceParadigmIds.includes(id)))
-          : deck.items;
-        panel.hidden = !panel.hidden;
-        panel.innerHTML = `<strong>Contexto do paradigma</strong><div>${related.slice(0, 40).map((item) => `<span class="paradigm-form ${item.id === question.item.id ? "current" : ""}" lang="grc">${item.form}</span>`).join("")}</div>`;
-      });
-      feedback.querySelector<HTMLButtonElement>("[data-action='continue']")?.addEventListener("click", renderQuestion);
+      feedback
+        .querySelector<HTMLButtonElement>("[data-action='paradigm']")
+        ?.addEventListener("click", () => {
+          const panel =
+            feedback.querySelector<HTMLElement>(".paradigm-context");
+          if (!panel) return;
+          const sourceParadigmIds = question.item.sourceParadigmIds;
+          const related = sourceParadigmIds?.length
+            ? deck.items.filter((item) =>
+                item.sourceParadigmIds?.some((id) =>
+                  sourceParadigmIds.includes(id),
+                ),
+              )
+            : deck.items;
+          panel.hidden = !panel.hidden;
+          panel.innerHTML = `<strong>Contexto do paradigma</strong><div>${related
+            .slice(0, 40)
+            .map(
+              (item) =>
+                `<span class="paradigm-form ${item.id === question.item.id ? "current" : ""}" lang="grc">${item.form}</span>`,
+            )
+            .join("")}</div>`;
+        });
+      feedback
+        .querySelector<HTMLButtonElement>("[data-action='continue']")
+        ?.addEventListener("click", renderQuestion);
     }
   }
   function renderComplete(): void {
     document.onkeydown = null;
     clearActiveRound();
-    app.innerHTML = `<section class="complete"><p class="completion-mark">✓</p><p class="eyebrow">Rodada concluída</p><h1>Você reconheceu todas as formas.</h1><p>Sem nota e sem pressa. Apenas a prática feita.</p><button class="primary" data-action="home">Voltar ao início</button></section>`;
-    app.querySelector<HTMLButtonElement>("[data-action='home']")?.addEventListener("click", renderHome);
+    app.innerHTML = `<section class="complete"><p class="completion-mark">✓</p><p class="eyebrow">Rodada concluída</p><h1>Você reconheceu todas as formas.</h1><div class="completion-actions"><button class="primary" data-action="repeat">Repetir sessão</button><button class="quiet" data-action="home">Voltar ao início</button></div></section>`;
+    app
+      .querySelector<HTMLButtonElement>("[data-action='repeat']")
+      ?.addEventListener("click", () => startRound(deck, config));
+    app
+      .querySelector<HTMLButtonElement>("[data-action='home']")
+      ?.addEventListener("click", renderHome);
   }
   renderQuestion();
 }
 
-renderHome();
+renderLanguageSelector();

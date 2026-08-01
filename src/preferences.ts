@@ -1,3 +1,5 @@
+import { storageKey, type StudyLanguage } from "./language";
+
 export interface Preferences {
   showTransliteration: boolean;
   showTranslation: boolean;
@@ -5,23 +7,31 @@ export interface Preferences {
 
 export const defaultPreferences: Preferences = {
   showTransliteration: false,
-  showTranslation: false
+  showTranslation: false,
 };
 
-const storageKey = "classical-drill-preferences:v1";
-
-export function loadPreferences(): Preferences {
+export function loadPreferences(
+  language: StudyLanguage = "greek",
+): Preferences {
   try {
-    const value = JSON.parse(localStorage.getItem(storageKey) ?? "null");
+    const value = JSON.parse(
+      localStorage.getItem(storageKey(language, "preferences")) ?? "null",
+    );
     return {
       showTransliteration: value?.showTransliteration === true,
-      showTranslation: value?.showTranslation === true
+      showTranslation: value?.showTranslation === true,
     };
   } catch {
     return { ...defaultPreferences };
   }
 }
 
-export function savePreferences(preferences: Preferences): void {
-  localStorage.setItem(storageKey, JSON.stringify(preferences));
+export function savePreferences(
+  preferences: Preferences,
+  language: StudyLanguage = "greek",
+): void {
+  localStorage.setItem(
+    storageKey(language, "preferences"),
+    JSON.stringify(preferences),
+  );
 }

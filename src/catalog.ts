@@ -5,15 +5,25 @@ export type GrammaticalCase =
   | "genitivo"
   | "dativo"
   | "acusativo"
+  | "ablativo"
   | "vocativo";
 export type GrammaticalNumber = "singular" | "dual" | "plural";
 export type GrammaticalGender = "masculino" | "feminino" | "neutro";
 export type GrammaticalDegree = "positivo" | "comparativo" | "superlativo";
 export type GrammaticalTense =
-  | "present" | "imperfect" | "future" | "aorist" | "perfect" | "pluperfect"
+  | "present"
+  | "imperfect"
+  | "future"
+  | "aorist"
+  | "perfect"
+  | "pluperfect"
   | "future-perfect";
-export type GrammaticalVoice = "active" | "middle" | "passive";
-export type GrammaticalMood = "indicative" | "subjunctive" | "optative" | "imperative";
+export type GrammaticalVoice = "active" | "middle" | "passive" | "deponent";
+export type GrammaticalMood =
+  | "indicative"
+  | "subjunctive"
+  | "optative"
+  | "imperative";
 export type GrammaticalPerson = "first" | "second" | "third";
 
 export interface NominalAnalysis {
@@ -56,7 +66,11 @@ export interface AdjectiveAnalysis {
 }
 
 export type MatchingAnalysis =
-  | { kind: "numeral"; meaning: string; numeralType: "cardinal" | "ordinal" | "adverbial" }
+  | {
+      kind: "numeral";
+      meaning: string;
+      numeralType: "cardinal" | "ordinal" | "adverbial";
+    }
   | { kind: "terminology"; meaning: string; topic: string };
 
 export type Analysis =
@@ -79,6 +93,15 @@ export interface DrillItem {
   productionContext?: string;
   sourceBlockIds?: string[];
   sourceParadigmIds?: string[];
+  sources?: CatalogSource[];
+}
+
+export interface CatalogSource {
+  id: string;
+  title: string;
+  url?: string;
+  consultedAt: string;
+  role: string;
 }
 
 export interface DrillDeck {
@@ -89,9 +112,17 @@ export interface DrillDeck {
 }
 
 export type FilterField =
-  | "grammaticalCase" | "number" | "gender"
-  | "form" | "tense" | "voice" | "mood" | "person" | "degree"
-  | "numeralType" | "topic";
+  | "grammaticalCase"
+  | "number"
+  | "gender"
+  | "form"
+  | "tense"
+  | "voice"
+  | "mood"
+  | "person"
+  | "degree"
+  | "numeralType"
+  | "topic";
 
 export interface CatalogFilter {
   field: FilterField;
@@ -99,16 +130,25 @@ export interface CatalogFilter {
   options: Array<{ value: string; label: string }>;
 }
 
-export type CatalogCategory = "Substantivo" | "Pronome" | "Artigo" | "Verbo" | "Adjetivo" | "Particípio" | "Numeral" | "Terminologia";
+export type CatalogCategory =
+  | "Substantivo"
+  | "Pronome"
+  | "Artigo"
+  | "Verbo"
+  | "Adjetivo"
+  | "Particípio"
+  | "Numeral"
+  | "Terminologia";
 
 export interface CatalogParadigm {
   id: string;
   category: CatalogCategory;
-  declension?: "first" | "second" | "third";
-  lemma: { greek: string; transliteration: string; gloss: string };
+  declension?: "first" | "second" | "third" | "fourth" | "fifth";
+  lemma: { form: string; transliteration: string; gloss: string };
   items: DrillItem[];
   filters: CatalogFilter[];
   supportsArticleMode: boolean;
+  sources?: CatalogSource[];
 }
 
 interface GeneratedNominalAnalysis {
@@ -167,8 +207,22 @@ interface GeneratedItem {
 }
 interface GeneratedParadigm {
   id: string;
-  kind: "nominal" | "verb" | "adjective" | "participle" | "numeral" | "terminology";
-  category: "noun" | "pronoun" | "article" | "verb" | "adjective" | "participle" | "numeral" | "terminology";
+  kind:
+    | "nominal"
+    | "verb"
+    | "adjective"
+    | "participle"
+    | "numeral"
+    | "terminology";
+  category:
+    | "noun"
+    | "pronoun"
+    | "article"
+    | "verb"
+    | "adjective"
+    | "participle"
+    | "numeral"
+    | "terminology";
   declension?: "first" | "second" | "third";
   lemma: { greek: string; transliteration: string; gloss: string };
   items: GeneratedItem[];
@@ -184,12 +238,12 @@ const caseLabels: Record<GeneratedNominalAnalysis["case"], GrammaticalCase> = {
   genitive: "genitivo",
   dative: "dativo",
   accusative: "acusativo",
-  vocative: "vocativo"
+  vocative: "vocativo",
 };
 const genderLabels = {
   masculine: "masculino",
   feminine: "feminino",
-  neuter: "neutro"
+  neuter: "neutro",
 } as const;
 const categoryLabels = {
   noun: "Substantivo",
@@ -199,191 +253,317 @@ const categoryLabels = {
   adjective: "Adjetivo",
   participle: "Particípio",
   numeral: "Numeral",
-  terminology: "Terminologia"
+  terminology: "Terminologia",
 } as const;
 const optionLabels: Record<string, string> = {
-  nominative: "nominativo", genitive: "genitivo", dative: "dativo",
-  accusative: "acusativo", vocative: "vocativo",
-  singular: "singular", dual: "dual", plural: "plural",
-  masculine: "masculino", feminine: "feminino", neuter: "neutro",
-  present: "presente", imperfect: "imperfeito", future: "futuro",
-  aorist: "aoristo", perfect: "perfeito", pluperfect: "mais-que-perfeito",
+  nominative: "nominativo",
+  genitive: "genitivo",
+  dative: "dativo",
+  accusative: "acusativo",
+  vocative: "vocativo",
+  singular: "singular",
+  dual: "dual",
+  plural: "plural",
+  masculine: "masculino",
+  feminine: "feminino",
+  neuter: "neutro",
+  present: "presente",
+  imperfect: "imperfeito",
+  future: "futuro",
+  aorist: "aoristo",
+  perfect: "perfeito",
+  pluperfect: "mais-que-perfeito",
   "future-perfect": "futuro perfeito",
-  active: "ativo", middle: "médio", passive: "passivo",
-  indicative: "indicativo", subjunctive: "subjuntivo",
-  optative: "optativo", imperative: "imperativo",
-  first: "1ª pessoa", second: "2ª pessoa", third: "3ª pessoa",
-  finite: "forma finita", infinitive: "infinitivo", participle: "particípio",
-  positive: "positivo", comparative: "comparativo", superlative: "superlativo",
-  cardinal: "cardinal", ordinal: "ordinal", adverbial: "adverbial"
+  active: "ativo",
+  middle: "médio",
+  passive: "passivo",
+  indicative: "indicativo",
+  subjunctive: "subjuntivo",
+  optative: "optativo",
+  imperative: "imperativo",
+  first: "1ª pessoa",
+  second: "2ª pessoa",
+  third: "3ª pessoa",
+  finite: "forma finita",
+  infinitive: "infinitivo",
+  participle: "particípio",
+  positive: "positivo",
+  comparative: "comparativo",
+  superlative: "superlativo",
+  cardinal: "cardinal",
+  ordinal: "ordinal",
+  adverbial: "adverbial",
 };
 
-function filter(field: FilterField, label: string, values: string[]): CatalogFilter {
+function filter(
+  field: FilterField,
+  label: string,
+  values: string[],
+): CatalogFilter {
   return {
     field,
     label,
     options: [...new Set(values)].map((value) => ({
       value,
-      label: optionLabels[value] ?? value
-    }))
+      label: optionLabels[value] ?? value,
+    })),
+  };
+}
+
+function mappedLemma(source: GeneratedParadigm): CatalogParadigm["lemma"] {
+  return {
+    form: source.lemma.greek,
+    transliteration: source.lemma.transliteration,
+    gloss: source.lemma.gloss,
   };
 }
 
 function nominalParadigm(source: GeneratedParadigm): CatalogParadigm {
-  const analyses = source.items.flatMap((item) =>
-    item.analyses as GeneratedNominalAnalysis[]
+  const analyses = source.items.flatMap(
+    (item) => item.analyses as GeneratedNominalAnalysis[],
   );
-  const items = source.items.map((item): DrillItem => ({
-    id: item.id,
-    form: item.variants.join(" / "),
-    bareForm: item.bareVariants?.join(" / "),
-    analyses: (item.analyses as GeneratedNominalAnalysis[]).map((analysis) => ({
-      kind: "nominal",
-      grammaticalCase: caseLabels[analysis.case],
-      grammaticalNumber: analysis.number,
-      ...(analysis.gender ? { gender: genderLabels[analysis.gender] } : {})
-    }))
-  }));
+  const items = source.items.map(
+    (item): DrillItem => ({
+      id: item.id,
+      form: item.variants.join(" / "),
+      bareForm: item.bareVariants?.join(" / "),
+      analyses: (item.analyses as GeneratedNominalAnalysis[]).map(
+        (analysis) => ({
+          kind: "nominal",
+          grammaticalCase: caseLabels[analysis.case],
+          grammaticalNumber: analysis.number,
+          ...(analysis.gender ? { gender: genderLabels[analysis.gender] } : {}),
+        }),
+      ),
+    }),
+  );
   const filters = [
     filter(
       "grammaticalCase",
       "Caso",
-      analyses.map(({ case: value }) => caseLabels[value])
+      analyses.map(({ case: value }) => caseLabels[value]),
     ),
-    filter("number", "Número", analyses.map(({ number }) => number))
+    filter(
+      "number",
+      "Número",
+      analyses.map(({ number }) => number),
+    ),
   ];
   if (analyses.some(({ gender }) => gender)) {
     filters.push(
       filter(
         "gender",
         "Gênero",
-        analyses.flatMap(({ gender }) => gender ? [genderLabels[gender]] : [])
-      )
+        analyses.flatMap(({ gender }) =>
+          gender ? [genderLabels[gender]] : [],
+        ),
+      ),
     );
   }
   return {
     id: source.id,
     category: categoryLabels[source.category],
     declension: source.declension,
-    lemma: source.lemma,
+    lemma: mappedLemma(source),
     items,
     filters,
-    supportsArticleMode: source.category === "noun"
+    supportsArticleMode: source.category === "noun",
   };
 }
 
 function adjectiveParadigm(source: GeneratedParadigm): CatalogParadigm {
-  const analyses = source.items.flatMap((item) => item.analyses as GeneratedAdjectiveAnalysis[]);
+  const analyses = source.items.flatMap(
+    (item) => item.analyses as GeneratedAdjectiveAnalysis[],
+  );
   return {
     id: source.id,
     category: "Adjetivo",
-    lemma: source.lemma,
+    lemma: mappedLemma(source),
     items: source.items.map((item) => ({
       id: item.id,
       form: item.variants.join(" / "),
       forms: item.variants,
-      analyses: (item.analyses as GeneratedAdjectiveAnalysis[]).map((analysis) => ({
-        kind: "adjective",
-        ...(analysis.case ? { grammaticalCase: caseLabels[analysis.case] } : {}),
-        ...(analysis.number ? { grammaticalNumber: analysis.number } : {}),
-        ...(analysis.gender ? { gender: genderLabels[analysis.gender] } : {}),
-        degree: ({ positive: "positivo", comparative: "comparativo", superlative: "superlativo" } as const)[analysis.degree]
-      }))
+      analyses: (item.analyses as GeneratedAdjectiveAnalysis[]).map(
+        (analysis) => ({
+          kind: "adjective",
+          ...(analysis.case
+            ? { grammaticalCase: caseLabels[analysis.case] }
+            : {}),
+          ...(analysis.number ? { grammaticalNumber: analysis.number } : {}),
+          ...(analysis.gender ? { gender: genderLabels[analysis.gender] } : {}),
+          degree: (
+            {
+              positive: "positivo",
+              comparative: "comparativo",
+              superlative: "superlativo",
+            } as const
+          )[analysis.degree],
+        }),
+      ),
     })),
     filters: [
-      filter("grammaticalCase", "Caso", analyses.flatMap(({ case: value }) => value ? [caseLabels[value]] : [])),
-      filter("number", "Número", analyses.flatMap(({ number }) => number ? [number] : [])),
-      filter("gender", "Gênero", analyses.flatMap(({ gender }) => gender ? [genderLabels[gender]] : [])),
-      filter("degree", "Grau", analyses.map(({ degree }) => optionLabels[degree]))
+      filter(
+        "grammaticalCase",
+        "Caso",
+        analyses.flatMap(({ case: value }) =>
+          value ? [caseLabels[value]] : [],
+        ),
+      ),
+      filter(
+        "number",
+        "Número",
+        analyses.flatMap(({ number }) => (number ? [number] : [])),
+      ),
+      filter(
+        "gender",
+        "Gênero",
+        analyses.flatMap(({ gender }) =>
+          gender ? [genderLabels[gender]] : [],
+        ),
+      ),
+      filter(
+        "degree",
+        "Grau",
+        analyses.map(({ degree }) => optionLabels[degree]),
+      ),
     ].filter(({ options }) => options.length > 0),
-    supportsArticleMode: false
+    supportsArticleMode: false,
   };
 }
 
 function participleParadigm(source: GeneratedParadigm): CatalogParadigm {
-  const analyses = source.items.flatMap((item) => item.analyses as GeneratedParticipleAnalysis[]);
+  const analyses = source.items.flatMap(
+    (item) => item.analyses as GeneratedParticipleAnalysis[],
+  );
   return {
     id: source.id,
     category: "Particípio",
-    lemma: source.lemma,
+    lemma: mappedLemma(source),
     items: source.items.map((item) => ({
       id: item.id,
       form: item.variants.join(" / "),
       forms: item.variants,
-      analyses: (item.analyses as GeneratedParticipleAnalysis[]).map((analysis) => ({
-        kind: "participle",
-        tense: analysis.tense,
-        voice: analysis.voice,
-        gender: genderLabels[analysis.gender],
-        ...(analysis.case ? { grammaticalCase: caseLabels[analysis.case] } : {}),
-        ...(analysis.number ? { grammaticalNumber: analysis.number } : {})
-      }))
+      analyses: (item.analyses as GeneratedParticipleAnalysis[]).map(
+        (analysis) => ({
+          kind: "participle",
+          tense: analysis.tense,
+          voice: analysis.voice,
+          gender: genderLabels[analysis.gender],
+          ...(analysis.case
+            ? { grammaticalCase: caseLabels[analysis.case] }
+            : {}),
+          ...(analysis.number ? { grammaticalNumber: analysis.number } : {}),
+        }),
+      ),
     })),
     filters: [
-      filter("tense", "Tempo", analyses.map(({ tense }) => tense)),
-      filter("voice", "Voz", analyses.map(({ voice }) => voice)),
-      filter("grammaticalCase", "Caso", analyses.flatMap(({ case: value }) => value ? [caseLabels[value]] : [])),
-      filter("number", "Número", analyses.flatMap(({ number }) => number ? [number] : [])),
-      filter("gender", "Gênero", analyses.map(({ gender }) => genderLabels[gender]))
+      filter(
+        "tense",
+        "Tempo",
+        analyses.map(({ tense }) => tense),
+      ),
+      filter(
+        "voice",
+        "Voz",
+        analyses.map(({ voice }) => voice),
+      ),
+      filter(
+        "grammaticalCase",
+        "Caso",
+        analyses.flatMap(({ case: value }) =>
+          value ? [caseLabels[value]] : [],
+        ),
+      ),
+      filter(
+        "number",
+        "Número",
+        analyses.flatMap(({ number }) => (number ? [number] : [])),
+      ),
+      filter(
+        "gender",
+        "Gênero",
+        analyses.map(({ gender }) => genderLabels[gender]),
+      ),
     ].filter(({ options }) => options.length > 0),
-    supportsArticleMode: false
+    supportsArticleMode: false,
   };
 }
 
 function matchingParadigm(source: GeneratedParadigm): CatalogParadigm {
   const kind = source.kind as "numeral" | "terminology";
   if (kind === "numeral") {
-    const analyses = source.items.flatMap((item) => item.analyses as GeneratedNumeralAnalysis[]);
+    const analyses = source.items.flatMap(
+      (item) => item.analyses as GeneratedNumeralAnalysis[],
+    );
     return {
       id: source.id,
       category: "Numeral",
-      lemma: source.lemma,
+      lemma: mappedLemma(source),
       items: source.items.map((item) => ({
         id: item.id,
         form: item.variants.join(" / "),
         forms: item.variants,
-        analyses: (item.analyses as GeneratedNumeralAnalysis[]).map((analysis) => ({
-          kind: "numeral" as const,
-          meaning: analysis.meaning,
-          numeralType: analysis.type
-        }))
+        analyses: (item.analyses as GeneratedNumeralAnalysis[]).map(
+          (analysis) => ({
+            kind: "numeral" as const,
+            meaning: analysis.meaning,
+            numeralType: analysis.type,
+          }),
+        ),
       })),
-      filters: [filter("numeralType", "Tipo", analyses.map(({ type }) => type))],
-      supportsArticleMode: false
+      filters: [
+        filter(
+          "numeralType",
+          "Tipo",
+          analyses.map(({ type }) => type),
+        ),
+      ],
+      supportsArticleMode: false,
     };
   }
-  const analyses = source.items.flatMap((item) => item.analyses as GeneratedTerminologyAnalysis[]);
+  const analyses = source.items.flatMap(
+    (item) => item.analyses as GeneratedTerminologyAnalysis[],
+  );
   return {
     id: source.id,
     category: categoryLabels[source.category],
-    lemma: source.lemma,
+    lemma: mappedLemma(source),
     items: source.items.map((item) => ({
       id: item.id,
       form: item.variants.join(" / "),
       forms: item.variants,
-      analyses: (item.analyses as GeneratedTerminologyAnalysis[]).map((analysis) => ({
-        kind: "terminology" as const,
-        meaning: analysis.meaning,
-        topic: analysis.topic
-      }))
+      analyses: (item.analyses as GeneratedTerminologyAnalysis[]).map(
+        (analysis) => ({
+          kind: "terminology" as const,
+          meaning: analysis.meaning,
+          topic: analysis.topic,
+        }),
+      ),
     })),
-    filters: [filter("topic", "Tema", analyses.map(({ topic }) => topic))],
-    supportsArticleMode: false
+    filters: [
+      filter(
+        "topic",
+        "Tema",
+        analyses.map(({ topic }) => topic),
+      ),
+    ],
+    supportsArticleMode: false,
   };
 }
 
 function verbParadigm(source: GeneratedParadigm): CatalogParadigm {
-  const analyses = source.items.flatMap((item) =>
-    item.analyses as Array<
-      | GeneratedFiniteVerbAnalysis
-      | GeneratedInfinitiveAnalysis
-      | GeneratedParticipleAnalysis
-    >
+  const analyses = source.items.flatMap(
+    (item) =>
+      item.analyses as Array<
+        | GeneratedFiniteVerbAnalysis
+        | GeneratedInfinitiveAnalysis
+        | GeneratedParticipleAnalysis
+      >,
   );
   return {
     id: source.id,
     category: "Verbo",
-    lemma: source.lemma,
+    lemma: mappedLemma(source),
     items: source.items.map((item) => ({
       id: item.id,
       form: item.variants.join(" / "),
@@ -396,73 +576,84 @@ function verbParadigm(source: GeneratedParadigm): CatalogParadigm {
               voice: analysis.voice,
               mood: analysis.mood,
               person: analysis.person,
-              grammaticalNumber: analysis.number
+              grammaticalNumber: analysis.number,
             }
           : analysis.form === "infinitive"
             ? {
                 kind: "infinitive",
                 tense: analysis.tense,
-                voice: analysis.voice
+                voice: analysis.voice,
               }
             : {
                 kind: "participle",
                 tense: analysis.tense,
                 voice: analysis.voice,
-                gender: genderLabels[analysis.gender]
-              }
-      )
+                gender: genderLabels[analysis.gender],
+              },
+      ),
     })),
     filters: [
-      filter("form", "Forma", analyses.map(({ form }) => form)),
-      filter("tense", "Tempo", analyses.map(({ tense }) => tense)),
-      filter("voice", "Voz", analyses.map(({ voice }) => voice)),
+      filter(
+        "form",
+        "Forma",
+        analyses.map(({ form }) => form),
+      ),
+      filter(
+        "tense",
+        "Tempo",
+        analyses.map(({ tense }) => tense),
+      ),
+      filter(
+        "voice",
+        "Voz",
+        analyses.map(({ voice }) => voice),
+      ),
       filter(
         "mood",
         "Modo",
         analyses.flatMap((analysis) =>
-          analysis.form === "finite" ? [analysis.mood] : []
-        )
+          analysis.form === "finite" ? [analysis.mood] : [],
+        ),
       ),
       filter(
         "person",
         "Pessoa",
         analyses.flatMap((analysis) =>
-          analysis.form === "finite" ? [analysis.person] : []
-        )
+          analysis.form === "finite" ? [analysis.person] : [],
+        ),
       ),
       filter(
         "number",
         "Número",
         analyses.flatMap((analysis) =>
-          analysis.form === "finite" ? [analysis.number] : []
-        )
+          analysis.form === "finite" ? [analysis.number] : [],
+        ),
       ),
       filter(
         "gender",
         "Gênero",
         analyses.flatMap((analysis) =>
-          analysis.form === "participle"
-            ? [genderLabels[analysis.gender]]
-            : []
-        )
-      )
+          analysis.form === "participle" ? [genderLabels[analysis.gender]] : [],
+        ),
+      ),
     ].filter(({ options }) => options.length > 0),
-    supportsArticleMode: false
+    supportsArticleMode: false,
   };
 }
 
 export const catalogVersion = generatedCatalog.catalogVersion;
-export const catalogParadigms: CatalogParadigm[] = generatedCatalog.paradigms.map(
-  (source) => source.kind === "nominal"
-    ? nominalParadigm(source)
-    : source.kind === "adjective"
-      ? adjectiveParadigm(source)
-    : source.kind === "participle"
-      ? participleParadigm(source)
-      : source.kind === "numeral" || source.kind === "terminology"
-        ? matchingParadigm(source)
-      : verbParadigm(source)
-);
+export const catalogParadigms: CatalogParadigm[] =
+  generatedCatalog.paradigms.map((source) =>
+    source.kind === "nominal"
+      ? nominalParadigm(source)
+      : source.kind === "adjective"
+        ? adjectiveParadigm(source)
+        : source.kind === "participle"
+          ? participleParadigm(source)
+          : source.kind === "numeral" || source.kind === "terminology"
+            ? matchingParadigm(source)
+            : verbParadigm(source),
+  );
 
 function requireCatalogParadigm(id: string): CatalogParadigm {
   const paradigm = catalogParadigms.find((candidate) => candidate.id === id);
@@ -473,33 +664,35 @@ function requireCatalogParadigm(id: string): CatalogParadigm {
 function nominalDeck(): DrillDeck {
   const paradigm = requireCatalogParadigm("noun:krene");
   const items = paradigm.items.filter(
-    (item) => item.analyses.length === 1 &&
+    (item) =>
+      item.analyses.length === 1 &&
       item.analyses[0]?.kind === "nominal" &&
-      item.analyses[0].grammaticalNumber !== "dual"
+      item.analyses[0].grammaticalNumber !== "dual",
   );
   return {
     id: "deck:krene",
-    title: paradigm.lemma.greek,
+    title: paradigm.lemma.form,
     description: "Primeira declinação · singular e plural · 8 formas",
-    items
+    items,
   };
 }
 
 function verbDeck(): DrillDeck {
   const paradigm = requireCatalogParadigm("verb:luo");
   const items = paradigm.items.filter((item) =>
-    item.analyses.some((analysis) =>
-      analysis.kind === "finite-verb" &&
-      analysis.tense === "present" &&
-      analysis.voice === "active" &&
-      analysis.mood === "indicative"
-    )
+    item.analyses.some(
+      (analysis) =>
+        analysis.kind === "finite-verb" &&
+        analysis.tense === "present" &&
+        analysis.voice === "active" &&
+        analysis.mood === "indicative",
+    ),
   );
   return {
     id: "deck:luo-present-active-indicative",
-    title: paradigm.lemma.greek,
+    title: paradigm.lemma.form,
     description: `Presente · ativo · indicativo · ${items.length} formas`,
-    items
+    items,
   };
 }
 
@@ -510,8 +703,12 @@ function mixedDeck(): DrillDeck {
     id: "deck:mixed-starter",
     title: "Prática mista",
     description: "κρήνη + λῡ́ω · substantivo e verbo · análise e produção",
-    items: [...nominal.items, ...verb.items]
+    items: [...nominal.items, ...verb.items],
   };
 }
 
-export const builtInDecks: DrillDeck[] = [nominalDeck(), verbDeck(), mixedDeck()];
+export const builtInDecks: DrillDeck[] = [
+  nominalDeck(),
+  verbDeck(),
+  mixedDeck(),
+];

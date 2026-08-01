@@ -8,13 +8,14 @@ const analysesByForm: Record<string, string> = {
   "αἱ κρῆναι": "nominativo · plural",
   "τῶν κρηνῶν": "genitivo · plural",
   "ταῖς κρήναις": "dativo · plural",
-  "τὰ̄ς κρήνᾱς": "acusativo · plural"
+  "τὰ̄ς κρήνᾱς": "acusativo · plural",
 };
 
 async function startRound(page: Page) {
   await page.goto("/");
+  await page.getByRole("button", { name: "Grego clássico" }).click();
   const deck = page.getByRole("article").filter({
-    has: page.getByRole("heading", { name: "κρήνη" })
+    has: page.getByRole("heading", { name: "κρήνη" }),
   });
   await deck.getByRole("button", { name: "Iniciar rodada" }).click();
 }
@@ -29,14 +30,15 @@ async function answerCurrentCorrectly(page: Page) {
 
 test("o estudante inicia uma rodada de κρήνη", async ({ page }) => {
   await page.goto("/");
+  await page.getByRole("button", { name: "Grego clássico" }).click();
 
   await expect(
-    page.getByRole("heading", { name: "Classical Drill Game: Grego e Latim" })
+    page.getByRole("heading", { name: "Grego clássico" }),
   ).toBeVisible();
   await expect(page.getByText("κρήνη", { exact: true })).toBeVisible();
 
   const deck = page.getByRole("article").filter({
-    has: page.getByRole("heading", { name: "κρήνη" })
+    has: page.getByRole("heading", { name: "κρήνη" }),
   });
   await deck.getByRole("button", { name: "Iniciar rodada" }).click();
 
@@ -46,23 +48,22 @@ test("o estudante inicia uma rodada de κρήνη", async ({ page }) => {
 });
 
 test("o estudante inicia uma rodada de λῡ́ω a partir do catálogo", async ({
-  page
+  page,
 }) => {
   await page.goto("/");
+  await page.getByRole("button", { name: "Grego clássico" }).click();
   const deck = page.getByRole("article").filter({
-    has: page.getByRole("heading", { name: "λῡ́ω" })
+    has: page.getByRole("heading", { name: "λῡ́ω" }),
   });
 
   await deck.getByRole("button", { name: "Iniciar rodada" }).click();
 
   await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
   await expect(page.getByRole("group", { name: "Alternativas" })).toContainText(
-    "presente"
+    "presente",
   );
   await expect(
-    page
-      .getByRole("group", { name: "Alternativas" })
-      .getByRole("button")
+    page.getByRole("group", { name: "Alternativas" }).getByRole("button"),
   ).toHaveCount(3);
 });
 
@@ -71,7 +72,8 @@ test("uma forma errada volta depois de outras perguntas", async ({ page }) => {
 
   const missedForm = (await page.locator(".greek-form").textContent())?.trim();
   const correct = missedForm ? analysesByForm[missedForm] : undefined;
-  if (!missedForm || !correct) throw new Error("A rodada não apresentou uma forma conhecida.");
+  if (!missedForm || !correct)
+    throw new Error("A rodada não apresentou uma forma conhecida.");
 
   const options = await page
     .getByRole("group", { name: "Alternativas" })
@@ -80,16 +82,19 @@ test("uma forma errada volta depois de outras perguntas", async ({ page }) => {
   const wrongOption = await Promise.all(
     options.map(async (option) => ({
       option,
-      label: await option.innerText()
-    }))
+      label: await option.innerText(),
+    })),
   ).then((candidates) =>
-    candidates.find(({ label }) => !label.includes(correct))
+    candidates.find(({ label }) => !label.includes(correct)),
   );
-  if (!wrongOption) throw new Error("A pergunta não ofereceu uma alternativa incorreta.");
+  if (!wrongOption)
+    throw new Error("A pergunta não ofereceu uma alternativa incorreta.");
   await wrongOption.option.click();
 
   await expect(page.getByText("Ainda não")).toBeVisible();
-  await expect(page.getByText("Esta forma voltará.", { exact: false })).toBeVisible();
+  await expect(
+    page.getByText("Esta forma voltará.", { exact: false }),
+  ).toBeVisible();
   await page.getByRole("button", { name: "Continuar" }).click();
 
   for (let index = 0; index < 7; index += 1) {
@@ -110,12 +115,21 @@ test("a rodada termina depois de acertar todas as formas", async ({ page }) => {
   }
 
   await expect(page.getByText("Rodada concluída")).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Você reconheceu todas as formas." })).toBeVisible();
-  await expect(page.getByText("Sem nota e sem pressa. Apenas a prática feita.")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Você reconheceu todas as formas." }),
+  ).toBeVisible();
+  await expect(page.getByText("Sem nota e sem pressa.")).toHaveCount(0);
+  await page.getByRole("button", { name: "Repetir sessão" }).click();
+  await expect(page.getByText("Progresso: 0 de 8")).toBeVisible();
+  await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
 });
 
-test("a rodada completa continua disponível offline", async ({ context, page }) => {
+test("a rodada completa continua disponível offline", async ({
+  context,
+  page,
+}) => {
   await page.goto("/");
+  await page.getByRole("button", { name: "Grego clássico" }).click();
   await expect(page.locator("link[rel='manifest']")).toHaveCount(1);
   await page.evaluate(async () => {
     await navigator.serviceWorker.ready;
@@ -123,12 +137,13 @@ test("a rodada completa continua disponível offline", async ({ context, page })
 
   await context.setOffline(true);
   await page.reload();
+  await page.getByRole("button", { name: "Grego clássico" }).click();
 
   await expect(
-    page.getByRole("heading", { name: "Classical Drill Game: Grego e Latim" })
+    page.getByRole("heading", { name: "Grego clássico" }),
   ).toBeVisible();
   const deck = page.getByRole("article").filter({
-    has: page.getByRole("heading", { name: "κρήνη" })
+    has: page.getByRole("heading", { name: "κρήνη" }),
   });
   await deck.getByRole("button", { name: "Iniciar rodada" }).click();
 

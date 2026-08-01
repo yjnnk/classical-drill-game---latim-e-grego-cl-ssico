@@ -8,7 +8,7 @@ const items: DrillItem[] = [
   ["a3", "λῡ́ει / λῡ́ῃ", "third", "singular", "block:a"],
   ["b1", "λῡ́ομεν", "first", "plural", "block:b"],
   ["b2", "λῡ́ετε", "second", "plural", "block:b"],
-  ["b3", "λῡ́ουσι(ν)", "third", "plural", "block:b"]
+  ["b3", "λῡ́ουσι(ν)", "third", "plural", "block:b"],
 ].map(([id, form, person, number, blockId]) => ({
   id,
   form,
@@ -20,16 +20,16 @@ const items: DrillItem[] = [
       voice: "active",
       mood: "indicative",
       person,
-      grammaticalNumber: number
-    }
-  ]
+      grammaticalNumber: number,
+    },
+  ],
 })) as DrillItem[];
 
 test("produção assistida oferece três formas e agrupa variantes corretas", () => {
   const round = new DrillRound(items, {
     direction: "production",
     coverage: "all",
-    random: () => 0.5
+    random: () => 0.5,
   });
   let question = round.question();
   while (question && question.item.id !== "a3") {
@@ -42,20 +42,18 @@ test("produção assistida oferece três formas e agrupa variantes corretas", ()
   expect(question?.direction).toBe("production");
   expect(question?.choices).toHaveLength(3);
   expect(question?.choices.filter(({ correct }) => correct)).toEqual([
-    expect.objectContaining({ label: "λῡ́ει / λῡ́ῃ" })
+    expect.objectContaining({ label: "λῡ́ει / λῡ́ῃ" }),
   ]);
 });
 
 test("análise apresenta uma variante equivalente de cada vez", () => {
   const variantItems = items.map((item) =>
-    item.id === "a3"
-      ? { ...item, forms: ["λῡ́ει", "λῡ́ῃ"] }
-      : item
+    item.id === "a3" ? { ...item, forms: ["λῡ́ει", "λῡ́ῃ"] } : item,
   );
   const round = new DrillRound(variantItems, {
     direction: "analysis",
     coverage: "all",
-    random: () => 0.5
+    random: () => 0.5,
   });
 
   let question = round.question();
@@ -77,35 +75,50 @@ test("análise reúne todas as leituras da variante sincrética", () => {
       form: "λῡ́ει / λῡ́ῃ",
       forms: ["λῡ́ει", "λῡ́ῃ"],
       sourceParadigmIds: ["verb:luo"],
-      analyses: [{
-        kind: "finite-verb", tense: "present", voice: "middle",
-        mood: "indicative", person: "second", grammaticalNumber: "singular"
-      }]
+      analyses: [
+        {
+          kind: "finite-verb",
+          tense: "present",
+          voice: "middle",
+          mood: "indicative",
+          person: "second",
+          grammaticalNumber: "singular",
+        },
+      ],
     },
     {
       id: "subjunctive",
       form: "λῡ́ῃ",
       forms: ["λῡ́ῃ"],
       sourceParadigmIds: ["verb:luo"],
-      analyses: [{
-        kind: "finite-verb", tense: "present", voice: "middle",
-        mood: "subjunctive", person: "second", grammaticalNumber: "singular"
-      }]
+      analyses: [
+        {
+          kind: "finite-verb",
+          tense: "present",
+          voice: "middle",
+          mood: "subjunctive",
+          person: "second",
+          grammaticalNumber: "singular",
+        },
+      ],
     },
     ...items.slice(0, 3).map((item, index) => ({
       ...item,
       id: `distractor:${index}`,
-      sourceParadigmIds: ["verb:luo"]
-    }))
+      sourceParadigmIds: ["verb:luo"],
+    })),
   ];
   const round = new DrillRound(syncreticItems, {
     direction: "analysis",
     coverage: "all",
-    random: () => 0
+    random: () => 0,
   });
 
   let question = round.question();
-  while (question && !(question.item.id === "indicative" && question.prompt === "λῡ́ῃ")) {
+  while (
+    question &&
+    !(question.item.id === "indicative" && question.prompt === "λῡ́ῃ")
+  ) {
     const correct = question.choices.find(({ correct }) => correct);
     if (!correct) throw new Error("Pergunta sem resposta correta.");
     round.answer(correct.id);
@@ -125,7 +138,7 @@ test("produção separa paradigmas com a mesma análise e informa o lema", () =>
     ["a-dat", "κρήνῃ", "dativo", "paradigm:krene"],
     ["b-nom", "τιμή", "nominativo", "paradigm:time"],
     ["b-gen", "τιμῆς", "genitivo", "paradigm:time"],
-    ["b-dat", "τιμῇ", "dativo", "paradigm:time"]
+    ["b-dat", "τιμῇ", "dativo", "paradigm:time"],
   ].map(([id, form, grammaticalCase, paradigmId]) => ({
     id,
     form,
@@ -135,14 +148,14 @@ test("produção separa paradigmas com a mesma análise e informa o lema", () =>
       {
         kind: "nominal",
         grammaticalCase,
-        grammaticalNumber: "singular"
-      }
-    ]
+        grammaticalNumber: "singular",
+      },
+    ],
   })) as DrillItem[];
   const round = new DrillRound(nominalItems, {
     direction: "production",
     coverage: "all",
-    random: () => 0.5
+    random: () => 0.5,
   });
 
   let question = round.question();
@@ -154,9 +167,11 @@ test("produção separa paradigmas com a mesma análise e informa o lema", () =>
   }
 
   expect(question?.context).toBe("κρήνη");
-  expect(question?.choices.find(({ correct }) => correct)?.label).toBe("κρήνης");
+  expect(question?.choices.find(({ correct }) => correct)?.label).toBe(
+    "κρήνης",
+  );
   expect(question?.choices.find(({ correct }) => correct)?.label).not.toContain(
-    "τιμῆς"
+    "τιμῆς",
   );
 });
 
@@ -164,7 +179,7 @@ test("misto divide as direções sem repetir o item original", () => {
   const round = new DrillRound(items, {
     direction: "mixed",
     coverage: "all",
-    random: () => 0.5
+    random: () => 0.5,
   });
   const seen = new Set<string>();
   const directions: string[] = [];
@@ -189,7 +204,7 @@ test("quantidade definida amostra sem repetição e equilibra os blocos", () => 
     direction: "analysis",
     coverage: "limited",
     quantity: 4,
-    random: () => 0.5
+    random: () => 0.5,
   });
   const selected: DrillItem[] = [];
   while (round.question()) {
@@ -203,10 +218,14 @@ test("quantidade definida amostra sem repetição e equilibra os blocos", () => 
 
   expect(new Set(selected.map(({ id }) => id)).size).toBe(4);
   expect(
-    selected.filter(({ sourceBlockIds }) => sourceBlockIds?.includes("block:a"))
+    selected.filter(({ sourceBlockIds }) =>
+      sourceBlockIds?.includes("block:a"),
+    ),
   ).toHaveLength(2);
   expect(
-    selected.filter(({ sourceBlockIds }) => sourceBlockIds?.includes("block:b"))
+    selected.filter(({ sourceBlockIds }) =>
+      sourceBlockIds?.includes("block:b"),
+    ),
   ).toHaveLength(2);
 });
 
@@ -214,7 +233,7 @@ test("cobertura completa apresenta todos os originais antes da revisão", () => 
   const round = new DrillRound(items, {
     direction: "analysis",
     coverage: "all",
-    random: () => 0.5
+    random: () => 0.5,
   });
   const missed = round.question();
   if (!missed) throw new Error("Rodada vazia.");
@@ -241,21 +260,39 @@ test("produção é inválida quando uma distração difere apenas por diacríti
     {
       id: "accented",
       form: "ά",
-      analyses: [{ kind: "nominal", grammaticalCase: "nominativo", grammaticalNumber: "singular" }]
+      analyses: [
+        {
+          kind: "nominal",
+          grammaticalCase: "nominativo",
+          grammaticalNumber: "singular",
+        },
+      ],
     },
     {
       id: "plain",
       form: "α",
-      analyses: [{ kind: "nominal", grammaticalCase: "genitivo", grammaticalNumber: "singular" }]
+      analyses: [
+        {
+          kind: "nominal",
+          grammaticalCase: "genitivo",
+          grammaticalNumber: "singular",
+        },
+      ],
     },
     {
       id: "other",
       form: "β",
-      analyses: [{ kind: "nominal", grammaticalCase: "dativo", grammaticalNumber: "singular" }]
-    }
+      analyses: [
+        {
+          kind: "nominal",
+          grammaticalCase: "dativo",
+          grammaticalNumber: "singular",
+        },
+      ],
+    },
   ];
 
   expect(roundFeasibilityError(diacriticItems, "production")).toBe(
-    "Este bloco não oferece duas distrações válidas para a direção escolhida."
+    "Este bloco não oferece duas distrações válidas para a direção escolhida.",
   );
 });
