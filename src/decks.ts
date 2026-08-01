@@ -4,15 +4,16 @@ import {
   type CatalogParadigm,
   type DrillDeck,
   type DrillItem,
-  type FilterField
+  type FilterField,
 } from "./catalog";
 import {
   roundFeasibilityError,
   type CoverageMode,
   type DirectionMode,
-  type RoundConfig
+  type RoundConfig,
 } from "./round";
 import { loadPreferences, type Preferences } from "./preferences";
+import { storageKey, type StudyLanguage } from "./language";
 
 export interface ContentBlock {
   id: string;
@@ -31,18 +32,27 @@ export interface SavedDeck {
   quantity: number;
 }
 
-const storageKey = "classical-drill-decks:v1";
-
 export function createId(prefix: string): string {
   return `${prefix}:${crypto.randomUUID()}`;
 }
 
-export function loadDecks(): SavedDeck[] {
+export function loadDecks(
+  language: StudyLanguage = "greek",
+  paradigms: CatalogParadigm[] = catalogParadigms,
+): SavedDeck[] {
   try {
-    const value = JSON.parse(localStorage.getItem(storageKey) ?? "[]");
-    const decks = Array.isArray(value) ? value : value?.version === 1 ? value.decks : [];
+    const value = JSON.parse(
+      localStorage.getItem(storageKey(language, "decks")) ?? "[]",
+    );
+    const decks = Array.isArray(value)
+      ? value
+      : value?.version === 1
+        ? value.decks
+        : [];
     return Array.isArray(decks)
-      ? decks.filter(isSavedDeck).map(withDefaults)
+      ? decks
+          .filter((deck: unknown) => isSavedDeck(deck, paradigms))
+          .map(withDefaults)
       : [];
   } catch {
     return [];
@@ -57,21 +67,31 @@ function withDefaults(deck: SavedDeck): SavedDeck {
     ...deck,
     blocks: deck.blocks.map((block) => ({
       ...block,
-      articleMode:
-        block.articleMode === "without" ? "without" : "with"
+      articleMode: block.articleMode === "without" ? "without" : "with",
     })),
-    direction: directions.includes(deck.direction) ? deck.direction : "analysis",
+    direction: directions.includes(deck.direction)
+      ? deck.direction
+      : "analysis",
     coverage: coverages.includes(deck.coverage) ? deck.coverage : "all",
     quantity:
-      Number.isFinite(quantity) && quantity >= 1 ? Math.floor(quantity) : 10
+      Number.isFinite(quantity) && quantity >= 1 ? Math.floor(quantity) : 10,
   };
 }
 
-export function saveDecks(decks: SavedDeck[]): void {
-  localStorage.setItem(storageKey, JSON.stringify({ version: 1, decks }));
+export function saveDecks(
+  decks: SavedDeck[],
+  language: StudyLanguage = "greek",
+): void {
+  localStorage.setItem(
+    storageKey(language, "decks"),
+    JSON.stringify({ version: 1, decks }),
+  );
 }
 
-function isSavedDeck(value: unknown): value is SavedDeck {
+function isSavedDeck(
+  value: unknown,
+  paradigms: CatalogParadigm[],
+): value is SavedDeck {
   if (!value || typeof value !== "object") return false;
   const deck = value as Partial<SavedDeck>;
   return (
@@ -85,20 +105,23 @@ function isSavedDeck(value: unknown): value is SavedDeck {
         typeof block.paradigmId === "string" &&
         typeof block.selected === "object" &&
         typeof block.showTransliteration === "boolean" &&
-        catalogParadigms.some(({ id }) => id === block.paradigmId)
+        paradigms.some(({ id }) => id === block.paradigmId),
     )
   );
 }
 
-export function paradigmFor(block: ContentBlock): CatalogParadigm {
-  const paradigm = catalogParadigms.find(({ id }) => id === block.paradigmId);
+export function paradigmFor(
+  block: ContentBlock,
+  paradigms: CatalogParadigm[] = catalogParadigms,
+): CatalogParadigm {
+  const paradigm = paradigms.find(({ id }) => id === block.paradigmId);
   if (!paradigm) throw new Error(`Paradigma ausente: ${block.paradigmId}`);
   return paradigm;
 }
 
 function analysisMatches(
   analysis: Analysis,
-  selected: Partial<Record<FilterField, string[]>>
+  selected: Partial<Record<FilterField, string[]>>,
 ): boolean {
   return Object.entries(selected).every(([field, values]) => {
     if (!values) return false;
@@ -122,21 +145,28 @@ function analysisValue(analysis: Analysis, field: FilterField): string | null {
         analysis.kind === "finite-verb" ||
         analysis.kind === "adjective" ||
         analysis.kind === "participle"
-        ? analysis.grammaticalNumber ?? null
+        ? (analysis.grammaticalNumber ?? null)
         : null;
     case "grammaticalCase":
-      return analysis.kind === "nominal" || analysis.kind === "adjective" || analysis.kind === "participle"
-        ? analysis.grammaticalCase ?? null : null;
+      return analysis.kind === "nominal" ||
+        analysis.kind === "adjective" ||
+        analysis.kind === "participle"
+        ? (analysis.grammaticalCase ?? null)
+        : null;
     case "gender":
-      return analysis.kind === "nominal" || analysis.kind === "participle" || analysis.kind === "adjective"
-        ? analysis.gender ?? null
+      return analysis.kind === "nominal" ||
+        analysis.kind === "participle" ||
+        analysis.kind === "adjective"
+        ? (analysis.gender ?? null)
         : null;
     case "degree":
       return analysis.kind === "adjective" ? analysis.degree : null;
     case "numeralType":
-      return analysis.kind === "numeral" ? analysis.numeralType ?? null : null;
+      return analysis.kind === "numeral"
+        ? (analysis.numeralType ?? null)
+        : null;
     case "topic":
-      return analysis.kind === "terminology" ? analysis.topic ?? null : null;
+      return analysis.kind === "terminology" ? (analysis.topic ?? null) : null;
     case "tense":
     case "voice":
       return analysis.kind === "finite-verb" ||
@@ -150,40 +180,44 @@ function analysisValue(analysis: Analysis, field: FilterField): string | null {
   }
 }
 
-export function itemsForBlock(block: ContentBlock): DrillItem[] {
-  return paradigmFor(block).items.flatMap((item) => {
-    const analyses = item.analyses.filter((analysis) =>
-      analysisMatches(analysis, block.selected)
-    );
-    return analyses.length ? [{ ...item, analyses }] : [];
-  }).map((item) => ({
-    ...item,
-    form:
-      block.articleMode === "without" && item.bareForm
-        ? item.bareForm
-        : item.form
-  }));
+export function itemsForBlock(
+  block: ContentBlock,
+  paradigms: CatalogParadigm[] = catalogParadigms,
+): DrillItem[] {
+  return paradigmFor(block, paradigms)
+    .items.flatMap((item) => {
+      const analyses = item.analyses.filter((analysis) =>
+        analysisMatches(analysis, block.selected),
+      );
+      return analyses.length ? [{ ...item, analyses }] : [];
+    })
+    .map((item) => ({
+      ...item,
+      form:
+        block.articleMode === "without" && item.bareForm
+          ? item.bareForm
+          : item.form,
+    }));
 }
 
 function analysisIdentity(analysis: Analysis): string {
   return JSON.stringify(
     Object.fromEntries(
       Object.entries(analysis).sort(([left], [right]) =>
-        left.localeCompare(right)
-      )
-    )
+        left.localeCompare(right),
+      ),
+    ),
   );
 }
 
 export function blockError(
   block: ContentBlock,
-  direction: DirectionMode = "analysis"
+  direction: DirectionMode = "analysis",
+  paradigms: CatalogParadigm[] = catalogParadigms,
 ): string | null {
-  const items = itemsForBlock(block);
+  const items = itemsForBlock(block, paradigms);
   const analysisSets = new Set(
-    items.map((item) =>
-      item.analyses.map(analysisIdentity).sort().join("|")
-    )
+    items.map((item) => item.analyses.map(analysisIdentity).sort().join("|")),
   );
   if (analysisSets.size < 3) {
     return "Escolha formas que ofereçam pelo menos três análises distintas.";
@@ -191,46 +225,48 @@ export function blockError(
   return roundFeasibilityError(items, direction);
 }
 
-export function deckError(deck: SavedDeck): string | null {
+export function deckError(
+  deck: SavedDeck,
+  paradigms: CatalogParadigm[] = catalogParadigms,
+): string | null {
   if (!deck.name.trim()) return "Dê um nome ao baralho.";
-  if (deck.blocks.length === 0) return "Adicione pelo menos um bloco de conteúdo.";
+  if (deck.blocks.length === 0)
+    return "Adicione pelo menos um bloco de conteúdo.";
   return (
     deck.blocks
-      .map((block) => blockError(block, deck.direction))
+      .map((block) => blockError(block, deck.direction, paradigms))
       .find(Boolean) ?? null
   );
 }
 
 export function playableDeck(
   deck: SavedDeck,
-  preferences: Preferences = loadPreferences()
+  preferences: Preferences = loadPreferences(),
+  paradigms: CatalogParadigm[] = catalogParadigms,
 ): DrillDeck {
   const deduplicated = new Map<string, DrillItem>();
   for (const block of deck.blocks) {
-    for (const item of itemsForBlock(block)) {
-      const paradigm = paradigmFor(block);
+    for (const item of itemsForBlock(block, paradigms)) {
+      const paradigm = paradigmFor(block, paradigms);
       const presentationId = `${item.id}:${block.articleMode}`;
       const existing = deduplicated.get(presentationId);
       const analyses = new Map(
         [...(existing?.analyses ?? []), ...item.analyses].map((analysis) => [
           analysisIdentity(analysis),
-          analysis
-        ])
+          analysis,
+        ]),
       );
       deduplicated.set(presentationId, {
         ...item,
         id: presentationId,
         analyses: [...analyses.values()],
         sourceBlockIds: [
-          ...new Set([...(existing?.sourceBlockIds ?? []), block.id])
+          ...new Set([...(existing?.sourceBlockIds ?? []), block.id]),
         ],
         sourceParadigmIds: [
-          ...new Set([
-            ...(existing?.sourceParadigmIds ?? []),
-            paradigm.id
-          ])
+          ...new Set([...(existing?.sourceParadigmIds ?? []), paradigm.id]),
         ],
-        productionContext: paradigm.lemma.greek
+        productionContext: paradigm.lemma.greek,
       });
     }
   }
@@ -248,20 +284,28 @@ export function playableDeck(
   for (const item of items) {
     if (
       variantsOf(item).some(
-        (variant) => (formsAcrossParadigms.get(variant)?.size ?? 0) > 1
+        (variant) => (formsAcrossParadigms.get(variant)?.size ?? 0) > 1,
       )
     ) {
       item.context = item.sourceParadigmIds
-        ?.map((id) => catalogParadigms.find((paradigm) => paradigm.id === id)?.lemma.greek)
+        ?.map(
+          (id) => paradigms.find((paradigm) => paradigm.id === id)?.lemma.greek,
+        )
         .filter(Boolean)
         .join(" / ");
       item.contextSupport = item.sourceParadigmIds
-        ?.map((id) => catalogParadigms.find((paradigm) => paradigm.id === id))
+        ?.map((id) => paradigms.find((paradigm) => paradigm.id === id))
         .filter((paradigm): paradigm is CatalogParadigm => Boolean(paradigm))
-        .map((paradigm) => [
-          preferences.showTransliteration ? paradigm.lemma.transliteration : "",
-          preferences.showTranslation ? paradigm.lemma.gloss : ""
-        ].filter(Boolean).join(" · "))
+        .map((paradigm) =>
+          [
+            preferences.showTransliteration
+              ? paradigm.lemma.transliteration
+              : "",
+            preferences.showTranslation ? paradigm.lemma.gloss : "",
+          ]
+            .filter(Boolean)
+            .join(" · "),
+        )
         .filter(Boolean)
         .join(" / ");
     } else {
@@ -273,7 +317,7 @@ export function playableDeck(
     id: deck.id,
     title: deck.name,
     description: `${deck.blocks.length} bloco${deck.blocks.length === 1 ? "" : "s"}`,
-    items
+    items,
   };
 }
 
@@ -281,7 +325,7 @@ export function roundConfig(deck: SavedDeck): RoundConfig {
   return {
     direction: deck.direction,
     coverage: deck.coverage,
-    quantity: deck.quantity
+    quantity: deck.quantity,
   };
 }
 
@@ -292,10 +336,10 @@ export function createBlock(paradigm: CatalogParadigm): ContentBlock {
     selected: Object.fromEntries(
       paradigm.filters.map((filter) => [
         filter.field,
-        filter.options.map(({ value }) => value)
-      ])
+        filter.options.map(({ value }) => value),
+      ]),
     ),
     showTransliteration: false,
-    articleMode: "with"
+    articleMode: "with",
   };
 }

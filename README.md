@@ -1,6 +1,8 @@
 # Classical Drill Game: Grego e Latim
 
-Jogo offline de navegador para praticar formas do grego clássico por meio de baralhos altamente configuráveis.
+Jogo offline de navegador para praticar formas do grego clássico e do latim por meio de baralhos altamente configuráveis. As duas línguas funcionam como áreas independentes: catálogos, preferências, baralhos, backups e rodadas nunca são misturados.
+
+O catálogo latino documenta sua política editorial e suas fontes em [docs/latin-sources.md](docs/latin-sources.md).
 
 ## Desenvolvimento
 
