@@ -23,6 +23,7 @@ import {
 import { DrillRound, type RoundConfig, type RoundQuestion } from "./round";
 import { loadPreferences, savePreferences } from "./preferences";
 import { clearActiveRound, loadActiveRound, saveActiveRound } from "./active-round";
+import { createBackup, mergeDecks, parseBackup, type BackupFile } from "./backup";
 import "./styles.css";
 
 const root = document.querySelector<HTMLElement>("#app");
@@ -72,6 +73,8 @@ function renderHome(): void {
         <label class="filter-option"><input type="checkbox" data-preference="showTranslation" ${preferences.showTranslation ? "checked" : ""}><span>Mostrar tradução</span></label>
       </section>
 
+      <section class="backup-panel" aria-labelledby="backup-title"><div><p class="deck-label">Dados locais</p><h2 id="backup-title">Backup</h2></div><div class="card-actions"><button class="quiet" data-action="export">Exportar JSON</button><label class="quiet file-button">Importar JSON<input type="file" accept="application/json,.json" data-action="import"></label></div><div class="import-preview" aria-live="polite"></div></section>
+
       ${saved.length ? `<h2 class="section-title">Meus baralhos</h2><div class="deck-list">${saved.map(savedDeckCard).join("")}</div>` : ""}
       <h2 class="section-title">Modelos para começar</h2>
       <div class="deck-list">${builtInDecks.map(builtInDeckCard).join("")}</div>
@@ -95,6 +98,26 @@ function renderHome(): void {
       renderHome();
     })
   );
+
+  app.querySelector<HTMLButtonElement>("[data-action='export']")?.addEventListener("click", () => {
+    const blob = new Blob([JSON.stringify(createBackup(loadDecks(), loadPreferences()), null, 2)], { type: "application/json" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "grego-classico-backup.json";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  });
+  app.querySelector<HTMLInputElement>("[data-action='import']")?.addEventListener("change", async (event) => {
+    const file = (event.currentTarget as HTMLInputElement).files?.[0];
+    const preview = app.querySelector<HTMLElement>(".import-preview");
+    if (!file || !preview) return;
+    try {
+      const backup = parseBackup(await file.text());
+      renderImportPreview(preview, backup, loadDecks());
+    } catch (error) {
+      preview.innerHTML = `<p class="validation-message">${escapeHtml(error instanceof Error ? error.message : "Backup inválido.")}</p>`;
+    }
+  });
 
   app.querySelector<HTMLButtonElement>("[data-action='create']")?.addEventListener(
     "click",
@@ -143,6 +166,17 @@ function renderHome(): void {
       }
     });
   });
+}
+
+function renderImportPreview(preview: HTMLElement, backup: BackupFile, current: SavedDeck[]): void {
+  const currentIds = new Set(current.map(({ id }) => id));
+  const conflicts = backup.decks.filter(({ id }) => currentIds.has(id));
+  preview.innerHTML = `<div class="import-summary"><p><strong>Prévia:</strong> ${backup.decks.length} baralho(s), preferências de exibição.</p>${conflicts.length ? `<p>${conflicts.length} conflito(s): ao mesclar, ambos serão mantidos e a cópia importada será renomeada.</p>` : ""}<div class="card-actions"><button class="quiet" data-import-mode="merge">Mesclar mantendo ambos</button><button class="primary" data-import-mode="replace">Substituir dados locais</button></div></div>`;
+  preview.querySelectorAll<HTMLButtonElement>("[data-import-mode]").forEach((button) => button.addEventListener("click", () => {
+    saveDecks(button.dataset.importMode === "merge" ? mergeDecks(current, backup.decks) : backup.decks);
+    savePreferences(backup.preferences);
+    renderHome();
+  }));
 }
 
 function builtInDeckCard(deck: DrillDeck): string {

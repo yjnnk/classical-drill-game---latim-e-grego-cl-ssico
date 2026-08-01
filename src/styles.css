@@ -146,6 +146,20 @@ h1 {
   background: var(--paper);
 }
 
+.backup-panel {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+.file-button { cursor: pointer; }
+.file-button input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.import-preview { grid-column: 1 / -1; }
+
 .deck-card h2,
 .deck-card h3,
 .catalog-card h3 {
