@@ -7,6 +7,30 @@ async function openLatin(page: import("@playwright/test").Page): Promise<void> {
   await page.getByRole("button", { name: "Latim" }).click();
 }
 
+async function answerPortaCorrectly(
+  page: import("@playwright/test").Page,
+): Promise<void> {
+  const form = (await page.locator(".latin-form").textContent())?.trim();
+  const expected: Record<string, string> = {
+    porta: "nominativo · singular",
+    portae: "genitivo · singular",
+    portam: "acusativo · singular",
+    portā: "ablativo · singular",
+    portārum: "genitivo · plural",
+    portīs: "dativo · plural",
+    portās: "acusativo · plural",
+  };
+  const label = form ? expected[form] : undefined;
+  if (!label) throw new Error(`Forma inesperada de porta: ${form}`);
+  const choices = page
+    .getByRole("group", { name: "Alternativas" })
+    .getByRole("button");
+  await (form === "porta" || form === "portae" || form === "portīs"
+    ? choices.filter({ hasText: " ou " })
+    : choices.filter({ hasText: label })
+  ).click();
+}
+
 test("porta oferece uma rodada latina completa com três alternativas", async ({
   page,
 }) => {
@@ -21,6 +45,24 @@ test("porta oferece uma rodada latina completa com três alternativas", async ({
   await expect(
     page.getByRole("group", { name: "Alternativas" }).getByRole("button"),
   ).toHaveCount(3);
+});
+
+test("permite repetir uma sessão latina concluída com progresso zerado", async ({
+  page,
+}) => {
+  await openLatin(page);
+  const model = page
+    .getByRole("article")
+    .filter({ has: page.getByRole("heading", { name: "porta", exact: true }) });
+  await model.getByRole("button", { name: "Iniciar rodada" }).click();
+  for (let index = 0; index < 12; index += 1) {
+    await answerPortaCorrectly(page);
+    await page.getByRole("button", { name: "Continuar" }).click();
+  }
+  await expect(page.getByText("Rodada concluída")).toBeVisible();
+  await page.getByRole("button", { name: "Repetir sessão" }).click();
+  await expect(page.getByText("Progresso: 0 de 12")).toBeVisible();
+  await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
 });
 
 test("catálogo latino contém substantivos, pronomes, adjetivos e verbos curados", async ({

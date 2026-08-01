@@ -727,7 +727,10 @@ function startRound(
   function renderComplete(): void {
     document.onkeydown = null;
     clearActiveRound();
-    app.innerHTML = `<section class="complete"><p class="completion-mark">✓</p><p class="eyebrow">Rodada concluída</p><h1>Você reconheceu todas as formas.</h1><button class="primary" data-action="home">Voltar ao início</button></section>`;
+    app.innerHTML = `<section class="complete"><p class="completion-mark">✓</p><p class="eyebrow">Rodada concluída</p><h1>Você reconheceu todas as formas.</h1><div class="completion-actions"><button class="primary" data-action="repeat">Repetir sessão</button><button class="quiet" data-action="home">Voltar ao início</button></div></section>`;
+    app
+      .querySelector<HTMLButtonElement>("[data-action='repeat']")
+      ?.addEventListener("click", () => startRound(deck, config));
     app
       .querySelector<HTMLButtonElement>("[data-action='home']")
       ?.addEventListener("click", renderHome);

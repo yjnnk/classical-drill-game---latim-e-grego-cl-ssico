@@ -861,8 +861,10 @@ html[data-language="latin"] .preference-panel {
 .latin-choice { border-top: 4px solid #7b2635; }
 .greek-choice { border-top: 4px solid #376b54; }
 .header-actions { display: flex; gap: .75rem; align-items: center; }
+.completion-actions { display: flex; justify-content: center; gap: .75rem; }
 
 @media (max-width: 640px) {
   .language-options { grid-template-columns: 1fr; }
   .header-actions { align-items: stretch; flex-direction: column; }
+  .completion-actions { align-items: stretch; flex-direction: column; width: 100%; }
 }
