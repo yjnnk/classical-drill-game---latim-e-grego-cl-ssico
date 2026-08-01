@@ -86,6 +86,13 @@ function escapeHtml(value: string): string {
   );
 }
 
+function choiceLabelHtml(value: string): string {
+  return escapeHtml(value).replace(
+    / ou /gu,
+    ' <strong class="choice-separator">ou</strong> ',
+  );
+}
+
 function deckStats(deck: SavedDeck): string {
   const forms = playableDeck(deck).items.length;
   return `${deck.blocks.length} bloco${deck.blocks.length === 1 ? "" : "s"} · ${forms} formas`;
@@ -657,7 +664,7 @@ function startRound(
     app.innerHTML = `<section class="round" aria-labelledby="question-title">
       <header class="round-header"><button class="quiet" data-action="exit">Sair</button><p aria-live="polite">Progresso: ${round.masteredCount} de ${round.total}</p></header>
       <div class="prompt"><p id="question-title">${isAnalysis ? "Qual é a análise desta forma?" : "Qual forma corresponde a esta análise?"}</p><p class="${isAnalysis ? "greek-form" : "analysis-prompt"}" ${isAnalysis ? 'lang="grc"' : ""}>${question.prompt}</p>${question.context ? `<p class="form-context">Lema: <span lang="grc">${question.context}</span>${question.item.contextSupport ? ` · ${question.item.contextSupport}` : ""}</p>` : ""}</div>
-      <div class="options" role="group" aria-label="Alternativas">${question.choices.map((choice, index) => `<button class="option"><span class="option-number">${index + 1}</span><span>${choice.label}</span></button>`).join("")}</div><div class="feedback" aria-live="polite"></div></section>`;
+      <div class="options" role="group" aria-label="Alternativas">${question.choices.map((choice, index) => `<button class="option"><span class="option-number">${index + 1}</span><span>${choiceLabelHtml(choice.label)}</span></button>`).join("")}</div><div class="feedback" aria-live="polite"></div></section>`;
     app
       .querySelector<HTMLButtonElement>("[data-action='exit']")
       ?.addEventListener("click", renderHome);

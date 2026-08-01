@@ -619,6 +619,12 @@ legend {
   font-size: 0.8rem;
 }
 
+.choice-separator {
+  display: inline-block;
+  padding-inline: 0.18em;
+  font-weight: 850;
+}
+
 .option.correct {
   border-color: #467157;
   background: #e4efe6;

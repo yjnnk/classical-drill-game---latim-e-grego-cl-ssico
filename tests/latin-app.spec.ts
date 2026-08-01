@@ -47,6 +47,27 @@ test("porta oferece uma rodada latina completa com três alternativas", async ({
   ).toHaveCount(3);
 });
 
+test("destaca o separador entre análises sincréticas", async ({ page }) => {
+  await openLatin(page);
+  const model = page
+    .getByRole("article")
+    .filter({ has: page.getByRole("heading", { name: "porta", exact: true }) });
+  await model.getByRole("button", { name: "Iniciar rodada" }).click();
+  let found = false;
+  for (let index = 0; index < 12 && !found; index += 1) {
+    const separator = page.locator(".choice-separator").first();
+    if (await separator.count()) {
+      found = true;
+      await expect(separator).toHaveText("ou");
+      await expect(separator).toHaveCSS("font-weight", "850");
+      break;
+    }
+    await answerPortaCorrectly(page);
+    await page.getByRole("button", { name: "Continuar" }).click();
+  }
+  expect(found).toBe(true);
+});
+
 test("mantém legíveis os textos latinos quando o sistema usa tema escuro", async ({
   page,
 }) => {

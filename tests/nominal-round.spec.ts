@@ -106,6 +106,76 @@ test("uma forma errada volta depois de outras perguntas", async ({ page }) => {
   await expect(page.locator(".greek-form")).toHaveText(missedForm);
 });
 
+test("destaca o separador entre análises gregas sincréticas", async ({ page }) => {
+  await page.goto("/");
+  await page.evaluate(() => {
+    const item = {
+      id: "test:syncretic",
+      form: "λῡ́ῃ",
+      analyses: [
+        {
+          kind: "finite-verb",
+          tense: "present",
+          voice: "active",
+          mood: "subjunctive",
+          person: "second",
+          grammaticalNumber: "singular",
+        },
+        {
+          kind: "finite-verb",
+          tense: "present",
+          voice: "middle",
+          mood: "subjunctive",
+          person: "second",
+          grammaticalNumber: "singular",
+        },
+      ],
+    };
+    localStorage.setItem(
+      "classical-drill:greek:active-round:v1",
+      JSON.stringify({
+        version: 1,
+        deck: {
+          id: "test:deck",
+          title: "Teste sincrético",
+          description: "",
+          items: [item],
+        },
+        config: { direction: "analysis", coverage: "all" },
+        snapshot: {
+          version: 1,
+          eligible: [item],
+          queue: [{ item, direction: "analysis" }],
+          masteredIds: [],
+          total: 1,
+          activeQuestion: {
+            item,
+            direction: "analysis",
+            prompt: "λῡ́ῃ",
+            choices: [
+              {
+                id: "correct",
+                label:
+                  "presente · subjuntivo · ativo · 2ª pessoa · singular ou presente · subjuntivo · médio · 2ª pessoa · singular",
+                correct: true,
+              },
+              { id: "wrong-1", label: "presente · indicativo", correct: false },
+              { id: "wrong-2", label: "imperfeito · indicativo", correct: false },
+            ],
+          },
+        },
+      }),
+    );
+  });
+  await page.reload();
+  await page.getByRole("button", { name: "Grego clássico" }).click();
+  await page.getByRole("button", { name: "Retomar rodada" }).click();
+
+  const separator = page.locator(".choice-separator");
+  await expect(separator).toHaveText("ou");
+  await expect(separator).toHaveCSS("font-weight", "850");
+});
+
 test("a rodada termina depois de acertar todas as formas", async ({ page }) => {
   await startRound(page);
 

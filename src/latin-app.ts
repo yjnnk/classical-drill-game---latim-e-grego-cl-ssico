@@ -52,6 +52,11 @@ const esc = (value: string) =>
         "'": "&#039;",
       })[c]!,
   );
+const choiceLabelHtml = (value: string) =>
+  esc(value).replace(
+    / ou /gu,
+    ' <strong class="choice-separator">ou</strong> ',
+  );
 const prefs = () => loadPreferences("latin");
 const decks = () => loadDecks("latin", latinCatalogParadigms);
 const playable = (deck: SavedDeck) =>
@@ -408,7 +413,7 @@ export function createLatinApp(
       if (!question) return complete();
       persistRound();
       const analysis = question.direction === "analysis";
-      root.innerHTML = `<section class="round latin-round"><header class="round-header"><button class="quiet" data-exit>Sair</button><p>Progresso: ${round.masteredCount} de ${round.total}</p></header><div class="prompt"><p>${analysis ? "Qual é a análise desta forma?" : "Qual forma corresponde a esta análise?"}</p><p class="${analysis ? "latin-form" : "analysis-prompt"}" ${analysis ? 'lang="la"' : ""}>${question.prompt}</p>${question.item.support ? `<p class="form-support">${question.item.support}</p>` : ""}${question.context ? `<p class="form-context">Lema: <span lang="la">${question.context}</span></p>` : ""}</div><div class="options" role="group" aria-label="Alternativas">${question.choices.map((choice, index) => `<button class="option"><span class="option-number">${index + 1}</span><span>${choice.label}</span></button>`).join("")}</div><div class="feedback" aria-live="polite"></div></section>`;
+      root.innerHTML = `<section class="round latin-round"><header class="round-header"><button class="quiet" data-exit>Sair</button><p>Progresso: ${round.masteredCount} de ${round.total}</p></header><div class="prompt"><p>${analysis ? "Qual é a análise desta forma?" : "Qual forma corresponde a esta análise?"}</p><p class="${analysis ? "latin-form" : "analysis-prompt"}" ${analysis ? 'lang="la"' : ""}>${question.prompt}</p>${question.item.support ? `<p class="form-support">${question.item.support}</p>` : ""}${question.context ? `<p class="form-context">Lema: <span lang="la">${question.context}</span></p>` : ""}</div><div class="options" role="group" aria-label="Alternativas">${question.choices.map((choice, index) => `<button class="option"><span class="option-number">${index + 1}</span><span>${choiceLabelHtml(choice.label)}</span></button>`).join("")}</div><div class="feedback" aria-live="polite"></div></section>`;
       root
         .querySelector<HTMLButtonElement>("[data-exit]")
         ?.addEventListener("click", renderHome);
