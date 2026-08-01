@@ -7,8 +7,8 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
-        name: "Greek Drill",
-        short_name: "Greek Drill",
+        name: "Classical Drill Game: Grego e Latim",
+        short_name: "Classical Drill",
         description: "Prática offline de formas do grego clássico",
         theme_color: "#21352b",
         background_color: "#f6f1e7",

@@ -31,7 +31,7 @@ test("o estudante inicia uma rodada de κρήνη", async ({ page }) => {
   await page.goto("/");
 
   await expect(
-    page.getByRole("heading", { name: "Prática de grego clássico" })
+    page.getByRole("heading", { name: "Classical Drill Game: Grego e Latim" })
   ).toBeVisible();
   await expect(page.getByText("κρήνη", { exact: true })).toBeVisible();
 
@@ -125,7 +125,7 @@ test("a rodada completa continua disponível offline", async ({ context, page })
   await page.reload();
 
   await expect(
-    page.getByRole("heading", { name: "Prática de grego clássico" })
+    page.getByRole("heading", { name: "Classical Drill Game: Grego e Latim" })
   ).toBeVisible();
   const deck = page.getByRole("article").filter({
     has: page.getByRole("heading", { name: "κρήνη" })

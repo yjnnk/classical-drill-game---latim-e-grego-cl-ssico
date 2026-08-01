@@ -1,4 +1,4 @@
-# classical-drill-game---latim-e-grego-cl-ssico
+# Classical Drill Game: Grego e Latim
 
 Jogo offline de navegador para praticar formas do grego clássico por meio de baralhos altamente configuráveis.
 

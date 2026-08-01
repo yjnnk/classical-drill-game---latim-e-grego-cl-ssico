@@ -60,7 +60,7 @@ function renderHome(): void {
       <div class="title-row">
         <div>
           <p class="eyebrow">Recuperação ativa · sem pressa</p>
-          <h1 id="page-title">Prática de grego clássico</h1>
+          <h1 id="page-title">Classical Drill Game: Grego e Latim</h1>
           <p class="intro">Monte recortes precisos do que deseja recordar. Tudo fica neste aparelho.</p>
         </div>
         <button class="primary" type="button" data-action="create" ${active ? "disabled" : ""}>Criar baralho</button>

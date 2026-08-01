@@ -3,7 +3,6 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests",
   testMatch: "**/*.spec.ts",
-  globalSetup: "./tests/global-setup.ts",
   timeout: 10_000,
   fullyParallel: false,
   retries: 0,
@@ -23,7 +22,7 @@ export default defineConfig({
     }
   ],
   webServer: {
-    command: "npm run preview -- --host 127.0.0.1 --port 4173",
+    command: "npm run build && npm run preview -- --host 127.0.0.1 --port 4173",
     url: "http://127.0.0.1:4173",
     reuseExistingServer: true
   }
