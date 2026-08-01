@@ -6,6 +6,7 @@ const requiredNominalFields = ["case", "number"];
 const requiredFiniteVerbFields = ["tense", "voice", "mood", "person", "number"];
 const requiredInfinitiveFields = ["tense", "voice"];
 const requiredParticipleFields = ["tense", "voice", "gender"];
+const requiredAdjectiveFields = ["degree"];
 const allowedValues = {
   case: new Set(["nominative", "genitive", "dative", "accusative", "vocative"]),
   number: new Set(["singular", "dual", "plural"]),
@@ -23,7 +24,8 @@ const allowedValues = {
   person: new Set(["first", "second", "third"])
   ,
   gender: new Set(["masculine", "feminine", "neuter"]),
-  form: new Set(["finite", "infinitive", "participle"])
+  form: new Set(["finite", "infinitive", "participle"]),
+  degree: new Set(["positive", "comparative", "superlative"])
 };
 
 function requireNonEmptyString(value, message) {
@@ -35,6 +37,12 @@ function requireNonEmptyString(value, message) {
 function validateAnalysis(analysis, kind, itemId) {
   const fields = kind === "nominal"
     ? requiredNominalFields
+    : kind === "adjective-declinable"
+      ? ["case", "number", "gender", "degree"]
+    : kind === "adjective"
+      ? requiredAdjectiveFields
+      : kind === "participle"
+        ? [...requiredParticipleFields, "case", "number"]
     : analysis?.form === "finite"
       ? requiredFiniteVerbFields
       : analysis?.form === "infinitive"
@@ -57,6 +65,11 @@ function validateAnalysis(analysis, kind, itemId) {
     throw new Error(
       `Valor gramatical inválido em ${itemId}: gender=${analysis.gender}`
     );
+  }
+  for (const field of ["case", "number"]) {
+    if (analysis?.[field] !== undefined && !allowedValues[field].has(analysis[field])) {
+      throw new Error(`Valor gramatical inválido em ${itemId}: ${field}=${analysis[field]}`);
+    }
   }
 }
 
@@ -107,6 +120,12 @@ export function validateCatalog(catalog) {
       throw new Error(`Paradigma ${paradigm.id} sem itens.`);
     }
 
+    const analysisKind = paradigm.kind === "adjective" &&
+      paradigm.items.some(({ analyses }) =>
+        analyses.some(({ case: value }) => value !== undefined)
+      )
+      ? "adjective-declinable"
+      : paradigm.kind;
     for (const item of paradigm.items) {
       requireNonEmptyString(item.id, `Item sem identificador em ${paradigm.id}.`);
       if (identifiers.has(item.id)) {
@@ -125,7 +144,7 @@ export function validateCatalog(catalog) {
         throw new Error(`Item ${item.id} sem análises.`);
       }
       for (const analysis of item.analyses) {
-        validateAnalysis(analysis, paradigm.kind, item.id);
+        validateAnalysis(analysis, analysisKind, item.id);
       }
     }
   }

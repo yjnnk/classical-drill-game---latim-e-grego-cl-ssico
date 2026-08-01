@@ -72,6 +72,32 @@ async function writeKnownWorkbook(path, official = false) {
     [null, "αἰτιᾱτική", "ὅν", "ἥν", "ὅ", "ὥ", "ὥ", "ὥ", "οὕς", "ἅ̄ς", "ἅ"]
   ]);
 
+  const adjectives = workbook.addWorksheet("Adjectives");
+  adjectives.addRows([
+    [null, "First Class Adjectives"],
+    [null, "good, beautiful", "singular", null, null, null, "dual", null, null, null, "plural"],
+    [null, "πτῶσις / ἀριθμός", "ἀ. m", "θ. f", "οὐ. n", null, "ἀ. m", "θ. f", "οὐ. n", null, "ἀ. m", "θ. f", "οὐ. n"],
+    [null, "ὀρθή", "καλός", "καλή", "καλόν", null, "καλώ", "καλᾱ́", "καλώ", null, "καλοί", "καλαί", "καλά"],
+    [null, "γενική", "καλοῦ", "καλῆς", "καλοῦ", null, "καλοῖν", "καλαῖν", "καλοῖν", null, "καλῶν", "καλῶν", "καλῶν"],
+    [null, "δοτική", "καλῷ", "καλῇ", "καλῷ", null, "καλοῖν", "καλαῖν", "καλοῖν", null, "καλοῖς", "καλαῖς", "καλοῖς"],
+    [null, "αἰτιᾱτική", "καλόν", "καλήν", "καλόν", null, "καλώ", "καλᾱ́", "καλώ", null, "καλούς", "καλᾱ́ς", "καλά"],
+    [],
+    [null, "Comparison of Regular Adjectives"],
+    [null, null, "positive", null, "comparative", null, null, "superlative"],
+    [null, "courageous", "ἀνδρεῖος", null, "ἀνδρειότερος", null, null, "ἀνδρειότατος"]
+  ]);
+
+  const participles = workbook.addWorksheet("Participles");
+  participles.addRows([
+    [null, "Present Active"],
+    [null, "solving", "ἀ. m", "θ. f", "οὐ. n", null, "ἀ. m", "θ. f", "οὐ. n", null, "ἀ. m", "θ. f", "οὐ. n"],
+    [null, "πτῶσις / ἀριθμός", "singular", null, null, null, "dual", null, null, null, "plural"],
+    [null, "ὀρθή", "λῡ́ων", "λῡ́ουσα", "λῦον", null, "λῡ́οντε", "λῡούσᾱ", "λῡ́οντε", null, "λῡ́οντες", "λῡ́ουσαι", "λῡ́οντα"],
+    [null, "γενική", "λῡ́οντος", "λῡούσης", "λῡ́οντος", null, "λῡόντοιν", "λῡούσαιν", "λῡόντοιν", null, "λῡόντων", "λῡουσῶν", "λῡόντων"],
+    [null, "δοτική", "λῡ́οντι", "λῡούσῃ", "λῡ́οντι", null, "λῡόντοιν", "λῡούσαιν", "λῡόντοιν", null, "λῡ́ουσι(ν)", "λῡούσαις", "λῡ́ουσι(ν)"],
+    [null, "αἰτιᾱτική", "λῡ́οντα", "λῡ́ουσαν", "λῦον", null, "λῡ́οντε", "λῡούσᾱ", "λῡ́οντε", null, "λῡ́οντας", "λῡούσᾱς", "λῡ́οντα"]
+  ]);
+
   const verbs = workbook.addWorksheet("λῡ́ω");
   verbs.addRows([
     [null, "λύ̄ω \"solvō\" loosen"],
@@ -159,8 +185,20 @@ test("a CLI gera um catálogo versionado com κρήνη e λῡ́ω", async () 
   assert.equal(catalog.language, "grc");
   assert.deepEqual(
     catalog.paradigms.map(({ category }) => category).sort(),
-    ["article", "noun", "noun", "noun", "pronoun", "verb", "verb"]
+    ["adjective", "adjective", "article", "noun", "noun", "noun", "participle", "pronoun", "verb", "verb"]
   );
+  const kalos = catalog.paradigms.find(({ category }) => category === "adjective");
+  assert.ok(kalos.items.some(({ analyses }) => analyses.some(({ case: grammaticalCase, number, gender, degree }) =>
+    grammaticalCase === "genitive" && number === "dual" && gender === "feminine" && degree === "positive"
+  )));
+  const courageous = catalog.paradigms.find(({ lemma }) => lemma.greek === "ἀνδρεῖος");
+  assert.deepEqual(courageous.items.flatMap(({ analyses }) => analyses), [
+    { degree: "positive" }, { degree: "comparative" }, { degree: "superlative" }
+  ]);
+  const luon = catalog.paradigms.find(({ category }) => category === "participle");
+  assert.ok(luon.items.some(({ analyses }) => analyses.some(({ case: grammaticalCase, number, gender, tense, voice }) =>
+    grammaticalCase === "dative" && number === "plural" && gender === "neuter" && tense === "present" && voice === "active"
+  )));
 
   const krene = catalog.paradigms.find(({ id }) => id === "noun:krene");
   const genitiveDual = krene.items.find(
@@ -286,13 +324,22 @@ test("a geração oficial falha se uma aba verbal estiver ausente", async () => 
   );
 });
 
-test("o catálogo distribuído contém os 23 paradigmas verbais validados", async () => {
+test("o catálogo distribuído contém todos os paradigmas validados", async () => {
   const catalog = JSON.parse(
     await readFile("src/generated/catalog.json", "utf8")
   );
   const verbs = catalog.paradigms.filter(({ category }) => category === "verb");
+  const adjectives = catalog.paradigms.filter(({ category }) => category === "adjective");
+  const participles = catalog.paradigms.filter(({ category }) => category === "participle");
 
   assert.equal(verbs.length, 23);
+  assert.equal(adjectives.length, 29);
+  assert.equal(participles.length, 7);
+  assert.ok(adjectives.some(({ lemma }) => lemma.gloss === "mau"));
+  assert.ok([...adjectives, ...participles].every(({ lemma }) =>
+    !/\p{Script=Greek}/u.test(lemma.transliteration)
+  ));
+  assert.deepEqual(catalog.source.sheets.slice(2, 4), ["Adjectives", "Participles"]);
   for (const id of [
     "verb:luo",
     "verb:timao",

@@ -313,7 +313,9 @@ function catalogPicker(query: string, category: string): string {
       ["Substantivo", "Substantivos"],
       ["Pronome", "Pronomes"],
       ["Artigo", "Artigo"],
-      ["Verbo", "Verbos"]
+      ["Verbo", "Verbos"],
+      ["Adjetivo", "Adjetivos"],
+      ["Particípio", "Particípios"]
     ].map(([value, label]) => `<button class="${category === value ? "active" : ""}" data-category="${value}">${label}</button>`).join("")}</div>
     <div class="catalog-results">${results.map(catalogResult).join("") || "<p>Nenhum paradigma encontrado.</p>"}</div>
   </aside>`;

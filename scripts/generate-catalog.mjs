@@ -31,6 +31,19 @@ function stableHash(value) {
   return createHash("sha256").update(value.normalize("NFC")).digest("hex").slice(0, 12);
 }
 
+function transliterateGreek(value) {
+  const letters = {
+    α: "a", β: "b", γ: "g", δ: "d", ε: "e", ζ: "z", η: "ē",
+    θ: "th", ι: "i", κ: "k", λ: "l", μ: "m", ν: "n", ξ: "x",
+    ο: "o", π: "p", ρ: "r", σ: "s", ς: "s", τ: "t", υ: "y",
+    φ: "ph", χ: "kh", ψ: "ps", ω: "ō"
+  };
+  return [...value.normalize("NFD")]
+    .filter((character) => !/\p{M}/u.test(character))
+    .map((character) => letters[character.toLowerCase()] ?? character)
+    .join("");
+}
+
 function parseLemmaHeading(heading) {
   const match = heading.match(/^(.+?)\s*\((.+)\)\s*$/u);
   return {
@@ -479,6 +492,185 @@ function parsePronouns(sheet) {
   return paradigms;
 }
 
+function gridGender(value) {
+  const normalized = value.toLowerCase();
+  if (/m\b|ἀ\./u.test(normalized) && /f\b|θ\./u.test(normalized)) {
+    return ["masculine", "feminine"];
+  }
+  if (/m\b|ἀ\./u.test(normalized)) return ["masculine"];
+  if (/f\b|θ\./u.test(normalized)) return ["feminine"];
+  if (/n\b|οὐ\./u.test(normalized)) return ["neuter"];
+  return [];
+}
+
+function gridNumber(value) {
+  const normalized = value.toLowerCase();
+  if (normalized.includes("sing")) return "singular";
+  if (normalized.includes("dual")) return "dual";
+  if (normalized.includes("pl.") || normalized.includes("plural")) return "plural";
+}
+
+function parseDeclinableGrid(sheet, headerRow, metadata) {
+  const gendersByColumn = new Map();
+  const numbersByColumn = new Map();
+  let currentNumber;
+  for (let column = 3; column <= 13; column += 1) {
+    for (const rowNumber of [headerRow - 1, headerRow]) {
+      const value = textOf(sheet.getRow(rowNumber).getCell(column));
+      const genders = gridGender(value);
+      if (genders.length) gendersByColumn.set(column, genders);
+      const number = gridNumber(value);
+      if (number) currentNumber = number;
+    }
+    if (gendersByColumn.has(column) && currentNumber) {
+      numbersByColumn.set(column, currentNumber);
+    }
+  }
+  const rawItems = [];
+  for (let rowNumber = headerRow + 1; rowNumber <= headerRow + 5; rowNumber += 1) {
+    const label = textOf(sheet.getRow(rowNumber).getCell(2));
+    let grammaticalCase;
+    try { grammaticalCase = nominalCase(label); } catch { break; }
+    for (const [column, cellGenders] of gendersByColumn) {
+      const value = textOf(sheet.getRow(rowNumber).getCell(column));
+      if (!value || !numbersByColumn.get(column)) continue;
+      rawItems.push({
+        variants: splitVariants(value.replace(/\s*;\s*/gu, ", ")),
+        analyses: cellGenders.map((gender) => ({
+          case: grammaticalCase,
+          number: numbersByColumn.get(column),
+          gender,
+          ...metadata.analysis
+        }))
+      });
+    }
+  }
+  if (rawItems.length < 3) return null;
+  const first = rawItems[0].variants[0];
+  const id = `${metadata.category}:${stableHash(`${first}|${metadata.gloss}`)}`;
+  return {
+    id,
+    kind: metadata.category,
+    category: metadata.category,
+    lemma: {
+      greek: rawItems.slice(0, 3).flatMap(({ variants }) => variants[0]).join(", "),
+      transliteration: transliterateGreek(first),
+      gloss: metadata.gloss
+    },
+    items: mergeByVariants(rawItems, id)
+  };
+}
+
+const adjectiveGlosses = {
+  "good, beautiful": "bom, belo", worthy: "digno", prudent: "prudente",
+  better: "melhor", true: "verdadeiro", all: "todo", graceful: "gracioso",
+  black: "negro", sweet: "doce", big: "grande", courageous: "corajoso",
+  common: "comum", difficult: "difícil", old: "velho", dear: "querido",
+  "former, first": "anterior, primeiro", ugly: "feio", hostile: "hostil",
+  small: "pequeno", good: "bom", beautiful: "belo", bad: "mau",
+  little: "pouco", much: "muito", easy: "fácil"
+};
+
+function portugueseAdjectiveGloss(value) {
+  const normalized = value.trim().toLowerCase();
+  return adjectiveGlosses[normalized] ?? normalized;
+}
+
+function parseAdjectiveComparisons(sheet) {
+  const paradigms = [];
+  let inComparison = false;
+  let current;
+  sheet.eachRow((row) => {
+    const label = textOf(row.getCell(2));
+    if (/Comparison of (?:Regular|Irregular) Adjectives/iu.test(label)) {
+      inComparison = true;
+      current = undefined;
+      return;
+    }
+    if (inComparison && /Comparison of .*Adverbs|Possessive Adjectives/iu.test(label)) {
+      inComparison = false;
+      current = undefined;
+      return;
+    }
+    if (!inComparison || textOf(row.getCell(3)).toLowerCase() === "positive") return;
+    const values = [3, 5, 8].map((column) => textOf(row.getCell(column)));
+    if (label && values[0]) {
+      const id = `adjective:comparison:${stableHash(`${label}|${values.join("|")}`)}`;
+      current = {
+        id,
+        kind: "adjective",
+        category: "adjective",
+        lemma: {
+          greek: values[0].trim().replace(/^\[|\]$/gu, ""),
+          transliteration: transliterateGreek(values[0].trim().replace(/^\[|\]$/gu, "")),
+          gloss: portugueseAdjectiveGloss(label)
+        },
+        degrees: [[], [], []]
+      };
+      paradigms.push(current);
+    }
+    if (!current) return;
+    values.forEach((value, index) => {
+      if (!value) return;
+      current.degrees[index].push(...value
+        .replace(/[?;]\s*$/u, "")
+        .split(/\s*(?:\/|;)\s*/u)
+        .map((form) => form.trim().replace(/^\((.+)\)$/u, "$1"))
+        .filter(Boolean));
+    });
+  });
+  return paradigms.flatMap((paradigm) => {
+    if (paradigm.degrees.some((forms) => forms.length === 0)) return [];
+    const items = paradigm.degrees.map((variants, index) => ({
+      variants: [...new Set(variants)],
+      analyses: [{ degree: ["positive", "comparative", "superlative"][index] }]
+    }));
+    const { degrees, ...metadata } = paradigm;
+    return [{ ...metadata, items: mergeByVariants(items, paradigm.id) }];
+  });
+}
+
+function parseAdjectives(sheet) {
+  if (!sheet) return [];
+  const paradigms = [];
+  sheet.eachRow((row) => {
+    if (!textOf(row.getCell(2)).includes("πτῶσις")) return;
+    const gloss = portugueseAdjectiveGloss(textOf(sheet.getRow(row.number - 1).getCell(2)));
+    const paradigm = parseDeclinableGrid(sheet, row.number, {
+      category: "adjective", gloss, analysis: { degree: "positive" }
+    });
+    if (paradigm) paradigms.push(paradigm);
+  });
+  return [...paradigms, ...parseAdjectiveComparisons(sheet)];
+}
+
+const participleGlosses = {
+  "ὤν": "ser", "λῡ́ων": "soltar", "λῡ́σᾱς": "soltar",
+  "λυθείς": "soltar", "διδούς": "dar", "δεικνῡ́ς": "mostrar",
+  "λελυκώς": "soltar"
+};
+
+function parseParticiples(sheet) {
+  if (!sheet) return [];
+  const paradigms = [];
+  sheet.eachRow((row) => {
+    if (!textOf(row.getCell(2)).includes("πτῶσις")) return;
+    const context = [2, 3, 4].map((offset) =>
+      textOf(sheet.getRow(Math.max(1, row.number - offset)).getCell(2))
+    ).join(" ");
+    const nominative = textOf(sheet.getRow(row.number + 1).getCell(3));
+    const tense = /Perfect/iu.test(context) ? "perfect" : /Aorist/iu.test(context) ? "aorist" : "present";
+    const voice = /Passive/iu.test(context) ? "passive" : "active";
+    const paradigm = parseDeclinableGrid(sheet, row.number, {
+      category: "participle",
+      gloss: participleGlosses[nominative] ?? textOf(sheet.getRow(row.number - 1).getCell(2)),
+      analysis: { form: "participle", tense, voice }
+    });
+    if (paradigm) paradigms.push(paradigm);
+  });
+  return paradigms;
+}
+
 function tenseFromHeading(value) {
   const heading = value.match(
     /^([A-Z]+(?:\s+PERFECT)?)(?::|\s|\(|$)/u
@@ -762,7 +954,8 @@ const catalog = {
   source: {
     workbook: basename(sourcePath),
     sheets: [
-      "Article", "Pronouns", "1st decl", "2nd decl", "3rd decl",
+      "Article", "Pronouns", "Adjectives", "Participles",
+      "1st decl", "2nd decl", "3rd decl",
       ...availableVerbSources.map(({ sheet }) => sheet)
     ]
   },
@@ -770,6 +963,8 @@ const catalog = {
   paradigms: [
     parseArticle(workbook.getWorksheet("Article")),
     ...parsePronouns(workbook.getWorksheet("Pronouns")),
+    ...parseAdjectives(workbook.getWorksheet("Adjectives")),
+    ...parseParticiples(workbook.getWorksheet("Participles")),
     ...parseNounSheet(workbook.getWorksheet("1st decl"), "first"),
     ...parseNounSheet(workbook.getWorksheet("2nd decl"), "second"),
     ...parseNounSheet(workbook.getWorksheet("3rd decl"), "third"),

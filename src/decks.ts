@@ -117,15 +117,21 @@ function analysisValue(analysis: Analysis, field: FilterField): string | null {
             ? "participle"
             : null;
     case "number":
-      return analysis.kind === "nominal" || analysis.kind === "finite-verb"
-        ? analysis.grammaticalNumber
+      return analysis.kind === "nominal" ||
+        analysis.kind === "finite-verb" ||
+        analysis.kind === "adjective" ||
+        analysis.kind === "participle"
+        ? analysis.grammaticalNumber ?? null
         : null;
     case "grammaticalCase":
-      return analysis.kind === "nominal" ? analysis.grammaticalCase : null;
+      return analysis.kind === "nominal" || analysis.kind === "adjective" || analysis.kind === "participle"
+        ? analysis.grammaticalCase ?? null : null;
     case "gender":
-      return analysis.kind === "nominal" || analysis.kind === "participle"
+      return analysis.kind === "nominal" || analysis.kind === "participle" || analysis.kind === "adjective"
         ? analysis.gender ?? null
         : null;
+    case "degree":
+      return analysis.kind === "adjective" ? analysis.degree : null;
     case "tense":
     case "voice":
       return analysis.kind === "finite-verb" ||

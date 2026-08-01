@@ -144,13 +144,24 @@ export function formatAnalysis(analysis: Analysis): string {
       translated(labels.voice, analysis.voice)
     ].join(" · ");
   }
+  if (analysis.kind === "adjective") {
+    return [
+      "adjetivo",
+      analysis.degree,
+      analysis.grammaticalCase,
+      analysis.grammaticalNumber,
+      analysis.gender
+    ].filter(Boolean).join(" · ");
+  }
   if (analysis.kind === "participle") {
     return [
       "particípio",
       translated(labels.tense, analysis.tense),
       translated(labels.voice, analysis.voice),
+      analysis.grammaticalCase,
+      analysis.grammaticalNumber,
       analysis.gender
-    ].join(" · ");
+    ].filter(Boolean).join(" · ");
   }
   return [
     translated(labels.tense, analysis.tense),
