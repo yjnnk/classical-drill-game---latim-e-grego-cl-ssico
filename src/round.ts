@@ -30,9 +30,18 @@ export interface AnswerResult {
   correctLabel: string;
 }
 
-interface ScheduledItem {
+export interface ScheduledItem {
   item: DrillItem;
   direction: RoundDirection;
+}
+
+export interface RoundSnapshot {
+  version: 1;
+  eligible: DrillItem[];
+  queue: ScheduledItem[];
+  masteredIds: string[];
+  activeQuestion: RoundQuestion | null;
+  total: number;
 }
 
 const labels = {
@@ -229,10 +238,18 @@ export class DrillRound {
 
   constructor(
     items: DrillItem[],
-    config: RoundConfig = { direction: "analysis", coverage: "all" }
+    config: RoundConfig = { direction: "analysis", coverage: "all" },
+    snapshot?: RoundSnapshot
   ) {
     this.random = config.random ?? Math.random;
-    this.eligible = items;
+    this.eligible = snapshot?.eligible ?? items;
+    if (snapshot) {
+      this.queue = snapshot.queue;
+      snapshot.masteredIds.forEach((id) => this.mastered.add(id));
+      this.activeQuestion = snapshot.activeQuestion;
+      this.total = snapshot.total;
+      return;
+    }
     const scheduledItems =
       config.coverage === "limited"
         ? balancedSample(
@@ -251,6 +268,21 @@ export class DrillRound {
           : config.direction
     }));
     this.total = this.queue.length;
+  }
+
+  static restore(snapshot: RoundSnapshot): DrillRound {
+    return new DrillRound(snapshot.eligible, { direction: "analysis", coverage: "all" }, snapshot);
+  }
+
+  snapshot(): RoundSnapshot {
+    return structuredClone({
+      version: 1 as const,
+      eligible: this.eligible,
+      queue: this.queue,
+      masteredIds: [...this.mastered],
+      activeQuestion: this.activeQuestion,
+      total: this.total
+    });
   }
 
   get masteredCount(): number {

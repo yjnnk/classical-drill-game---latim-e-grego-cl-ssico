@@ -22,6 +22,7 @@ import {
 } from "./decks";
 import { DrillRound, type RoundConfig, type RoundQuestion } from "./round";
 import { loadPreferences, savePreferences } from "./preferences";
+import { clearActiveRound, loadActiveRound, saveActiveRound } from "./active-round";
 import "./styles.css";
 
 const root = document.querySelector<HTMLElement>("#app");
@@ -51,6 +52,7 @@ function joinPortuguese(values: string[]): string {
 function renderHome(): void {
   const saved = loadDecks();
   const preferences = loadPreferences();
+  const active = loadActiveRound();
   app.innerHTML = `
     <section class="home" aria-labelledby="page-title">
       <div class="title-row">
@@ -59,8 +61,10 @@ function renderHome(): void {
           <h1 id="page-title">Prática de grego clássico</h1>
           <p class="intro">Monte recortes precisos do que deseja recordar. Tudo fica neste aparelho.</p>
         </div>
-        <button class="primary" type="button" data-action="create">Criar baralho</button>
+        <button class="primary" type="button" data-action="create" ${active ? "disabled" : ""}>Criar baralho</button>
       </div>
+
+      ${active ? `<section class="active-round" aria-labelledby="active-round-title"><div><p class="deck-label">Rodada em andamento</p><h2 id="active-round-title">${escapeHtml(active.deck.title)}</h2><p>Progresso: ${active.snapshot.masteredIds.length} de ${active.snapshot.total}</p></div><div class="card-actions"><button class="primary" data-action="resume">Retomar rodada</button><button class="quiet danger" data-action="abandon">Abandonar rodada</button></div></section>` : ""}
 
       <section class="preference-panel" aria-labelledby="preference-title">
         <div><p class="deck-label">Apoios pedagógicos</p><h2 id="preference-title">Exibição</h2></div>
@@ -73,6 +77,15 @@ function renderHome(): void {
       <div class="deck-list">${builtInDecks.map(builtInDeckCard).join("")}</div>
     </section>
   `;
+
+  app.querySelector<HTMLButtonElement>("[data-action='resume']")?.addEventListener("click", () => {
+    const current = loadActiveRound();
+    if (current) startRound(current.deck, current.config, DrillRound.restore(current.snapshot));
+  });
+  app.querySelector<HTMLButtonElement>("[data-action='abandon']")?.addEventListener("click", () => {
+    clearActiveRound();
+    renderHome();
+  });
 
   app.querySelectorAll<HTMLInputElement>("[data-preference]").forEach((input) =>
     input.addEventListener("change", () => {
@@ -97,11 +110,13 @@ function renderHome(): void {
   );
   app.querySelectorAll<HTMLButtonElement>("[data-built-in]").forEach((button) => {
     const deck = builtInDecks.find(({ id }) => id === button.dataset.builtIn);
+    button.disabled = Boolean(active);
     if (deck) button.addEventListener("click", () => startRound(deck));
   });
   app.querySelectorAll<HTMLButtonElement>("[data-deck-action]").forEach((button) => {
     const deck = saved.find(({ id }) => id === button.dataset.deckId);
     if (!deck) return;
+    if (button.dataset.deckAction === "start") button.disabled = button.disabled || Boolean(active);
     button.addEventListener("click", () => {
       switch (button.dataset.deckAction) {
         case "start":
@@ -368,12 +383,21 @@ function wireCatalog(deck: SavedDeck, query: string, category: string): void {
 
 function startRound(
   deck: DrillDeck,
-  config: RoundConfig = { direction: "analysis", coverage: "all" }
+  config: RoundConfig = { direction: "analysis", coverage: "all" },
+  restoredRound?: DrillRound
 ): void {
-  const round = new DrillRound(deck.items, config);
+  if (!restoredRound && loadActiveRound()) return renderHome();
+  const round = restoredRound ?? new DrillRound(deck.items, config);
+  const persist = (): void => saveActiveRound({
+    version: 1,
+    deck,
+    config: { direction: config.direction, coverage: config.coverage, quantity: config.quantity },
+    snapshot: round.snapshot()
+  });
   function renderQuestion(): void {
     const question = round.question();
     if (!question) return renderComplete();
+    persist();
     const isAnalysis = question.direction === "analysis";
     app.innerHTML = `<section class="round" aria-labelledby="question-title">
       <header class="round-header"><button class="quiet" data-action="exit">Sair</button><p aria-live="polite">Progresso: ${round.masteredCount} de ${round.total}</p></header>
@@ -388,6 +412,7 @@ function startRound(
   }
   function answer(question: RoundQuestion, buttons: HTMLButtonElement[], selectedButton: HTMLButtonElement, selected: string): void {
     const result = round.answer(selected);
+    persist();
     const correct = result.correctLabel;
     buttons.forEach((button) => {
       button.disabled = true;
@@ -411,6 +436,7 @@ function startRound(
     }
   }
   function renderComplete(): void {
+    clearActiveRound();
     app.innerHTML = `<section class="complete"><p class="completion-mark">✓</p><p class="eyebrow">Rodada concluída</p><h1>Você reconheceu todas as formas.</h1><p>Sem nota e sem pressa. Apenas a prática feita.</p><button class="primary" data-action="home">Voltar ao início</button></section>`;
     app.querySelector<HTMLButtonElement>("[data-action='home']")?.addEventListener("click", renderHome);
   }
