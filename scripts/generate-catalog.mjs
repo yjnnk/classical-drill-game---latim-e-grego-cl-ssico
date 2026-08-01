@@ -671,6 +671,155 @@ function parseParticiples(sheet) {
   return paradigms;
 }
 
+const cardinalUnits = [
+  "zero", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove"
+];
+const cardinalTeens = {
+  10: "dez", 11: "onze", 12: "doze", 13: "treze", 14: "catorze",
+  15: "quinze", 16: "dezesseis", 17: "dezessete", 18: "dezoito", 19: "dezenove"
+};
+const cardinalTens = {
+  20: "vinte", 30: "trinta", 40: "quarenta", 50: "cinquenta",
+  60: "sessenta", 70: "setenta", 80: "oitenta", 90: "noventa"
+};
+const cardinalHundreds = {
+  100: "cem", 200: "duzentos", 300: "trezentos", 400: "quatrocentos",
+  500: "quinhentos", 600: "seiscentos", 700: "setecentos",
+  800: "oitocentos", 900: "novecentos"
+};
+
+function cardinalPortuguese(value) {
+  if (value < 10) return cardinalUnits[value];
+  if (cardinalTeens[value]) return cardinalTeens[value];
+  if (value < 100) {
+    const tens = Math.floor(value / 10) * 10;
+    return value === tens ? cardinalTens[tens] : `${cardinalTens[tens]} e ${cardinalUnits[value % 10]}`;
+  }
+  if (cardinalHundreds[value]) return cardinalHundreds[value];
+  if (value === 1000) return "mil";
+  if (value < 100000 && value % 1000 === 0) {
+    return `${cardinalPortuguese(value / 1000)} mil`;
+  }
+  if (value === 100000) return "cem mil";
+  return String(value);
+}
+
+const ordinalUnits = [
+  "", "primeiro", "segundo", "terceiro", "quarto", "quinto",
+  "sexto", "sétimo", "oitavo", "nono"
+];
+const ordinalTens = {
+  10: "décimo", 20: "vigésimo", 30: "trigésimo", 40: "quadragésimo",
+  50: "quinquagésimo", 60: "sexagésimo", 70: "septuagésimo",
+  80: "octogésimo", 90: "nonagésimo"
+};
+const ordinalHundreds = {
+  100: "centésimo", 200: "ducentésimo", 300: "tricentésimo",
+  400: "quadringentésimo", 500: "quingentésimo", 600: "sexcentésimo",
+  700: "septingentésimo", 800: "octingentésimo", 900: "nongentésimo"
+};
+
+function ordinalPortuguese(value) {
+  if (value < 10) return ordinalUnits[value];
+  if (value < 100) {
+    const tens = Math.floor(value / 10) * 10;
+    return value === tens ? ordinalTens[tens] : `${ordinalTens[tens]} ${ordinalUnits[value % 10]}`;
+  }
+  if (ordinalHundreds[value]) return ordinalHundreds[value];
+  if (value === 1000) return "milésimo";
+  if (value % 1000 === 0) return `${ordinalPortuguese(value / 1000)} milésimo`;
+  return `${value}º`;
+}
+
+function parseNumerals(sheet) {
+  if (!sheet) return null;
+  const rawItems = [];
+  for (let rowNumber = 4; rowNumber <= sheet.rowCount; rowNumber += 1) {
+    const row = sheet.getRow(rowNumber);
+    const value = Number(textOf(row.getCell(2)));
+    if (!Number.isFinite(value) || value < 1) continue;
+    const meanings = [
+      cardinalPortuguese(value),
+      ordinalPortuguese(value),
+      value === 1 ? "uma vez" : `${cardinalPortuguese(value).replace(/\bum\b/u, "uma").replace(/\bdois\b/u, "duas")} vezes`
+    ];
+    ["cardinal", "ordinal", "adverbial"].forEach((type, index) => {
+      const form = textOf(row.getCell(index + 4));
+      if (!form) return;
+      rawItems.push({ variants: [form], analyses: [{ meaning: meanings[index], type }] });
+    });
+  }
+  const id = "numeral:greek";
+  return {
+    id,
+    kind: "numeral",
+    category: "numeral",
+    lemma: { greek: "οἱ ἀριθμοί", transliteration: "hoi arithmoí", gloss: "numerais" },
+    items: mergeByVariants(rawItems, id)
+  };
+}
+
+const terminologyPortuguese = {
+  noun: "substantivo", gender: "gênero", masculine: "masculino", feminine: "feminino",
+  neuter: "neutro", number: "número", singular: "singular", dual: "dual", plural: "plural",
+  case: "caso", nominative: "nominativo", genitive: "genitivo", dative: "dativo",
+  accusative: "acusativo", ablative: "ablativo", vocative: "vocativo", declension: "declinação",
+  subject: "sujeito", object: "objeto", adjective: "adjetivo", "positive (degree)": "grau positivo",
+  comparative: "comparativo", superlative: "superlativo", verb: "verbo", mood: "modo",
+  indicative: "indicativo", imperative: "imperativo", optative: "optativo", infinitive: "infinitivo",
+  subjunctive: "subjuntivo", voice: "voz", active: "ativo", middle: "médio", passive: "passivo",
+  person: "pessoa", first: "primeira", second: "segunda", third: "terceira", tense: "tempo",
+  present: "presente", past: "passado", imperfect: "imperfeito", perfect: "perfeito",
+  pluperfect: "mais-que-perfeito", aorist: "aoristo", future: "futuro", conjugation: "conjugação",
+  "contract verbs": "verbos contractos", "mi verbs": "verbos em -μι",
+  "transitive verbs": "verbos transitivos", "intransitive verbs": "verbos intransitivos",
+  participle: "particípio", article: "artigo", pronoun: "pronome", relative: "relativo",
+  possessive: "possessivo", demonstrative: "demonstrativo", interrogative: "interrogativo",
+  indefinite: "indefinido", personal: "pessoal", reflexive: "reflexivo", reciprocal: "recíproco",
+  preposition: "preposição", adverb: "advérbio", conjunction: "conjunção", word: "palavra",
+  syllable: "sílaba", letter: "letra", vowel: "vogal", long: "longo", short: "breve",
+  common: "comum", breathing: "aspiração", rough: "áspero", smooth: "suave",
+  consonant: "consoante", "aspirated stop": "oclusiva aspirada",
+  "voiceless, unaspirated stop": "oclusiva surda não aspirada", "voiced stop": "oclusiva sonora",
+  "diacritical marks": "sinais diacríticos", accent: "acento", acute: "agudo", grave: "grave",
+  circumflex: "circunflexo", "contraction, it contracts": "contração"
+};
+
+function terminologyTopic(english) {
+  if (["nominative", "genitive", "dative", "accusative", "ablative", "vocative", "case"].includes(english)) return "casos";
+  if (["present", "past", "imperfect", "perfect", "pluperfect", "aorist", "future", "tense"].includes(english)) return "tempos";
+  if (["active", "middle", "passive", "voice"].includes(english)) return "vozes";
+  if (["indicative", "imperative", "optative", "infinitive", "subjunctive", "mood"].includes(english)) return "modos";
+  if (["noun", "verb", "adjective", "participle", "article", "pronoun", "preposition", "adverb", "conjunction"].includes(english)) return "classes de palavras";
+  if (["masculine", "feminine", "neuter", "gender"].includes(english)) return "gêneros";
+  if (["singular", "dual", "plural", "number"].includes(english)) return "números gramaticais";
+  if (["first", "second", "third", "person"].includes(english)) return "pessoas";
+  if (english.includes("degree") || ["comparative", "superlative"].includes(english)) return "graus";
+  if (english.includes("verb") || english === "conjugation") return "verbos";
+  if (["relative", "possessive", "demonstrative", "interrogative", "indefinite", "personal", "reflexive", "reciprocal"].includes(english)) return "pronomes";
+  return "fonética e outros termos";
+}
+
+function parseTerminology(sheet) {
+  if (!sheet) return null;
+  const rawItems = [];
+  sheet.eachRow((row) => {
+    const greek = textOf(row.getCell(2));
+    const english = (textOf(row.getCell(4)) || textOf(row.getCell(10))).trim().toLowerCase();
+    const meaning = terminologyPortuguese[english];
+    if (!greek || !meaning) return;
+    rawItems.push({ variants: [greek], analyses: [{ meaning, topic: terminologyTopic(english) }] });
+  });
+  const id = "terminology:grammar";
+  return {
+    id,
+    kind: "terminology",
+    category: "terminology",
+    lemma: { greek: "γραμματικοὶ ὅροι", transliteration: "grammatikoì hóroi", gloss: "terminologia gramatical" },
+    items: mergeByVariants(rawItems, id)
+  };
+}
+
 function tenseFromHeading(value) {
   const heading = value.match(
     /^([A-Z]+(?:\s+PERFECT)?)(?::|\s|\(|$)/u
@@ -954,7 +1103,7 @@ const catalog = {
   source: {
     workbook: basename(sourcePath),
     sheets: [
-      "Article", "Pronouns", "Adjectives", "Participles",
+      "Greek-Latin-English terms", "Numbers", "Article", "Pronouns", "Adjectives", "Participles",
       "1st decl", "2nd decl", "3rd decl",
       ...availableVerbSources.map(({ sheet }) => sheet)
     ]
@@ -962,6 +1111,8 @@ const catalog = {
   corrections: await readCorrections(),
   paradigms: [
     parseArticle(workbook.getWorksheet("Article")),
+    parseNumerals(workbook.getWorksheet("Numbers")),
+    parseTerminology(workbook.getWorksheet("Greek-Latin-English terms")),
     ...parsePronouns(workbook.getWorksheet("Pronouns")),
     ...parseAdjectives(workbook.getWorksheet("Adjectives")),
     ...parseParticiples(workbook.getWorksheet("Participles")),

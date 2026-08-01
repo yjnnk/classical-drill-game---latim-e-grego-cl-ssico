@@ -25,7 +25,8 @@ const allowedValues = {
   ,
   gender: new Set(["masculine", "feminine", "neuter"]),
   form: new Set(["finite", "infinitive", "participle"]),
-  degree: new Set(["positive", "comparative", "superlative"])
+  degree: new Set(["positive", "comparative", "superlative"]),
+  type: new Set(["cardinal", "ordinal", "adverbial"])
 };
 
 function requireNonEmptyString(value, message) {
@@ -41,8 +42,12 @@ function validateAnalysis(analysis, kind, itemId) {
       ? ["case", "number", "gender", "degree"]
     : kind === "adjective"
       ? requiredAdjectiveFields
-      : kind === "participle"
-        ? [...requiredParticipleFields, "case", "number"]
+    : kind === "participle"
+      ? [...requiredParticipleFields, "case", "number"]
+      : kind === "numeral"
+        ? ["meaning", "type"]
+        : kind === "terminology"
+          ? ["meaning", "topic"]
     : analysis?.form === "finite"
       ? requiredFiniteVerbFields
       : analysis?.form === "infinitive"
@@ -55,7 +60,7 @@ function validateAnalysis(analysis, kind, itemId) {
       analysis?.[field],
       `Análise incompleta em ${itemId}: campo ${field}`
     );
-    if (!allowedValues[field]?.has(analysis[field])) {
+    if (allowedValues[field] && !allowedValues[field].has(analysis[field])) {
       throw new Error(
         `Valor gramatical inválido em ${itemId}: ${field}=${analysis[field]}`
       );

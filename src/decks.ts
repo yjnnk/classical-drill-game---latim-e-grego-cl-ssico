@@ -132,6 +132,10 @@ function analysisValue(analysis: Analysis, field: FilterField): string | null {
         : null;
     case "degree":
       return analysis.kind === "adjective" ? analysis.degree : null;
+    case "numeralType":
+      return analysis.kind === "numeral" ? analysis.numeralType ?? null : null;
+    case "topic":
+      return analysis.kind === "terminology" ? analysis.topic ?? null : null;
     case "tense":
     case "voice":
       return analysis.kind === "finite-verb" ||

@@ -5,6 +5,8 @@
   "source": {
     "workbook": " Ancient Greek Ranieri-Dowling Method Summary of Forms v2.0.xlsx",
     "sheets": [
+      "Greek-Latin-English terms",
+      "Numbers",
       "Article",
       "Pronouns",
       "Adjectives",
@@ -394,6 +396,5202 @@
               "case": "accusative",
               "number": "plural",
               "gender": "neuter"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "numeral:greek",
+      "kind": "numeral",
+      "category": "numeral",
+      "lemma": {
+        "greek": "οἱ ἀριθμοί",
+        "transliteration": "hoi arithmoí",
+        "gloss": "numerais"
+      },
+      "items": [
+        {
+          "id": "numeral:greek:d28f8552a0e1",
+          "variants": [
+            "εἷς, μία, ἕν"
+          ],
+          "analyses": [
+            {
+              "meaning": "um",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8a8551328737",
+          "variants": [
+            "πρῶτος (-η -ον κτλ.)"
+          ],
+          "analyses": [
+            {
+              "meaning": "primeiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8181d71a041c",
+          "variants": [
+            "ἅπαξ"
+          ],
+          "analyses": [
+            {
+              "meaning": "uma vez",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a7913ceb16cc",
+          "variants": [
+            "δύο"
+          ],
+          "analyses": [
+            {
+              "meaning": "dois",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:0b7fa3e38b58",
+          "variants": [
+            "δεύτερος"
+          ],
+          "analyses": [
+            {
+              "meaning": "segundo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a789107fb68a",
+          "variants": [
+            "δίς"
+          ],
+          "analyses": [
+            {
+              "meaning": "duas vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:32e44bb20990",
+          "variants": [
+            "τρεῖς, τρία"
+          ],
+          "analyses": [
+            {
+              "meaning": "três",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:0af467c27810",
+          "variants": [
+            "τρίτος"
+          ],
+          "analyses": [
+            {
+              "meaning": "terceiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:3763edcf8394",
+          "variants": [
+            "τρίς"
+          ],
+          "analyses": [
+            {
+              "meaning": "três vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a23936a2fb77",
+          "variants": [
+            "τέτταρες, τέτταρα"
+          ],
+          "analyses": [
+            {
+              "meaning": "quatro",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8b2f7b4e987f",
+          "variants": [
+            "τέταρτος"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:2e6a57c21183",
+          "variants": [
+            "τετράκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "quatro vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a61953306235",
+          "variants": [
+            "πέντε"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinco",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a8eccedbdf6c",
+          "variants": [
+            "πέμπτος"
+          ],
+          "analyses": [
+            {
+              "meaning": "quinto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a2979373ac97",
+          "variants": [
+            "πεντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinco vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:6a12ed9c93c0",
+          "variants": [
+            "ἕξ"
+          ],
+          "analyses": [
+            {
+              "meaning": "seis",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:086d18a15f62",
+          "variants": [
+            "ἕκτος"
+          ],
+          "analyses": [
+            {
+              "meaning": "sexto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d340c8df2930",
+          "variants": [
+            "ἑξάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "seis vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:13d89c629169",
+          "variants": [
+            "ἑπτά"
+          ],
+          "analyses": [
+            {
+              "meaning": "sete",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:06a09e690de8",
+          "variants": [
+            "ἕβδομος"
+          ],
+          "analyses": [
+            {
+              "meaning": "sétimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:9920645d49af",
+          "variants": [
+            "ἑπτάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "sete vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:322cfe9d6f2f",
+          "variants": [
+            "ὀκτώ"
+          ],
+          "analyses": [
+            {
+              "meaning": "oito",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:401ad56eded2",
+          "variants": [
+            "ὄγδοος"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitavo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b2d8e480b00a",
+          "variants": [
+            "ὀκτάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "oito vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:7613f0b4daec",
+          "variants": [
+            "ἐννέα"
+          ],
+          "analyses": [
+            {
+              "meaning": "nove",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b1030852adab",
+          "variants": [
+            "ἔνατος"
+          ],
+          "analyses": [
+            {
+              "meaning": "nono",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:ccf9a7ab6392",
+          "variants": [
+            "ἐνάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "nove vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d39fddf46d55",
+          "variants": [
+            "δέκα"
+          ],
+          "analyses": [
+            {
+              "meaning": "dez",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b28f6f1cb8a0",
+          "variants": [
+            "δέκατος"
+          ],
+          "analyses": [
+            {
+              "meaning": "décimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d4ff71b2d239",
+          "variants": [
+            "δεκάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "dez vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:aeccf56b683b",
+          "variants": [
+            "ἕνδεκα"
+          ],
+          "analyses": [
+            {
+              "meaning": "onze",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:09e08aac7aa6",
+          "variants": [
+            "ἑνδέκατος"
+          ],
+          "analyses": [
+            {
+              "meaning": "décimo primeiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:3a455d43d23e",
+          "variants": [
+            "ἑνδεκάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "onze vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:c06c7f911d24",
+          "variants": [
+            "δώδεκα"
+          ],
+          "analyses": [
+            {
+              "meaning": "doze",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8fa8530dc9fe",
+          "variants": [
+            "δωδέκατος"
+          ],
+          "analyses": [
+            {
+              "meaning": "décimo segundo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a12a77b80ce7",
+          "variants": [
+            "δωδεκάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "doze vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:0405917a54a5",
+          "variants": [
+            "τρεῖς, τρία καὶ δέκα"
+          ],
+          "analyses": [
+            {
+              "meaning": "treze",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:5fb26dad6edf",
+          "variants": [
+            "τρίτος καὶ δέκατος"
+          ],
+          "analyses": [
+            {
+              "meaning": "décimo terceiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:ab5711d430f9",
+          "variants": [
+            "τρεισκαιδεκάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "treze vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:4e2ecd675ef1",
+          "variants": [
+            "τέτταρες, τέτταρα καὶ δέκα"
+          ],
+          "analyses": [
+            {
+              "meaning": "catorze",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:af5c00988c9a",
+          "variants": [
+            "τέταρτος καὶ δέκατος"
+          ],
+          "analyses": [
+            {
+              "meaning": "décimo quarto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:fe0f145b6b5b",
+          "variants": [
+            "τετταρεσκαιδεκάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "catorze vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:39cdd77f4509",
+          "variants": [
+            "πεντεκαίδεκα"
+          ],
+          "analyses": [
+            {
+              "meaning": "quinze",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:7ab3e2c86164",
+          "variants": [
+            "πέμπτος καὶ δέκατος"
+          ],
+          "analyses": [
+            {
+              "meaning": "décimo quinto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:67f2d044c97b",
+          "variants": [
+            "πεντεκαιδεκάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "quinze vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:39684a61d3e8",
+          "variants": [
+            "ἑκκαίδεκα"
+          ],
+          "analyses": [
+            {
+              "meaning": "dezesseis",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:83b03a6b4264",
+          "variants": [
+            "ἕκτος καὶ δέκατος"
+          ],
+          "analyses": [
+            {
+              "meaning": "décimo sexto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:4158bf71af05",
+          "variants": [
+            "ἑκκαιδεκάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "dezesseis vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8b151d2ebdd8",
+          "variants": [
+            "ἑπτακαίδεκα"
+          ],
+          "analyses": [
+            {
+              "meaning": "dezessete",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:35977026c47c",
+          "variants": [
+            "ἕβδομος καὶ δέκατος"
+          ],
+          "analyses": [
+            {
+              "meaning": "décimo sétimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:2259a3afe9d1",
+          "variants": [
+            "ἑπτακαιδεκάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "dezessete vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:78d5112c0d0b",
+          "variants": [
+            "ὀκτωκαίδεκα"
+          ],
+          "analyses": [
+            {
+              "meaning": "dezoito",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:cb4a0f57841b",
+          "variants": [
+            "ὄγδοος καὶ δέκατος"
+          ],
+          "analyses": [
+            {
+              "meaning": "décimo oitavo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d5a335245ebd",
+          "variants": [
+            "ὀκτωκαιδεκάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "dezoito vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:e983fec45744",
+          "variants": [
+            "ἐννεακαίδεκα"
+          ],
+          "analyses": [
+            {
+              "meaning": "dezenove",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:1a98a61ddf2c",
+          "variants": [
+            "ἔνατος καὶ δέκατος"
+          ],
+          "analyses": [
+            {
+              "meaning": "décimo nono",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:676afaf9e119",
+          "variants": [
+            "ἐννεακαιδεκάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "dezenove vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8400b32b9af4",
+          "variants": [
+            "εἴκοσι(ν)"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:9b76aa9ac85a",
+          "variants": [
+            "εἰκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "vigésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:e9815ed2ec56",
+          "variants": [
+            "εἰκοσάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:f622a0f705b9",
+          "variants": [
+            "εἷς, μία, ἕν καὶ εἴκοσι(ν)"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e um",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:cf75839f2674",
+          "variants": [
+            "πρῶτος καὶ εἰκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "vigésimo primeiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:340d7fefc70d",
+          "variants": [
+            "ἅπαξ καὶ εἰκοσάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e uma vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:94f6deba43f3",
+          "variants": [
+            "δύο καὶ εἴκοσι(ν)"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e dois",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b0ad54a049e7",
+          "variants": [
+            "δεύτερος καὶ εἰκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "vigésimo segundo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:01e479f01d83",
+          "variants": [
+            "δὶς καὶ εἰκοσάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e duas vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:f9d575d3badd",
+          "variants": [
+            "τρεῖς, τρία καὶ εἴκοσι(ν)"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e três",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:5c2ffd520dc7",
+          "variants": [
+            "τρίτος καὶ εἰκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "vigésimo terceiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:30960085b264",
+          "variants": [
+            "τρὶς καὶ εἰκοσάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e três vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:70ea64057025",
+          "variants": [
+            "τέτταρες, τέτταρα καὶ εἴκοσι(ν)"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e quatro",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:bc28691a622a",
+          "variants": [
+            "τέταρτος καὶ εἰκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "vigésimo quarto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:ffee728022e2",
+          "variants": [
+            "τετράκις καὶ εἰκοσάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e quatro vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b7b289c42613",
+          "variants": [
+            "πέντε καὶ εἴκοσι(ν)"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e cinco",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:1f36c9c062ab",
+          "variants": [
+            "πέμπτος καὶ εἰκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "vigésimo quinto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:93ab10136468",
+          "variants": [
+            "πεντάκις καὶ εἰκοσάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e cinco vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:7f03f9930220",
+          "variants": [
+            "ἕξ καὶ εἴκοσι(ν)"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e seis",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:47bb3fd3d6b3",
+          "variants": [
+            "ἕκτος καὶ εἰκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "vigésimo sexto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:da09f807cfb7",
+          "variants": [
+            "ἑξάκις καὶ εἰκοσάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e seis vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:434d7bf4c4e8",
+          "variants": [
+            "ἑπτὰ καὶ εἴκοσι(ν)"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e sete",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:480398b80ad5",
+          "variants": [
+            "ἕβδομος καὶ εἰκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "vigésimo sétimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a8c129a31cac",
+          "variants": [
+            "ἑπτάκις καὶ εἰκοσάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e sete vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b7c28f2efa48",
+          "variants": [
+            "ὀκτὼ καὶ εἴκοσι(ν)"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e oito",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:acdbd89bf8ad",
+          "variants": [
+            "ὄγδοος καὶ εἰκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "vigésimo oitavo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:76be7cd43b6d",
+          "variants": [
+            "ὀκτάκις καὶ εἰκοσάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e oito vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:62335acad743",
+          "variants": [
+            "ἐννέα καὶ εἴκοσι(ν)"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e nove",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:93b9f0ad2ddf",
+          "variants": [
+            "ἔνατος καὶ εἰκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "vigésimo nono",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8f689d0027f6",
+          "variants": [
+            "ἐνάκις καὶ εἰκοσάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte e nove vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:6ce287d8d029",
+          "variants": [
+            "τριά̄κοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:6657ce440ff3",
+          "variants": [
+            "τριᾱκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "trigésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:75437b4aaa7c",
+          "variants": [
+            "τριᾱκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:15b2ccd7dd29",
+          "variants": [
+            "εἷς, μία, ἕν καὶ τριά̄κοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e um",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:3ad77c492084",
+          "variants": [
+            "πρῶτος καὶ τριᾱκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "trigésimo primeiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:41b37b689f15",
+          "variants": [
+            "ἅπαξ καὶ τριᾱκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e uma vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:4194019d8ff1",
+          "variants": [
+            "δύο καὶ τριά̄κοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e dois",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:96f3c15428b3",
+          "variants": [
+            "δεύτερος καὶ τριᾱκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "trigésimo segundo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:082203e44785",
+          "variants": [
+            "δὶς καὶ τριᾱκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e duas vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:121a3c0326d4",
+          "variants": [
+            "τρεῖς, τρία καὶ τριά̄κοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e três",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:cfbda2fd465a",
+          "variants": [
+            "τρίτος καὶ τριᾱκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "trigésimo terceiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:891d380e29bc",
+          "variants": [
+            "τρὶς καὶ τριᾱκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e três vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:1638276e6287",
+          "variants": [
+            "τέτταρες, τέτταρα καὶ τριά̄κοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e quatro",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:1dc09b95997c",
+          "variants": [
+            "τέταρτος καὶ τριᾱκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "trigésimo quarto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:c03296e12a4a",
+          "variants": [
+            "τετράκις καὶ τριᾱκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e quatro vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a6679d33906b",
+          "variants": [
+            "πέντε καὶ τριά̄κοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e cinco",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:ccbf945c0722",
+          "variants": [
+            "πέμπτος καὶ τριᾱκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "trigésimo quinto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:74bfbf6e307c",
+          "variants": [
+            "πεντάκις καὶ τριᾱκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e cinco vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:90599b7fc934",
+          "variants": [
+            "ἕξ καὶ τριά̄κοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e seis",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:c8b2cfea8e44",
+          "variants": [
+            "ἕκτος καὶ τριᾱκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "trigésimo sexto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:e2b6da3c8877",
+          "variants": [
+            "ἑξάκις καὶ τριᾱκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e seis vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:83855d896d42",
+          "variants": [
+            "ἑπτὰ καὶ τριά̄κοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e sete",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:90781a45a703",
+          "variants": [
+            "ἕβδομος καὶ τριᾱκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "trigésimo sétimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a8d78158e441",
+          "variants": [
+            "ἑπτάκις καὶ τριᾱκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e sete vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:35f76193bcb9",
+          "variants": [
+            "ὀκτὼ καὶ τριά̄κοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e oito",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:25982e5ed193",
+          "variants": [
+            "ὄγδοος  καὶ τριᾱκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "trigésimo oitavo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:77d9f6502cb8",
+          "variants": [
+            "ὀκτάκις καὶ τριᾱκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e oito vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8ebed7f78250",
+          "variants": [
+            "ἐννέα καὶ τριά̄κοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e nove",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:3950aeb7bc4c",
+          "variants": [
+            "ἔνατος καὶ τριᾱκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "trigésimo nono",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:96175b8dda79",
+          "variants": [
+            "ἐνάκις καὶ τριᾱκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "trinta e nove vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:cad126990e75",
+          "variants": [
+            "τετταράκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:4f9c4692295f",
+          "variants": [
+            "τετταρακοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quadragésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:dd13cdb3b27f",
+          "variants": [
+            "τετταρακοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:e7ff29242a77",
+          "variants": [
+            "εἷς, μία, ἕν καὶ τετταράκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e um",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:2fcbabb5db3d",
+          "variants": [
+            "πρῶτος καὶ τετταρακοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quadragésimo primeiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:e79c64935940",
+          "variants": [
+            "ἅπαξ καὶ τετταρακοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e uma vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:70ba07cd8cf2",
+          "variants": [
+            "δύο καὶ τετταράκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e dois",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:713b8a778887",
+          "variants": [
+            "δεύτερος καὶ τετταρακοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quadragésimo segundo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:cf5cc074a71d",
+          "variants": [
+            "δὶς καὶ τετταρακοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e duas vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:40f60349437f",
+          "variants": [
+            "τρεῖς, τρία καὶ τετταράκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e três",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:76eafdd109aa",
+          "variants": [
+            "τρίτος καὶ τετταρακοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quadragésimo terceiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:2caf9d693616",
+          "variants": [
+            "τρὶς καὶ τετταρακοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e três vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:c6ef273df46a",
+          "variants": [
+            "τέτταρες, τέτταρα καὶ τετταράκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e quatro",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a99d6e16c048",
+          "variants": [
+            "τέταρτος καὶ τετταρακοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quadragésimo quarto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:2f6fd09a3854",
+          "variants": [
+            "τετράκις καὶ τετταρακοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e quatro vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:4cea937dc68a",
+          "variants": [
+            "πέντε καὶ τετταράκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e cinco",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a515d81e283d",
+          "variants": [
+            "πέμπτος καὶ τετταρακοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quadragésimo quinto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:859ad1b6d2e6",
+          "variants": [
+            "πεντάκις καὶ τετταρακοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e cinco vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8c3993a4ca45",
+          "variants": [
+            "ἕξ καὶ τετταράκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e seis",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:53b9c67cd0f9",
+          "variants": [
+            "ἕκτος καὶ τετταρακοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quadragésimo sexto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:1ccc5c7345cd",
+          "variants": [
+            "ἑξάκις καὶ τετταρακοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e seis vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:affebd78a56b",
+          "variants": [
+            "ἑπτὰ καὶ τετταράκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e sete",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d5eadf2ea1f4",
+          "variants": [
+            "ἕβδομος καὶ τετταρακοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quadragésimo sétimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:23e07f9ce3a7",
+          "variants": [
+            "ἑπτάκις καὶ τετταρακοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e sete vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a2185a0bb8e3",
+          "variants": [
+            "ὀκτὼ καὶ τετταράκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e oito",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:e8648d063662",
+          "variants": [
+            "ὄγδοος καὶ τετταρακοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quadragésimo oitavo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:4cf9ea77460b",
+          "variants": [
+            "ὀκτάκις καὶ τετταρακοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e oito vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:7fff9bfec4ad",
+          "variants": [
+            "ἐννέα καὶ τετταράκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e nove",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:86fed3528aad",
+          "variants": [
+            "ἔνατος καὶ τετταρακοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quadragésimo nono",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:bb87083473b4",
+          "variants": [
+            "ἐνάκις καὶ τετταρακοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "quarenta e nove vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a6bbc9525752",
+          "variants": [
+            "πεντήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8ea6cd76cabe",
+          "variants": [
+            "πεντηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quinquagésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:81a14a8cd5f8",
+          "variants": [
+            "πεντηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:aea3748bf2a6",
+          "variants": [
+            "εἷς, μία, ἕν καὶ πεντήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e um",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:eae4fed0b22e",
+          "variants": [
+            "πρῶτος καὶ πεντηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quinquagésimo primeiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:7b96e18748c1",
+          "variants": [
+            "ἅπαξ καὶ πεντηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e uma vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:1c48c49746ba",
+          "variants": [
+            "δύο καὶ πεντήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e dois",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d6cd9d8c5535",
+          "variants": [
+            "δεύτερος καὶ πεντηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quinquagésimo segundo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:bfd9899ae17a",
+          "variants": [
+            "δὶς καὶ πεντηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e duas vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:700717d4079a",
+          "variants": [
+            "τρεῖς, τρία καὶ πεντήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e três",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:f07a88f760e8",
+          "variants": [
+            "τρίτος καὶ πεντηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quinquagésimo terceiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:ca4b91767f55",
+          "variants": [
+            "τρὶς καὶ πεντηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e três vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:0501b263022e",
+          "variants": [
+            "τέτταρες, τέτταρα καὶ πεντήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e quatro",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b913e564bd28",
+          "variants": [
+            "τέταρτος καὶ πεντηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quinquagésimo quarto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:0535235b5a77",
+          "variants": [
+            "τετράκις καὶ πεντηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e quatro vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:4dbc17084c59",
+          "variants": [
+            "πέντε καὶ πεντήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e cinco",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:75e4419336dd",
+          "variants": [
+            "πέμπτος καὶ πεντηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quinquagésimo quinto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a387640138ca",
+          "variants": [
+            "πεντάκις καὶ πεντηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e cinco vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:f629bd4fe49c",
+          "variants": [
+            "ἕξ καὶ πεντήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e seis",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:2b9ab2640f4d",
+          "variants": [
+            "ἕκτος καὶ πεντηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quinquagésimo sexto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:855aeb531ab7",
+          "variants": [
+            "ἑξάκις καὶ πεντηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e seis vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:f9df2be1fe4d",
+          "variants": [
+            "ἑπτὰ καὶ πεντήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e sete",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8f66a636d66f",
+          "variants": [
+            "ἕβδομος καὶ πεντηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quinquagésimo sétimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a8bbc5617bb9",
+          "variants": [
+            "ἑπτάκις καὶ πεντηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e sete vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:3081b41b248d",
+          "variants": [
+            "ὀκτὼ καὶ πεντήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e oito",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:816e7a5f0b25",
+          "variants": [
+            "ὄγδοος καὶ πεντηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quinquagésimo oitavo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:211ed215eab5",
+          "variants": [
+            "ὀκτάκις καὶ πεντηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e oito vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:f5aca37b83fe",
+          "variants": [
+            "ἐννέα καὶ πεντήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e nove",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:4064ac5ebc53",
+          "variants": [
+            "ἔνατος καὶ πεντηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quinquagésimo nono",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:286dffed2468",
+          "variants": [
+            "ἐνάκις καὶ πεντηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinquenta e nove vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:216b42663dca",
+          "variants": [
+            "ἑξήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:13b65f07e9ea",
+          "variants": [
+            "ἑξηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "sexagésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:65fc38c59b39",
+          "variants": [
+            "ἑξηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:6a1b73d92c96",
+          "variants": [
+            "εἷς, μία, ἕν καὶ ἑξήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e um",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a0499f0b06b3",
+          "variants": [
+            "πρῶτος καὶ ἑξηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "sexagésimo primeiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:3419ef6d577b",
+          "variants": [
+            "ἅπαξ καὶ ἑξηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e uma vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:534c908b9fdc",
+          "variants": [
+            "δύο καὶ ἑξήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e dois",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:3032538bba46",
+          "variants": [
+            "δεύτερος καὶ ἑξηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "sexagésimo segundo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8b64289a6005",
+          "variants": [
+            "δὶς καὶ ἑξηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e duas vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:9f4a322f48ab",
+          "variants": [
+            "τρεῖς, τρία καὶ ἑξήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e três",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:970b98b0c698",
+          "variants": [
+            "τρίτος καὶ ἑξηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "sexagésimo terceiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d4784fc9d180",
+          "variants": [
+            "τρὶς καὶ ἑξηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e três vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:f64018fb047f",
+          "variants": [
+            "τέτταρες, τέτταρα καὶ ἑξήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e quatro",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:f0eccb8cae0a",
+          "variants": [
+            "τέταρτος καὶ ἑξηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "sexagésimo quarto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:0ae5d292f2de",
+          "variants": [
+            "τετράκις καὶ ἑξηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e quatro vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:1c2eba0882ea",
+          "variants": [
+            "πέντε καὶ ἑξήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e cinco",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:93eec0f9b310",
+          "variants": [
+            "πέμπτος καὶ ἑξηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "sexagésimo quinto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:bdd88879f887",
+          "variants": [
+            "πεντάκις καὶ ἑξηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e cinco vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:2c4fc2a5d14d",
+          "variants": [
+            "ἕξ καὶ ἑξήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e seis",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d843e3c988ad",
+          "variants": [
+            "ἕκτος καὶ ἑξηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "sexagésimo sexto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:ebb85eccfe92",
+          "variants": [
+            "ἑξάκις καὶ ἑξηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e seis vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:f8ae12170ec4",
+          "variants": [
+            "ἑπτὰ καὶ ἑξήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e sete",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:f0a224e8fcfa",
+          "variants": [
+            "ἕβδομος καὶ ἑξηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "sexagésimo sétimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:612b0e820844",
+          "variants": [
+            "ἑπτάκις καὶ ἑξηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e sete vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d37671a6b100",
+          "variants": [
+            "ὀκτὼ καὶ ἑξήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e oito",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:6cd0fd8e791d",
+          "variants": [
+            "ὄγδοος  καὶ ἑξηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "sexagésimo oitavo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:3a0a1cf95685",
+          "variants": [
+            "ὀκτάκις καὶ ἑξηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e oito vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:0d0db70cf380",
+          "variants": [
+            "ἐννέα καὶ ἑξήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e nove",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:c18fd8499149",
+          "variants": [
+            "ἔνατος καὶ ἑξηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "sexagésimo nono",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:f3752f1828b0",
+          "variants": [
+            "ἐνάκις καὶ ἑξηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "sessenta e nove vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a7c166a94784",
+          "variants": [
+            "ἑβδομήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:dddfcd5bf663",
+          "variants": [
+            "ἑβδομηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "septuagésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:5aae738077a7",
+          "variants": [
+            "ἑβδομηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:bdc295edf3f3",
+          "variants": [
+            "εἷς, μία, ἕν καὶ ἑβδομήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e um",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:9e0e73636aeb",
+          "variants": [
+            "πρῶτος καὶ ἑβδομηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "septuagésimo primeiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:aed189ef6b65",
+          "variants": [
+            "ἅπαξ καὶ ἑβδομηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e uma vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:704b0c1a0849",
+          "variants": [
+            "δύο καὶ ἑβδομήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e dois",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:359c135127ca",
+          "variants": [
+            "δεύτερος καὶ ἑβδομηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "septuagésimo segundo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d0826ea94c47",
+          "variants": [
+            "δὶς καὶ ἑβδομηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e duas vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:aae4a36d3f29",
+          "variants": [
+            "τρεῖς, τρία καὶ ἑβδομήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e três",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:bd53fadd155d",
+          "variants": [
+            "τρίτος καὶ ἑβδομηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "septuagésimo terceiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:edd1ae1e787a",
+          "variants": [
+            "τρὶς καὶ ἑβδομηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e três vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:2e0e8577f405",
+          "variants": [
+            "τέτταρες, τέτταρα καὶ ἑβδομήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e quatro",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b071b5aea081",
+          "variants": [
+            "τέταρτος καὶ ἑβδομηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "septuagésimo quarto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:724e0fd2b0c8",
+          "variants": [
+            "τετράκις καὶ ἑβδομηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e quatro vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:29e78775cfd4",
+          "variants": [
+            "πέντε καὶ ἑβδομήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e cinco",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:51580b696ef2",
+          "variants": [
+            "πέμπτος καὶ ἑβδομηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "septuagésimo quinto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:2a00e0e80157",
+          "variants": [
+            "πεντάκις καὶ ἑβδομηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e cinco vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:0c5fa48a151d",
+          "variants": [
+            "ἕξ καὶ ἑβδομήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e seis",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:86b4d4364170",
+          "variants": [
+            "ἕκτος καὶ ἑβδομηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "septuagésimo sexto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:7bf61721a1cc",
+          "variants": [
+            "ἑξάκις καὶ ἑβδομηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e seis vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:72da95368eb8",
+          "variants": [
+            "ἑπτὰ καὶ ἑβδομήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e sete",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:5a602599b233",
+          "variants": [
+            "ἕβδομος καὶ ἑβδομηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "septuagésimo sétimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:124c4dafbb03",
+          "variants": [
+            "ἑπτάκις καὶ ἑβδομηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e sete vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:61c03a86271d",
+          "variants": [
+            "ὀκτὼ καὶ ἑβδομήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e oito",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:c782bd8bcc50",
+          "variants": [
+            "ὄγδοος καὶ ἑβδομηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "septuagésimo oitavo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:c646430fd904",
+          "variants": [
+            "ὀκτάκις καὶ ἑβδομηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e oito vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:05eec9ffc84e",
+          "variants": [
+            "ἐννέα καὶ ἑβδομήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e nove",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:f76cf9076f92",
+          "variants": [
+            "ἔνατος καὶ ἑβδομηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "septuagésimo nono",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:346f7c0b5bbd",
+          "variants": [
+            "ἐνάκις καὶ ἑβδομηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "setenta e nove vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:2990e2da2fc2",
+          "variants": [
+            "ὀγδοήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:16657ce0fdc8",
+          "variants": [
+            "ὀγδοηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "octogésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:145f171def00",
+          "variants": [
+            "ὀγδοηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:0fd47598cc16",
+          "variants": [
+            "εἷς, μία, ἕν καὶ ὀγδοήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e um",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:f5ddbeb2826e",
+          "variants": [
+            "πρῶτος καὶ ὀγδοηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "octogésimo primeiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b041a25f5cd9",
+          "variants": [
+            "ἅπαξ καὶ ὀγδοηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e uma vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b7c04524d638",
+          "variants": [
+            "δύο καὶ ὀγδοήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e dois",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:0199c07cd35e",
+          "variants": [
+            "δεύτερος καὶ ὀγδοηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "octogésimo segundo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:fec2d7b548fd",
+          "variants": [
+            "δὶς καὶ ὀγδοηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e duas vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:770af13bbc60",
+          "variants": [
+            "τρεῖς, τρία καὶ ὀγδοήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e três",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:77296a8482f3",
+          "variants": [
+            "τρίτος καὶ ὀγδοηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "octogésimo terceiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b1d004f31666",
+          "variants": [
+            "τρὶς καὶ ὀγδοηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e três vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:f3f0ddf12147",
+          "variants": [
+            "τέτταρες, τέτταρα καὶ ὀγδοήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e quatro",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:0ee7d5a0f863",
+          "variants": [
+            "τέταρτος καὶ ὀγδοηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "octogésimo quarto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b02ee29c1692",
+          "variants": [
+            "τετράκις καὶ ὀγδοηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e quatro vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:84e409602754",
+          "variants": [
+            "πέντε καὶ ὀγδοήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e cinco",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:aa1c46f6acd0",
+          "variants": [
+            "πέμπτος καὶ ὀγδοηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "octogésimo quinto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:2aa4866160de",
+          "variants": [
+            "πεντάκις καὶ ὀγδοηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e cinco vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d233acc27036",
+          "variants": [
+            "ἕξ καὶ ὀγδοήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e seis",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:0b55a2780b7b",
+          "variants": [
+            "ἕκτος καὶ ὀγδοηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "octogésimo sexto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:9d91bd700e5c",
+          "variants": [
+            "ἑξάκις καὶ ὀγδοηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e seis vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d3ad4acf95ce",
+          "variants": [
+            "ἑπτὰ καὶ ὀγδοήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e sete",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a9154db8944c",
+          "variants": [
+            "ἕβδομος καὶ ὀγδοηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "octogésimo sétimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:c84650d09dc5",
+          "variants": [
+            "ἑπτάκις καὶ ὀγδοηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e sete vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8791f49a2481",
+          "variants": [
+            "ὀκτὼ καὶ ὀγδοήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e oito",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8e61c4b6c80e",
+          "variants": [
+            "ὄγδοος  καὶ ὀγδοηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "octogésimo oitavo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:f3266dfe4cbb",
+          "variants": [
+            "ὀκτάκις καὶ ὀγδοηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e oito vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:0ed70a71f3d5",
+          "variants": [
+            "ἐννέα καὶ ὀγδοήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e nove",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:6b7cd290c961",
+          "variants": [
+            "ἔνατος καὶ ὀγδοηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "octogésimo nono",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:1ed51e1eca88",
+          "variants": [
+            "ἐνάκις καὶ ὀγδοηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitenta e nove vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:9231ddde1cc6",
+          "variants": [
+            "ἐνενήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:5443c392510f",
+          "variants": [
+            "ἐνενηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "nonagésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:ded89c2afa52",
+          "variants": [
+            "ἐνενηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8b003b0aafcd",
+          "variants": [
+            "εἷς, μία, ἕν καὶ ἐνενήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e um",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:c622ed56bd42",
+          "variants": [
+            "πρῶτος καὶ ἐνενηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "nonagésimo primeiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:3b5ede8ac242",
+          "variants": [
+            "ἅπαξ καὶ ἐνενηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e uma vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:43a2cb576868",
+          "variants": [
+            "δύο καὶ ἐνενήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e dois",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:6c66ed354885",
+          "variants": [
+            "δεύτερος καὶ ἐνενηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "nonagésimo segundo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:755bf97e9394",
+          "variants": [
+            "δὶς καὶ ἐνενηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e duas vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:80088fc65a43",
+          "variants": [
+            "τρεῖς, τρία καὶ ἐνενήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e três",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:9a178a2d0e10",
+          "variants": [
+            "τρίτος καὶ ἐνενηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "nonagésimo terceiro",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:9f3177de28f0",
+          "variants": [
+            "τρὶς καὶ ἐνενηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e três vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:c546b54b5d72",
+          "variants": [
+            "τέτταρες, τέτταρα καὶ ἐνενήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e quatro",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a3d499cf6de8",
+          "variants": [
+            "τέταρτος καὶ ἐνενηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "nonagésimo quarto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b87d98e248c6",
+          "variants": [
+            "τετράκις καὶ ἐνενηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e quatro vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:609b22fdb415",
+          "variants": [
+            "πέντε καὶ ἐνενήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e cinco",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b348a79202ee",
+          "variants": [
+            "πέμπτος καὶ ἐνενηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "nonagésimo quinto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:597f8d977fb3",
+          "variants": [
+            "πεντάκις καὶ ἐνενηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e cinco vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:c2f4c4d5e686",
+          "variants": [
+            "ἕξ καὶ ἐνενήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e seis",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:35c70ba07669",
+          "variants": [
+            "ἕκτος καὶ ἐνενηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "nonagésimo sexto",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:63251edb4fc6",
+          "variants": [
+            "ἑξάκις καὶ ἐνενηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e seis vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:02e4cd023d2b",
+          "variants": [
+            "ἑπτὰ καὶ ἐνενήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e sete",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a52ef94e4a85",
+          "variants": [
+            "ἕβδομος καὶ ἐνενηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "nonagésimo sétimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8b2bf9925054",
+          "variants": [
+            "ἑπτάκις καὶ ἐνενηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e sete vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:9010815014d6",
+          "variants": [
+            "ὀκτὼ καὶ ἐνενήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e oito",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:15aad3bf4400",
+          "variants": [
+            "ὄγδοος καὶ ἐνενηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "nonagésimo oitavo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:255eedd8ed19",
+          "variants": [
+            "ὀκτάκις καὶ ἐνενηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e oito vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:100efe74b7d3",
+          "variants": [
+            "ἐννέα καὶ ἐνενήκοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e nove",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8e857cf4d9d4",
+          "variants": [
+            "ἔνατος καὶ ἐνενηκοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "nonagésimo nono",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:e6b8b19d22c5",
+          "variants": [
+            "ἐνάκις καὶ ἐνενηκοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "noventa e nove vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:5767123beed5",
+          "variants": [
+            "ἑκατόν"
+          ],
+          "analyses": [
+            {
+              "meaning": "cem",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8b1f60fd5386",
+          "variants": [
+            "ἑκατοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "centésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:81aa62ce922e",
+          "variants": [
+            "ἑκατοντάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "cem vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:e7b3f918a844",
+          "variants": [
+            "διᾱκόσιοι, -αι, -α"
+          ],
+          "analyses": [
+            {
+              "meaning": "duzentos",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:cc55bc26fd41",
+          "variants": [
+            "διᾱκοσιοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "ducentésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:5eb070488286",
+          "variants": [
+            "διᾱκοσιάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "duzentos vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:184c53b0f19b",
+          "variants": [
+            "τριᾱκόσιοι, -αι, -α"
+          ],
+          "analyses": [
+            {
+              "meaning": "trezentos",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:9df2eda43318",
+          "variants": [
+            "τριᾱκοσιοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "tricentésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:7d10e00fd691",
+          "variants": [
+            "τριᾱκοσιάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "trezentos vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:80601fe66efe",
+          "variants": [
+            "τετρακόσιοι, -αι, -α"
+          ],
+          "analyses": [
+            {
+              "meaning": "quatrocentos",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:4f8bf89e5c6e",
+          "variants": [
+            "τετρακοσιοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quadringentésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d9d6139e6eb1",
+          "variants": [
+            "τετρακοσιάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "quatrocentos vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:ff6593d80202",
+          "variants": [
+            "πεντακόσιοι, -αι, -α"
+          ],
+          "analyses": [
+            {
+              "meaning": "quinhentos",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b129e24246a5",
+          "variants": [
+            "πεντακοσιοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quingentésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:c3c254303f5b",
+          "variants": [
+            "πεντακοσιάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "quinhentos vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:1f88e31f046d",
+          "variants": [
+            "ἑξακόσιοι, -αι, -α"
+          ],
+          "analyses": [
+            {
+              "meaning": "seiscentos",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:e3aecc9b39f8",
+          "variants": [
+            "ἑξακοσιοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "sexcentésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:575de6e4694b",
+          "variants": [
+            "ἑξακοσιάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "seiscentos vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:9c1c78d6e04a",
+          "variants": [
+            "ἑπτακόσιοι, -αι, -α"
+          ],
+          "analyses": [
+            {
+              "meaning": "setecentos",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b4d028f5fbfd",
+          "variants": [
+            "ἑπτακοσιοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "septingentésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:74c75b4af909",
+          "variants": [
+            "ἑπτακοσιάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "setecentos vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:24c8da7d8159",
+          "variants": [
+            "ὀκτακόσιοι, -αι, -α"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitocentos",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:efbf2714e9d1",
+          "variants": [
+            "ὀκτακοσιοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "octingentésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:b6c0bfc0f4e4",
+          "variants": [
+            "ὀκτακοσιάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "oitocentos vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:216c2e88d393",
+          "variants": [
+            "ἐνακόσιοι, -αι, -α"
+          ],
+          "analyses": [
+            {
+              "meaning": "novecentos",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a61c2c7c7152",
+          "variants": [
+            "ἐνακοσιοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "nongentésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d93652d370f0",
+          "variants": [
+            "ἐνακοσιάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "novecentos vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:3a0f6c4150c2",
+          "variants": [
+            "χί̄λιοι, -αι, -α"
+          ],
+          "analyses": [
+            {
+              "meaning": "mil",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:6c3983753d5a",
+          "variants": [
+            "χῑλιοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "milésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:4190d483e97f",
+          "variants": [
+            "χῑλιάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "mil vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:2f5b906aeff3",
+          "variants": [
+            "δισχί̄λιοι, -αι, -α"
+          ],
+          "analyses": [
+            {
+              "meaning": "dois mil",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8da4f3a87d82",
+          "variants": [
+            "δισχῑλιοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "segundo milésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:859e531c038e",
+          "variants": [
+            "δισχῑλιάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "duas mil vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:15da442f0bc2",
+          "variants": [
+            "τρισχί̄λιοι, -αι, -α"
+          ],
+          "analyses": [
+            {
+              "meaning": "três mil",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d14babeafe64",
+          "variants": [
+            "τρισχῑλιοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "terceiro milésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:2cbcadb5a468",
+          "variants": [
+            "τρισχῑλιάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "três mil vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:a57a0164030b",
+          "variants": [
+            "πεντακισχί̄λιοι, -αι, -α"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinco mil",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:7f7584a2c090",
+          "variants": [
+            "πεντακισχῑλιοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "quinto milésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:8489c1b12b54",
+          "variants": [
+            "πεντακισχῑλιάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "cinco mil vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d407f4dea5b3",
+          "variants": [
+            "μύ̄ριοι, -αι, -α"
+          ],
+          "analyses": [
+            {
+              "meaning": "dez mil",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:bd811fb336a9",
+          "variants": [
+            "μῡριοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "décimo milésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:28b843189d14",
+          "variants": [
+            "μῡριάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "dez mil vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:4dcf265a6ca4",
+          "variants": [
+            "δισμύ̄ριοι, -αι, -α"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte mil",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:1a4369f9b5f1",
+          "variants": [
+            "δισμῡριοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "vigésimo milésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:6ebe73a687ba",
+          "variants": [
+            "δισμῡριάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "vinte mil vezes",
+              "type": "adverbial"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:d840a32c2d77",
+          "variants": [
+            "δεκακισμύ̄ριοι, -αι, -α"
+          ],
+          "analyses": [
+            {
+              "meaning": "cem mil",
+              "type": "cardinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:e5531a374f7d",
+          "variants": [
+            "δεκάκισμῡριοστός"
+          ],
+          "analyses": [
+            {
+              "meaning": "centésimo milésimo",
+              "type": "ordinal"
+            }
+          ]
+        },
+        {
+          "id": "numeral:greek:fb99111283fc",
+          "variants": [
+            "δεκακισμῡριάκις"
+          ],
+          "analyses": [
+            {
+              "meaning": "cem mil vezes",
+              "type": "adverbial"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "terminology:grammar",
+      "kind": "terminology",
+      "category": "terminology",
+      "lemma": {
+        "greek": "γραμματικοὶ ὅροι",
+        "transliteration": "grammatikoì hóroi",
+        "gloss": "terminologia gramatical"
+      },
+      "items": [
+        {
+          "id": "terminology:grammar:c9103bc45c07",
+          "variants": [
+            "τὸ ὄνομα"
+          ],
+          "analyses": [
+            {
+              "meaning": "substantivo",
+              "topic": "classes de palavras"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:1a9a36b6a5dc",
+          "variants": [
+            "τὸ γένος"
+          ],
+          "analyses": [
+            {
+              "meaning": "gênero",
+              "topic": "gêneros"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:88a11e368c44",
+          "variants": [
+            "ἄρρεν/ἀρρενικόν"
+          ],
+          "analyses": [
+            {
+              "meaning": "masculino",
+              "topic": "gêneros"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:29181d99947c",
+          "variants": [
+            "θῆλυ/θηλυκόν"
+          ],
+          "analyses": [
+            {
+              "meaning": "feminino",
+              "topic": "gêneros"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:850a230a5bd7",
+          "variants": [
+            "οὐδέτερον"
+          ],
+          "analyses": [
+            {
+              "meaning": "neutro",
+              "topic": "gêneros"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:362d5e9ffcfd",
+          "variants": [
+            "ὁ ἀριθμός"
+          ],
+          "analyses": [
+            {
+              "meaning": "número",
+              "topic": "números gramaticais"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:476a61f9f7cf",
+          "variants": [
+            "ἑνικός"
+          ],
+          "analyses": [
+            {
+              "meaning": "singular",
+              "topic": "números gramaticais"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:9c19cef9c99e",
+          "variants": [
+            "δυϊκός"
+          ],
+          "analyses": [
+            {
+              "meaning": "dual",
+              "topic": "números gramaticais"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:f9d0609f3b62",
+          "variants": [
+            "πληθυντικός"
+          ],
+          "analyses": [
+            {
+              "meaning": "plural",
+              "topic": "números gramaticais"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:56cc89dffdfd",
+          "variants": [
+            "ἡ πτῶσις"
+          ],
+          "analyses": [
+            {
+              "meaning": "caso",
+              "topic": "casos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:c7bb9c78e568",
+          "variants": [
+            "εὐθεῖα/ὀρθή"
+          ],
+          "analyses": [
+            {
+              "meaning": "nominativo",
+              "topic": "casos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:6c04165ee31d",
+          "variants": [
+            "γενική"
+          ],
+          "analyses": [
+            {
+              "meaning": "genitivo",
+              "topic": "casos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:dda0723c8044",
+          "variants": [
+            "δοτική"
+          ],
+          "analyses": [
+            {
+              "meaning": "dativo",
+              "topic": "casos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:a37b43254f4f",
+          "variants": [
+            "αἰτιᾱτική"
+          ],
+          "analyses": [
+            {
+              "meaning": "acusativo",
+              "topic": "casos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:fcfcc7c02253",
+          "variants": [
+            "ἀπενεκτική"
+          ],
+          "analyses": [
+            {
+              "meaning": "ablativo",
+              "topic": "casos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:e52a64131b62",
+          "variants": [
+            "κλητική"
+          ],
+          "analyses": [
+            {
+              "meaning": "vocativo",
+              "topic": "casos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:718280aa4dab",
+          "variants": [
+            "ἡ κλίσις  (<- κλί̄νω)"
+          ],
+          "analyses": [
+            {
+              "meaning": "declinação",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:1ec663755a93",
+          "variants": [
+            "ὁ ἐνεργῶν"
+          ],
+          "analyses": [
+            {
+              "meaning": "sujeito",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:65ab8eaee582",
+          "variants": [
+            "ὁ ἐνεργούμενος"
+          ],
+          "analyses": [
+            {
+              "meaning": "objeto",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:1f6a5e3e19c8",
+          "variants": [
+            "τὸ ἐπίθετον"
+          ],
+          "analyses": [
+            {
+              "meaning": "adjetivo",
+              "topic": "classes de palavras"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:2cf846062b66",
+          "variants": [
+            "θετικός (βαθμός)"
+          ],
+          "analyses": [
+            {
+              "meaning": "grau positivo",
+              "topic": "graus"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:0d4dfea7bc6e",
+          "variants": [
+            "συγκριτικός (βαθμός)"
+          ],
+          "analyses": [
+            {
+              "meaning": "comparativo",
+              "topic": "graus"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:54f63e38473f",
+          "variants": [
+            "ὑπερθετικός (βαθμός)"
+          ],
+          "analyses": [
+            {
+              "meaning": "superlativo",
+              "topic": "graus"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:c4f9e2d815d3",
+          "variants": [
+            "τὸ ῥῆμα"
+          ],
+          "analyses": [
+            {
+              "meaning": "verbo",
+              "topic": "classes de palavras"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:43934513fe5e",
+          "variants": [
+            "ἡ ἔγκλισις"
+          ],
+          "analyses": [
+            {
+              "meaning": "modo",
+              "topic": "modos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:2ffdfac143ba",
+          "variants": [
+            "ὁριστική"
+          ],
+          "analyses": [
+            {
+              "meaning": "indicativo",
+              "topic": "modos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:a617d9d5ece4",
+          "variants": [
+            "προστακτική"
+          ],
+          "analyses": [
+            {
+              "meaning": "imperativo",
+              "topic": "modos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:9a88c87ae81d",
+          "variants": [
+            "εὐκτική"
+          ],
+          "analyses": [
+            {
+              "meaning": "optativo",
+              "topic": "modos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:28e9e241ec92",
+          "variants": [
+            "ἀπαρέμφατος"
+          ],
+          "analyses": [
+            {
+              "meaning": "infinitivo",
+              "topic": "modos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:fb726b683b71",
+          "variants": [
+            "ὑποτακτική"
+          ],
+          "analyses": [
+            {
+              "meaning": "subjuntivo",
+              "topic": "modos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:be9297948b2d",
+          "variants": [
+            "ἡ διάθεσις"
+          ],
+          "analyses": [
+            {
+              "meaning": "voz",
+              "topic": "vozes"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:868291f91b8f",
+          "variants": [
+            "ἡ ἐνέργεια (ἐνεργητική)"
+          ],
+          "analyses": [
+            {
+              "meaning": "ativo",
+              "topic": "vozes"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:b3a9b5f2aec0",
+          "variants": [
+            "ἡ μεσότης (μέση)"
+          ],
+          "analyses": [
+            {
+              "meaning": "médio",
+              "topic": "vozes"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:8578273a4181",
+          "variants": [
+            "τὸ πάθος (παθητική)"
+          ],
+          "analyses": [
+            {
+              "meaning": "passivo",
+              "topic": "vozes"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:e668034f9363",
+          "variants": [
+            "τὸ πρόσωπον"
+          ],
+          "analyses": [
+            {
+              "meaning": "pessoa",
+              "topic": "pessoas"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:fac534ec0541",
+          "variants": [
+            "πρῶτον"
+          ],
+          "analyses": [
+            {
+              "meaning": "primeira",
+              "topic": "pessoas"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:c4fcca141169",
+          "variants": [
+            "δεύτερον"
+          ],
+          "analyses": [
+            {
+              "meaning": "segunda",
+              "topic": "pessoas"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:35b75a97e89d",
+          "variants": [
+            "τρίτον"
+          ],
+          "analyses": [
+            {
+              "meaning": "terceira",
+              "topic": "pessoas"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:b044e19072e7",
+          "variants": [
+            "ὁ χρόνος"
+          ],
+          "analyses": [
+            {
+              "meaning": "tempo",
+              "topic": "tempos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:7dd84c39ecd6",
+          "variants": [
+            "ἐνἑστώς"
+          ],
+          "analyses": [
+            {
+              "meaning": "presente",
+              "topic": "tempos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:f65bc3316285",
+          "variants": [
+            "παρεληλυθώς/παρελθών"
+          ],
+          "analyses": [
+            {
+              "meaning": "passado",
+              "topic": "tempos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:97dfd5cdfba8",
+          "variants": [
+            "παρατατικός"
+          ],
+          "analyses": [
+            {
+              "meaning": "imperfeito",
+              "topic": "tempos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:5e0b9404d67f",
+          "variants": [
+            "παρακείμενος"
+          ],
+          "analyses": [
+            {
+              "meaning": "perfeito",
+              "topic": "tempos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:fdcbcf11b9b3",
+          "variants": [
+            "ὑπερσυντελικός"
+          ],
+          "analyses": [
+            {
+              "meaning": "mais-que-perfeito",
+              "topic": "tempos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:2de3d7ef3a09",
+          "variants": [
+            "ἀὅριστος"
+          ],
+          "analyses": [
+            {
+              "meaning": "aoristo",
+              "topic": "tempos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:a190d0eb7fa3",
+          "variants": [
+            "μέλλων"
+          ],
+          "analyses": [
+            {
+              "meaning": "futuro",
+              "topic": "tempos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:3996c5f71687",
+          "variants": [
+            "ἡ συζυγίᾱ"
+          ],
+          "analyses": [
+            {
+              "meaning": "conjugação",
+              "topic": "verbos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:6168700c9f84",
+          "variants": [
+            "ῥήματα περισπώμενα"
+          ],
+          "analyses": [
+            {
+              "meaning": "verbos contractos",
+              "topic": "verbos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:f8483c578943",
+          "variants": [
+            "ῥήματα εἰς -μι λήγοντα"
+          ],
+          "analyses": [
+            {
+              "meaning": "verbos em -μι",
+              "topic": "verbos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:723cc0d89cf7",
+          "variants": [
+            "ῥήματα μεταβατικά"
+          ],
+          "analyses": [
+            {
+              "meaning": "verbos transitivos",
+              "topic": "verbos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:5ab806da7b4e",
+          "variants": [
+            "ῥήματα ἀμετάβατα"
+          ],
+          "analyses": [
+            {
+              "meaning": "verbos intransitivos",
+              "topic": "verbos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:85f2cf4d7b50",
+          "variants": [
+            "ἡ μετοχή"
+          ],
+          "analyses": [
+            {
+              "meaning": "particípio",
+              "topic": "classes de palavras"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:a69a3ca543d2",
+          "variants": [
+            "τὸ ἄρθρον"
+          ],
+          "analyses": [
+            {
+              "meaning": "artigo",
+              "topic": "classes de palavras"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:b47a7cf20d29",
+          "variants": [
+            "ἡ ἀντωνυμίᾱ"
+          ],
+          "analyses": [
+            {
+              "meaning": "pronome",
+              "topic": "classes de palavras"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:d68d9db7f676",
+          "variants": [
+            "ἡ ἀναφορικὴ ἀντωνυμίᾱ"
+          ],
+          "analyses": [
+            {
+              "meaning": "relativo",
+              "topic": "pronomes"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:57a8b63fb99b",
+          "variants": [
+            "ἡ κλητικὴ ἀντωνυμίᾱ"
+          ],
+          "analyses": [
+            {
+              "meaning": "possessivo",
+              "topic": "pronomes"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:32a055ba6435",
+          "variants": [
+            "ἡ δεικτικὴ ἀντωνυμίᾱ"
+          ],
+          "analyses": [
+            {
+              "meaning": "demonstrativo",
+              "topic": "pronomes"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:fa0866247759",
+          "variants": [
+            "ἡ ἑρωτηματικὴ ἀντωνυμίᾱ"
+          ],
+          "analyses": [
+            {
+              "meaning": "interrogativo",
+              "topic": "pronomes"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:82ce4def5371",
+          "variants": [
+            "ἡ ἀὅριστος ἀντωνυμίᾱ"
+          ],
+          "analyses": [
+            {
+              "meaning": "indefinido",
+              "topic": "pronomes"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:d38d8bc388f6",
+          "variants": [
+            "ἡ προσωπικὴ ἀντωνυμίᾱ"
+          ],
+          "analyses": [
+            {
+              "meaning": "pessoal",
+              "topic": "pronomes"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:232f1993b7bb",
+          "variants": [
+            "ἡ αὐτοπαθητικὴ ἀντωνυμίᾱ"
+          ],
+          "analyses": [
+            {
+              "meaning": "reflexivo",
+              "topic": "pronomes"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:109c32aab643",
+          "variants": [
+            "ἡ ἀντιστροφικὴ ἀντωνυμίᾱ"
+          ],
+          "analyses": [
+            {
+              "meaning": "recíproco",
+              "topic": "pronomes"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:41d0237ea207",
+          "variants": [
+            "ἡ πρόθεσις"
+          ],
+          "analyses": [
+            {
+              "meaning": "preposição",
+              "topic": "classes de palavras"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:d8ee9f271b8e",
+          "variants": [
+            "ἡ ἐπίρρημα"
+          ],
+          "analyses": [
+            {
+              "meaning": "advérbio",
+              "topic": "classes de palavras"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:b48a95faf03d",
+          "variants": [
+            "ὁ σύνδεσμος"
+          ],
+          "analyses": [
+            {
+              "meaning": "conjunção",
+              "topic": "classes de palavras"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:4acbbd8d5a20",
+          "variants": [
+            "ἡ λέξις, ὁ λόγος"
+          ],
+          "analyses": [
+            {
+              "meaning": "palavra",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:69d426cecf31",
+          "variants": [
+            "ἡ συλλαβή"
+          ],
+          "analyses": [
+            {
+              "meaning": "sílaba",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:f858ee7fc4c3",
+          "variants": [
+            "τὸ στοιχεῖον, τὸ γράμμα"
+          ],
+          "analyses": [
+            {
+              "meaning": "letra",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:c24eb4353154",
+          "variants": [
+            "τὸ φωνῆεν"
+          ],
+          "analyses": [
+            {
+              "meaning": "vogal",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:de2e623131ca",
+          "variants": [
+            "μακρόν (μηκύ̄νεται)"
+          ],
+          "analyses": [
+            {
+              "meaning": "longo",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:4539783ec342",
+          "variants": [
+            "βραχύ (βραχύ̄νεται)"
+          ],
+          "analyses": [
+            {
+              "meaning": "breve",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:15139e46a0e7",
+          "variants": [
+            "κοινόν/δίχρονον"
+          ],
+          "analyses": [
+            {
+              "meaning": "comum",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:6f0b4e25bf1f",
+          "variants": [
+            "τὸ πνεῦμα"
+          ],
+          "analyses": [
+            {
+              "meaning": "aspiração",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:72bc7a564324",
+          "variants": [
+            "δασύ (δασύ̄νεται)"
+          ],
+          "analyses": [
+            {
+              "meaning": "áspero",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:e7dcc6e5e9eb",
+          "variants": [
+            "ψῑλόν (ψῑλοῦται)"
+          ],
+          "analyses": [
+            {
+              "meaning": "suave",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:6a83e956a2b3",
+          "variants": [
+            "τὸ σύμφωνον"
+          ],
+          "analyses": [
+            {
+              "meaning": "consoante",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:13b282d91897",
+          "variants": [
+            "δασύ (ἄφωνον)"
+          ],
+          "analyses": [
+            {
+              "meaning": "oclusiva aspirada",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:d4666d0cd062",
+          "variants": [
+            "ψῑλόν (ἄφωνον)"
+          ],
+          "analyses": [
+            {
+              "meaning": "oclusiva surda não aspirada",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:7473b1f847f8",
+          "variants": [
+            "μέσον (ἄφωνον)"
+          ],
+          "analyses": [
+            {
+              "meaning": "oclusiva sonora",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:06a72d501ea1",
+          "variants": [
+            "αἱ προσῳδίαι"
+          ],
+          "analyses": [
+            {
+              "meaning": "sinais diacríticos",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:3efe75c6f5b9",
+          "variants": [
+            "τόνος (τονόω)"
+          ],
+          "analyses": [
+            {
+              "meaning": "acento",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:bef1be2e5fde",
+          "variants": [
+            "ἡ ὀξεῖα"
+          ],
+          "analyses": [
+            {
+              "meaning": "agudo",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:a0a3ce7cdfd2",
+          "variants": [
+            "ἡ βαρεῖα"
+          ],
+          "analyses": [
+            {
+              "meaning": "grave",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:70598647b551",
+          "variants": [
+            "ἡ περισπωμένη/ὀξύβαρις"
+          ],
+          "analyses": [
+            {
+              "meaning": "circunflexo",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:86fb11a4fe02",
+          "variants": [
+            "ἡ συναἵρεσις, συναἵρεται"
+          ],
+          "analyses": [
+            {
+              "meaning": "contração",
+              "topic": "fonética e outros termos"
+            }
+          ]
+        },
+        {
+          "id": "terminology:grammar:40f027c68bf0",
+          "variants": [
+            "ἡ κρᾶσις, κεράννυται"
+          ],
+          "analyses": [
+            {
+              "meaning": "contração",
+              "topic": "fonética e outros termos"
             }
           ]
         }

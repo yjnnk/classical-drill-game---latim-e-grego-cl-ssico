@@ -55,12 +55,17 @@ export interface AdjectiveAnalysis {
   degree: GrammaticalDegree;
 }
 
+export type MatchingAnalysis =
+  | { kind: "numeral"; meaning: string; numeralType: "cardinal" | "ordinal" | "adverbial" }
+  | { kind: "terminology"; meaning: string; topic: string };
+
 export type Analysis =
   | NominalAnalysis
   | FiniteVerbAnalysis
   | InfinitiveAnalysis
   | ParticipleAnalysis
-  | AdjectiveAnalysis;
+  | AdjectiveAnalysis
+  | MatchingAnalysis;
 
 export interface DrillItem {
   id: string;
@@ -84,7 +89,8 @@ export interface DrillDeck {
 
 export type FilterField =
   | "grammaticalCase" | "number" | "gender"
-  | "form" | "tense" | "voice" | "mood" | "person" | "degree";
+  | "form" | "tense" | "voice" | "mood" | "person" | "degree"
+  | "numeralType" | "topic";
 
 export interface CatalogFilter {
   field: FilterField;
@@ -92,7 +98,7 @@ export interface CatalogFilter {
   options: Array<{ value: string; label: string }>;
 }
 
-export type CatalogCategory = "Substantivo" | "Pronome" | "Artigo" | "Verbo" | "Adjetivo" | "Particípio";
+export type CatalogCategory = "Substantivo" | "Pronome" | "Artigo" | "Verbo" | "Adjetivo" | "Particípio" | "Numeral" | "Terminologia";
 
 export interface CatalogParadigm {
   id: string;
@@ -136,6 +142,14 @@ interface GeneratedAdjectiveAnalysis {
   gender?: "masculine" | "feminine" | "neuter";
   degree: "positive" | "comparative" | "superlative";
 }
+interface GeneratedNumeralAnalysis {
+  meaning: string;
+  type: "cardinal" | "ordinal" | "adverbial";
+}
+interface GeneratedTerminologyAnalysis {
+  meaning: string;
+  topic: string;
+}
 interface GeneratedItem {
   id: string;
   variants: string[];
@@ -146,12 +160,14 @@ interface GeneratedItem {
     | GeneratedInfinitiveAnalysis
     | GeneratedParticipleAnalysis
     | GeneratedAdjectiveAnalysis
+    | GeneratedNumeralAnalysis
+    | GeneratedTerminologyAnalysis
   >;
 }
 interface GeneratedParadigm {
   id: string;
-  kind: "nominal" | "verb" | "adjective" | "participle";
-  category: "noun" | "pronoun" | "article" | "verb" | "adjective" | "participle";
+  kind: "nominal" | "verb" | "adjective" | "participle" | "numeral" | "terminology";
+  category: "noun" | "pronoun" | "article" | "verb" | "adjective" | "participle" | "numeral" | "terminology";
   declension?: "first" | "second" | "third";
   lemma: { greek: string; transliteration: string; gloss: string };
   items: GeneratedItem[];
@@ -180,7 +196,9 @@ const categoryLabels = {
   article: "Artigo",
   verb: "Verbo",
   adjective: "Adjetivo",
-  participle: "Particípio"
+  participle: "Particípio",
+  numeral: "Numeral",
+  terminology: "Terminologia"
 } as const;
 const optionLabels: Record<string, string> = {
   nominative: "nominativo", genitive: "genitivo", dative: "dativo",
@@ -195,7 +213,8 @@ const optionLabels: Record<string, string> = {
   optative: "optativo", imperative: "imperativo",
   first: "1ª pessoa", second: "2ª pessoa", third: "3ª pessoa",
   finite: "forma finita", infinitive: "infinitivo", participle: "particípio",
-  positive: "positivo", comparative: "comparativo", superlative: "superlativo"
+  positive: "positivo", comparative: "comparativo", superlative: "superlativo",
+  cardinal: "cardinal", ordinal: "ordinal", adverbial: "adverbial"
 };
 
 function filter(field: FilterField, label: string, values: string[]): CatalogFilter {
@@ -310,6 +329,48 @@ function participleParadigm(source: GeneratedParadigm): CatalogParadigm {
   };
 }
 
+function matchingParadigm(source: GeneratedParadigm): CatalogParadigm {
+  const kind = source.kind as "numeral" | "terminology";
+  if (kind === "numeral") {
+    const analyses = source.items.flatMap((item) => item.analyses as GeneratedNumeralAnalysis[]);
+    return {
+      id: source.id,
+      category: "Numeral",
+      lemma: source.lemma,
+      items: source.items.map((item) => ({
+        id: item.id,
+        form: item.variants.join(" / "),
+        forms: item.variants,
+        analyses: (item.analyses as GeneratedNumeralAnalysis[]).map((analysis) => ({
+          kind: "numeral" as const,
+          meaning: analysis.meaning,
+          numeralType: analysis.type
+        }))
+      })),
+      filters: [filter("numeralType", "Tipo", analyses.map(({ type }) => type))],
+      supportsArticleMode: false
+    };
+  }
+  const analyses = source.items.flatMap((item) => item.analyses as GeneratedTerminologyAnalysis[]);
+  return {
+    id: source.id,
+    category: categoryLabels[source.category],
+    lemma: source.lemma,
+    items: source.items.map((item) => ({
+      id: item.id,
+      form: item.variants.join(" / "),
+      forms: item.variants,
+      analyses: (item.analyses as GeneratedTerminologyAnalysis[]).map((analysis) => ({
+        kind: "terminology" as const,
+        meaning: analysis.meaning,
+        topic: analysis.topic
+      }))
+    })),
+    filters: [filter("topic", "Tema", analyses.map(({ topic }) => topic))],
+    supportsArticleMode: false
+  };
+}
+
 function verbParadigm(source: GeneratedParadigm): CatalogParadigm {
   const analyses = source.items.flatMap((item) =>
     item.analyses as Array<
@@ -395,9 +456,11 @@ export const catalogParadigms: CatalogParadigm[] = generatedCatalog.paradigms.ma
     ? nominalParadigm(source)
     : source.kind === "adjective"
       ? adjectiveParadigm(source)
-      : source.kind === "participle"
-        ? participleParadigm(source)
-        : verbParadigm(source)
+    : source.kind === "participle"
+      ? participleParadigm(source)
+      : source.kind === "numeral" || source.kind === "terminology"
+        ? matchingParadigm(source)
+      : verbParadigm(source)
 );
 
 function requireCatalogParadigm(id: string): CatalogParadigm {

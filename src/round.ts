@@ -130,6 +130,9 @@ function translated(dictionary: Record<string, string>, value: string): string {
 }
 
 export function formatAnalysis(analysis: Analysis): string {
+  if (analysis.kind === "numeral" || analysis.kind === "terminology") {
+    return analysis.meaning;
+  }
   if (analysis.kind === "nominal") {
     return [
       analysis.grammaticalCase,

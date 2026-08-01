@@ -98,6 +98,29 @@ async function writeKnownWorkbook(path, official = false) {
     [null, "αἰτιᾱτική", "λῡ́οντα", "λῡ́ουσαν", "λῦον", null, "λῡ́οντε", "λῡούσᾱ", "λῡ́οντε", null, "λῡ́οντας", "λῡούσᾱς", "λῡ́οντα"]
   ]);
 
+  const numbers = workbook.addWorksheet("Numbers");
+  numbers.addRows([
+    [null, "NUMBERS", null, "Κύ̄ριοι", "Τακτικοί", "Ἐπιρρηματικοί"],
+    [null, null, null, "Cardinal", "Ordinal", "Adverbial"],
+    ["αʹ", 1, null, "εἷς, μία, ἕν", "πρῶτος", "ἅπαξ"],
+    ["βʹ", 2, null, "δύο", "δεύτερος", "δίς"],
+    ["γʹ", 3, null, "τρεῖς, τρία", "τρίτος", "τρίς"]
+  ]);
+
+  const terms = workbook.addWorksheet("Greek-Latin-English terms");
+  terms.addRows([
+    ["GREEK-LATIN-ENGLISH GRAMMAR TERMS"],
+    [null, "τὸ ὄνομα", "nōmen", "noun"],
+    [null, "ἡ πτῶσις", "cāsus", "case"],
+    [null, "ὀρθή", "nōminātīvus", "nominative"],
+    [null, "ἡ ἔγκλισις", "modus", "mood"],
+    [null, "ὁριστική", "indicātīvus", "indicative"],
+    [null, "ἡ διάθεσις", "vōx", "voice"],
+    [null, "ἐνεργητική", "āctīva", "active"],
+    [null, "ὁ χρόνος", "tempus", "tense"],
+    [null, "ἐνἑστώς", "praesēns", "present"]
+  ]);
+
   const verbs = workbook.addWorksheet("λῡ́ω");
   verbs.addRows([
     [null, "λύ̄ω \"solvō\" loosen"],
@@ -185,7 +208,7 @@ test("a CLI gera um catálogo versionado com κρήνη e λῡ́ω", async () 
   assert.equal(catalog.language, "grc");
   assert.deepEqual(
     catalog.paradigms.map(({ category }) => category).sort(),
-    ["adjective", "adjective", "article", "noun", "noun", "noun", "participle", "pronoun", "verb", "verb"]
+    ["adjective", "adjective", "article", "noun", "noun", "noun", "numeral", "participle", "pronoun", "terminology", "verb", "verb"]
   );
   const kalos = catalog.paradigms.find(({ category }) => category === "adjective");
   assert.ok(kalos.items.some(({ analyses }) => analyses.some(({ case: grammaticalCase, number, gender, degree }) =>
@@ -199,6 +222,14 @@ test("a CLI gera um catálogo versionado com κρήνη e λῡ́ω", async () 
   assert.ok(luon.items.some(({ analyses }) => analyses.some(({ case: grammaticalCase, number, gender, tense, voice }) =>
     grammaticalCase === "dative" && number === "plural" && gender === "neuter" && tense === "present" && voice === "active"
   )));
+  const numerals = catalog.paradigms.find(({ category }) => category === "numeral");
+  assert.ok(numerals.items.some(({ variants, analyses }) =>
+    variants[0] === "δύο" && analyses[0].meaning === "dois" && analyses[0].type === "cardinal"
+  ));
+  const terminology = catalog.paradigms.find(({ category }) => category === "terminology");
+  assert.ok(terminology.items.some(({ variants, analyses }) =>
+    variants[0] === "ὁριστική" && analyses[0].meaning === "indicativo" && analyses[0].topic === "modos"
+  ));
 
   const krene = catalog.paradigms.find(({ id }) => id === "noun:krene");
   const genitiveDual = krene.items.find(
@@ -331,15 +362,37 @@ test("o catálogo distribuído contém todos os paradigmas validados", async () 
   const verbs = catalog.paradigms.filter(({ category }) => category === "verb");
   const adjectives = catalog.paradigms.filter(({ category }) => category === "adjective");
   const participles = catalog.paradigms.filter(({ category }) => category === "participle");
+  const numerals = catalog.paradigms.filter(({ category }) => category === "numeral");
+  const terminology = catalog.paradigms.filter(({ category }) => category === "terminology");
 
   assert.equal(verbs.length, 23);
   assert.equal(adjectives.length, 29);
   assert.equal(participles.length, 7);
+  assert.equal(numerals.length, 1);
+  assert.equal(numerals[0].items.length, 345);
+  assert.equal(terminology.length, 1);
+  assert.equal(terminology[0].items.length, 86);
+  assert.deepEqual(
+    new Set(numerals[0].items.flatMap(({ analyses }) => analyses.map(({ type }) => type))),
+    new Set(["cardinal", "ordinal", "adverbial"])
+  );
+  assert.ok(numerals[0].items.some(({ variants, analyses }) =>
+    variants[0].startsWith("δισχῑλιοστός") && analyses[0].meaning === "segundo milésimo"
+  ));
+  const terminologyAnalyses = terminology[0].items.flatMap(({ analyses }) => analyses);
+  for (const topic of ["casos", "tempos", "vozes", "modos", "classes de palavras"]) {
+    assert.ok(terminologyAnalyses.some((analysis) => analysis.topic === topic), topic);
+  }
+  for (const meaning of ["nominativo", "presente", "ativo", "indicativo", "substantivo"]) {
+    assert.ok(terminologyAnalyses.some((analysis) => analysis.meaning === meaning), meaning);
+  }
   assert.ok(adjectives.some(({ lemma }) => lemma.gloss === "mau"));
   assert.ok([...adjectives, ...participles].every(({ lemma }) =>
     !/\p{Script=Greek}/u.test(lemma.transliteration)
   ));
-  assert.deepEqual(catalog.source.sheets.slice(2, 4), ["Adjectives", "Participles"]);
+  for (const sheet of ["Greek-Latin-English terms", "Numbers", "Adjectives", "Participles"]) {
+    assert.ok(catalog.source.sheets.includes(sheet), sheet);
+  }
   for (const id of [
     "verb:luo",
     "verb:timao",
