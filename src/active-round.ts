@@ -15,8 +15,17 @@ export function loadActiveRound(): ActiveRound | null {
     const value = localStorage.getItem(storageKey);
     if (!value) return null;
     const parsed = JSON.parse(value) as ActiveRound;
-    return parsed.version === 1 && parsed.snapshot?.version === 1 ? parsed : null;
+    const valid = parsed.version === 1 && parsed.snapshot?.version === 1 &&
+      parsed.deck && Array.isArray(parsed.deck.items) && typeof parsed.deck.title === "string" &&
+      parsed.config && ["analysis", "production", "mixed"].includes(parsed.config.direction) &&
+      ["all", "limited"].includes(parsed.config.coverage) && Array.isArray(parsed.snapshot.eligible) &&
+      Array.isArray(parsed.snapshot.queue) && Array.isArray(parsed.snapshot.masteredIds) &&
+      Number.isInteger(parsed.snapshot.total) && parsed.snapshot.total >= 0;
+    if (valid) return parsed;
+    localStorage.removeItem(storageKey);
+    return null;
   } catch {
+    localStorage.removeItem(storageKey);
     return null;
   }
 }

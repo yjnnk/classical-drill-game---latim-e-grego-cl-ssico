@@ -20,10 +20,21 @@ export function parseBackup(text: string): BackupFile {
   if (value.catalogVersion !== catalogVersion) throw new Error("Este backup usa outra versão do catálogo.");
   if (!Array.isArray(value.decks) || !value.preferences) throw new Error("Backup incompleto.");
   const validPreferences = typeof value.preferences.showTransliteration === "boolean" && typeof value.preferences.showTranslation === "boolean";
-  const validDecks = value.decks.every((deck) =>
-    deck && typeof deck.id === "string" && typeof deck.name === "string" && Array.isArray(deck.blocks) &&
-    deck.blocks.every((block) => catalogParadigms.some(({ id }) => id === block.paradigmId))
-  );
+  const deckIds = new Set<string>();
+  const blockIds = new Set<string>();
+  const validDecks = value.decks.every((deck) => {
+    if (!deck || typeof deck.id !== "string" || deckIds.has(deck.id) || typeof deck.name !== "string" ||
+      !["analysis", "production", "mixed"].includes(deck.direction) || !["all", "limited"].includes(deck.coverage) ||
+      !Number.isInteger(deck.quantity) || deck.quantity < 1 || !Array.isArray(deck.blocks)) return false;
+    deckIds.add(deck.id);
+    return deck.blocks.every((block) => {
+      if (!block || typeof block.id !== "string" || blockIds.has(block.id) || typeof block.selected !== "object" ||
+        typeof block.showTransliteration !== "boolean" || !["with", "without"].includes(block.articleMode) ||
+        !catalogParadigms.some(({ id }) => id === block.paradigmId)) return false;
+      blockIds.add(block.id);
+      return Object.values(block.selected).every((selection) => Array.isArray(selection) && selection.every((item) => typeof item === "string"));
+    });
+  });
   if (!validPreferences || !validDecks) throw new Error("O backup contém dados inválidos.");
   return value as BackupFile;
 }

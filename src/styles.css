@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Noto Serif Local";
+  src: url("/fonts/NotoSerif-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   --paper: #fffdf7;
   --line: rgb(55 79 66 / 18%);
@@ -541,7 +549,7 @@ legend {
 .greek-form {
   margin: 0;
   color: #192b22;
-  font-family: "Noto Serif", "Noto Serif Greek", Georgia, serif;
+  font-family: "Noto Serif Local", Georgia, serif;
   font-size: clamp(3rem, 13vw, 6.5rem);
   line-height: 1.2;
 }
