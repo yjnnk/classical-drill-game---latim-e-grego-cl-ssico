@@ -86,7 +86,7 @@ export function createLatinApp(
       ?.addEventListener("click", () =>
         renderEditor({
           id: createId("latin-deck"),
-          name: "",
+          name: "baralho customizado",
           blocks: [],
           direction: "analysis",
           coverage: "all",

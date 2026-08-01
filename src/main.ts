@@ -193,7 +193,7 @@ function renderHome(): void {
     ?.addEventListener("click", () =>
       renderEditor({
         id: createId("deck"),
-        name: "",
+        name: "baralho customizado",
         blocks: [],
         direction: "analysis",
         coverage: "all",

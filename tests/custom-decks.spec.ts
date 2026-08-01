@@ -11,6 +11,9 @@ test.beforeEach(async ({ page }) => {
 test("o estudante pesquisa, filtra e salva um baralho", async ({ page }) => {
   await page.getByRole("checkbox", { name: "Mostrar transliteração" }).check();
   await page.getByRole("button", { name: "Criar baralho" }).click();
+  await expect(page.getByLabel("Nome do baralho")).toHaveValue(
+    "baralho customizado",
+  );
   await page.getByLabel("Nome do baralho").fill("Primeira declinação");
   await page.getByRole("button", { name: "Adicionar conteúdo" }).click();
 

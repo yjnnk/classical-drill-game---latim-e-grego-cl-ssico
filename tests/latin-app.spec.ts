@@ -74,6 +74,25 @@ test("mantém legíveis os textos latinos quando o sistema usa tema escuro", asy
   );
 });
 
+test("editor latino mantém a superfície clara e sugere um nome", async ({
+  page,
+}) => {
+  await page.emulateMedia({ colorScheme: "dark" });
+  await openLatin(page);
+  await page.getByRole("button", { name: "Criar baralho" }).click();
+  await expect(page.getByLabel("Nome do baralho")).toHaveValue(
+    "baralho customizado",
+  );
+  await expect(page.locator(".editor-footer")).toHaveCSS(
+    "background-color",
+    "rgba(245, 238, 227, 0.96)",
+  );
+  await expect(page.getByRole("heading", { name: "Como praticar" })).toHaveCSS(
+    "color",
+    "rgb(64, 26, 33)",
+  );
+});
+
 test("permite repetir uma sessão latina concluída com progresso zerado", async ({
   page,
 }) => {

@@ -851,9 +851,23 @@ html[data-language="latin"] .form-context {
 html[data-language="latin"] .preference-panel h2,
 html[data-language="latin"] .backup-panel h2,
 html[data-language="latin"] .active-round h2,
+html[data-language="latin"] .round-settings h2,
 html[data-language="latin"] .latin-form,
 html[data-language="latin"] .analysis-prompt {
   color: #401a21;
+}
+
+html[data-language="latin"] .editor-footer {
+  background: rgb(245 238 227 / 96%);
+}
+
+html[data-language="latin"] .editor-title p,
+html[data-language="latin"] .name-field,
+html[data-language="latin"] legend,
+html[data-language="latin"] .quantity-field,
+html[data-language="latin"] .editor-footer p,
+html[data-language="latin"] .editor-footer .quiet {
+  color: #5e5049;
 }
 
 .latin-form {
