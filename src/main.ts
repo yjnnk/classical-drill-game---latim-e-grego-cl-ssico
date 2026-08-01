@@ -35,12 +35,18 @@ import {
 } from "./backup";
 import { migrateGreekLegacyStorage, type StudyLanguage } from "./language";
 import { createLatinApp } from "./latin-app";
+import {
+  applyTheme,
+  loadTheme,
+  saveTheme,
+} from "./theme";
 import "./styles.css";
 
 const root = document.querySelector<HTMLElement>("#app");
 if (!root) throw new Error("Elemento raiz da aplicação não encontrado.");
 const app = root;
 let currentLanguage: StudyLanguage | null = null;
+applyTheme(loadTheme());
 
 function renderLanguageSelector(): void {
   currentLanguage = null;
@@ -109,6 +115,7 @@ function renderHome(): void {
   document.onkeydown = null;
   const saved = loadDecks();
   const preferences = loadPreferences();
+  const theme = loadTheme();
   const active = loadActiveRound();
   app.innerHTML = `
     <section class="home" aria-labelledby="page-title">
@@ -118,7 +125,7 @@ function renderHome(): void {
           <h1 id="page-title">Grego clássico</h1>
           <p class="intro">Monte recortes precisos do que deseja recordar. Tudo fica neste aparelho.</p>
         </div>
-        <div class="header-actions"><button class="quiet" type="button" data-action="switch-language">Trocar idioma</button><button class="primary" type="button" data-action="create" ${active ? "disabled" : ""}>Criar baralho</button></div>
+        <div class="header-actions"><button class="quiet" type="button" data-action="switch-language">Trocar idioma</button><button class="quiet" type="button" data-action="toggle-theme">Usar tema ${theme === "dark" ? "claro" : "escuro"}</button><button class="primary" type="button" data-action="create" ${active ? "disabled" : ""}>Criar baralho</button></div>
       </div>
 
       ${active ? `<section class="active-round" aria-labelledby="active-round-title"><div><p class="deck-label">Rodada em andamento</p><h2 id="active-round-title">${escapeHtml(active.deck.title)}</h2><p>Progresso: ${active.snapshot.masteredIds.length} de ${active.snapshot.total}</p></div><div class="card-actions"><button class="primary" data-action="resume">Retomar rodada</button><button class="quiet danger" data-action="abandon">Abandonar rodada</button></div></section>` : ""}
@@ -140,6 +147,12 @@ function renderHome(): void {
   app
     .querySelector<HTMLButtonElement>("[data-action='switch-language']")
     ?.addEventListener("click", renderLanguageSelector);
+  app
+    .querySelector<HTMLButtonElement>("[data-action='toggle-theme']")
+    ?.addEventListener("click", () => {
+      saveTheme(theme === "dark" ? "light" : "dark");
+      renderHome();
+    });
 
   app
     .querySelector<HTMLButtonElement>("[data-action='resume']")
