@@ -146,16 +146,17 @@ test("permite repetir uma sessão latina concluída com progresso zerado", async
     await page.getByRole("button", { name: "Continuar" }).click();
   }
   await expect(page.getByText("Rodada concluída")).toBeVisible();
+  await expect(page.getByText("Sessão 1")).toBeVisible();
   await page.getByRole("button", { name: "Repetir sessão" }).click();
   await expect(page.getByText("Progresso: 0 de 12")).toBeVisible();
-  await expect(page.getByText(/Repetição \d/)).toHaveCount(0);
+  await expect(page.getByText(/Sessão \d/)).toHaveCount(0);
   await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
 
   for (let index = 0; index < 12; index += 1) {
     await answerPortaCorrectly(page);
     await page.getByRole("button", { name: "Continuar" }).click();
   }
-  await expect(page.getByText("Repetição 1")).toBeVisible();
+  await expect(page.getByText("Sessão 2")).toBeVisible();
 });
 
 test("backup latino aparece ao fim com peso visual reduzido", async ({

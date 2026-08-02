@@ -676,7 +676,7 @@ function startRound(
   deck: DrillDeck,
   config: RoundConfig = { direction: "analysis", coverage: "all" },
   restoredRound?: DrillRound,
-  repetitionCount = 0,
+  sessionCount = 1,
 ): void {
   if (!restoredRound && loadActiveRound()) return renderHome();
   const round = restoredRound ?? new DrillRound(deck.items, config);
@@ -769,11 +769,11 @@ function startRound(
   function renderComplete(): void {
     document.onkeydown = null;
     clearActiveRound();
-    app.innerHTML = `<section class="complete"><p class="completion-mark">✓</p><p class="eyebrow">Rodada concluída</p><h1>Você reconheceu todas as formas.</h1>${repetitionCount ? `<p class="repetition-count">Repetição ${repetitionCount}</p>` : ""}<div class="completion-actions"><button class="primary" data-action="repeat">Repetir sessão</button><button class="quiet" data-action="home">Voltar ao início</button></div></section>`;
+    app.innerHTML = `<section class="complete"><p class="completion-mark">✓</p><p class="eyebrow">Rodada concluída</p><h1>Você reconheceu todas as formas.</h1><p class="session-count">Sessão ${sessionCount}</p><div class="completion-actions"><button class="primary" data-action="repeat">Repetir sessão</button><button class="quiet" data-action="home">Voltar ao início</button></div></section>`;
     app
       .querySelector<HTMLButtonElement>("[data-action='repeat']")
       ?.addEventListener("click", () =>
-        startRound(deck, config, undefined, repetitionCount + 1),
+        startRound(deck, config, undefined, sessionCount + 1),
       );
     app
       .querySelector<HTMLButtonElement>("[data-action='home']")
