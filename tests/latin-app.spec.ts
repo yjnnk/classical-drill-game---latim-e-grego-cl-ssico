@@ -68,11 +68,11 @@ test("destaca o separador entre análises sincréticas", async ({ page }) => {
   expect(found).toBe(true);
 });
 
-test("mantém legíveis os textos latinos quando o sistema usa tema escuro", async ({
+test("mantém legíveis os textos latinos no tema claro", async ({
   page,
 }) => {
-  await page.emulateMedia({ colorScheme: "dark" });
   await openLatin(page);
+  await page.getByRole("button", { name: "Usar tema claro" }).click();
   await expect(page.locator(".intro")).toHaveText(
     "Monte recortes precisos do que deseja recordar. Tudo fica neste aparelho.",
   );
@@ -98,8 +98,8 @@ test("mantém legíveis os textos latinos quando o sistema usa tema escuro", asy
 test("editor latino mantém a superfície clara e sugere um nome", async ({
   page,
 }) => {
-  await page.emulateMedia({ colorScheme: "dark" });
   await openLatin(page);
+  await page.getByRole("button", { name: "Usar tema claro" }).click();
   await page.getByRole("button", { name: "Criar baralho" }).click();
   await expect(page.getByLabel("Nome do baralho")).toHaveValue(
     "baralho customizado",
@@ -111,6 +111,25 @@ test("editor latino mantém a superfície clara e sugere um nome", async ({
   await expect(page.getByRole("heading", { name: "Como praticar" })).toHaveCSS(
     "color",
     "rgb(64, 26, 33)",
+  );
+});
+
+test("mantém espaço entre criar baralho e o primeiro card", async ({
+  page,
+}) => {
+  await openLatin(page);
+
+  const header = page.locator(".title-row");
+  const firstCard = page.locator(".preference-panel");
+  const [headerBox, cardBox] = await Promise.all([
+    header.boundingBox(),
+    firstCard.boundingBox(),
+  ]);
+
+  expect(headerBox).not.toBeNull();
+  expect(cardBox).not.toBeNull();
+  expect(cardBox!.y - (headerBox!.y + headerBox!.height)).toBeGreaterThanOrEqual(
+    32,
   );
 });
 
