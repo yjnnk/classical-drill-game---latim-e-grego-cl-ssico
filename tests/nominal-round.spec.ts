@@ -191,7 +191,7 @@ test("a rodada termina depois de acertar todas as formas", async ({ page }) => {
   await expect(page.getByText("Sem nota e sem pressa.")).toHaveCount(0);
   await page.getByRole("button", { name: "Repetir sessão" }).click();
   await expect(page.getByText("Progresso: 0 de 8")).toBeVisible();
-  await expect(page.getByText("Repetição 1")).toBeVisible();
+  await expect(page.getByText(/Repetição \d/)).toHaveCount(0);
   await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
 
   for (let index = 0; index < 8; index += 1) {
@@ -200,7 +200,14 @@ test("a rodada termina depois de acertar todas as formas", async ({ page }) => {
   }
   await expect(page.getByText("Repetição 1")).toBeVisible();
   await page.getByRole("button", { name: "Repetir sessão" }).click();
+  await expect(page.getByText(/Repetição \d/)).toHaveCount(0);
+
+  for (let index = 0; index < 8; index += 1) {
+    await answerCurrentCorrectly(page);
+    await page.getByRole("button", { name: "Continuar" }).click();
+  }
   await expect(page.getByText("Repetição 2")).toBeVisible();
+  await page.getByRole("button", { name: "Repetir sessão" }).click();
 
   await page.getByRole("button", { name: "Sair" }).click();
   await page.getByRole("button", { name: "Retomar rodada" }).click();
