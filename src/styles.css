@@ -529,6 +529,19 @@ legend {
   margin: 0;
 }
 
+.round-status {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.round-status > span,
+.repetition-count {
+  color: #718078;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
 .quiet {
   padding: 0.6rem 0;
   color: #526158;
@@ -729,6 +742,10 @@ legend {
   font-weight: 800;
 }
 
+.repetition-count {
+  margin: 0 0 1.25rem;
+}
+
 @media (max-width: 36rem) {
   .title-row,
   .editor-title,
@@ -874,6 +891,21 @@ html[data-language="latin"] .quantity-field,
 html[data-language="latin"] .editor-footer p,
 html[data-language="latin"] .editor-footer .quiet {
   color: #5e5049;
+}
+
+html .backup-panel.backup-secondary {
+  margin-top: 3.5rem;
+  padding: 0.9rem 1rem;
+  border-style: dashed;
+  background: transparent;
+  box-shadow: none;
+}
+
+html .backup-panel.backup-secondary h2 {
+  margin: 0;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 650;
 }
 
 .latin-form {

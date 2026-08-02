@@ -129,11 +129,10 @@ function renderHome(): void {
         <label class="filter-option"><input type="checkbox" data-preference="showTranslation" ${preferences.showTranslation ? "checked" : ""}><span>Mostrar tradução</span></label>
       </section>
 
-      <section class="backup-panel" aria-labelledby="backup-title"><div><p class="deck-label">Dados locais</p><h2 id="backup-title">Backup</h2></div><div class="card-actions"><button class="quiet" data-action="export">Exportar JSON</button><label class="quiet file-button">Importar JSON<input type="file" accept="application/json,.json" data-action="import"></label></div><div class="import-preview" aria-live="polite"></div></section>
-
       ${saved.length ? `<h2 class="section-title">Meus baralhos</h2><div class="deck-list">${saved.map(savedDeckCard).join("")}</div>` : ""}
       <h2 class="section-title">Modelos para começar</h2>
       <div class="deck-list">${builtInDecks.map(builtInDeckCard).join("")}</div>
+      <section class="backup-panel backup-secondary" aria-labelledby="backup-title"><div><p class="deck-label">Dados locais</p><h2 id="backup-title">Backup</h2></div><div class="card-actions"><button class="quiet" data-action="export">Exportar JSON</button><label class="quiet file-button">Importar JSON<input type="file" accept="application/json,.json" data-action="import"></label></div><div class="import-preview" aria-live="polite"></div></section>
     </section>
   `;
 
@@ -664,6 +663,7 @@ function startRound(
   deck: DrillDeck,
   config: RoundConfig = { direction: "analysis", coverage: "all" },
   restoredRound?: DrillRound,
+  repetitionCount = 0,
 ): void {
   if (!restoredRound && loadActiveRound()) return renderHome();
   const round = restoredRound ?? new DrillRound(deck.items, config);
@@ -684,7 +684,7 @@ function startRound(
     persist();
     const isAnalysis = question.direction === "analysis";
     app.innerHTML = `<section class="round" aria-labelledby="question-title">
-      <header class="round-header"><button class="quiet" data-action="exit">Sair</button><p aria-live="polite">Progresso: ${round.masteredCount} de ${round.total}</p></header>
+      <header class="round-header"><button class="quiet" data-action="exit">Sair</button><div class="round-status">${repetitionCount ? `<span>Repetição ${repetitionCount}</span>` : ""}<p aria-live="polite">Progresso: ${round.masteredCount} de ${round.total}</p></div></header>
       <div class="prompt"><p id="question-title">${isAnalysis ? "Qual é a análise desta forma?" : "Qual forma corresponde a esta análise?"}</p><p class="${isAnalysis ? "greek-form" : "analysis-prompt"}" ${isAnalysis ? 'lang="grc"' : ""}>${question.prompt}</p>${question.context ? `<p class="form-context">Lema: <span lang="grc">${question.context}</span>${question.item.contextSupport ? ` · ${question.item.contextSupport}` : ""}</p>` : ""}</div>
       <div class="options" role="group" aria-label="Alternativas">${question.choices.map((choice, index) => `<button class="option"><span class="option-number">${index + 1}</span><span>${choiceLabelHtml(choice.label)}</span></button>`).join("")}</div><div class="feedback" aria-live="polite"></div></section>`;
     app
@@ -756,10 +756,12 @@ function startRound(
   function renderComplete(): void {
     document.onkeydown = null;
     clearActiveRound();
-    app.innerHTML = `<section class="complete"><p class="completion-mark">✓</p><p class="eyebrow">Rodada concluída</p><h1>Você reconheceu todas as formas.</h1><div class="completion-actions"><button class="primary" data-action="repeat">Repetir sessão</button><button class="quiet" data-action="home">Voltar ao início</button></div></section>`;
+    app.innerHTML = `<section class="complete"><p class="completion-mark">✓</p><p class="eyebrow">Rodada concluída</p><h1>Você reconheceu todas as formas.</h1>${repetitionCount ? `<p class="repetition-count">Repetição ${repetitionCount}</p>` : ""}<div class="completion-actions"><button class="primary" data-action="repeat">Repetir sessão</button><button class="quiet" data-action="home">Voltar ao início</button></div></section>`;
     app
       .querySelector<HTMLButtonElement>("[data-action='repeat']")
-      ?.addEventListener("click", () => startRound(deck, config));
+      ?.addEventListener("click", () =>
+        startRound(deck, config, undefined, repetitionCount + 1),
+      );
     app
       .querySelector<HTMLButtonElement>("[data-action='home']")
       ?.addEventListener("click", renderHome);

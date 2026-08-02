@@ -129,7 +129,30 @@ test("permite repetir uma sessão latina concluída com progresso zerado", async
   await expect(page.getByText("Rodada concluída")).toBeVisible();
   await page.getByRole("button", { name: "Repetir sessão" }).click();
   await expect(page.getByText("Progresso: 0 de 12")).toBeVisible();
+  await expect(page.getByText("Repetição 1")).toBeVisible();
   await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
+});
+
+test("backup latino aparece ao fim com peso visual reduzido", async ({
+  page,
+}) => {
+  await openLatin(page);
+
+  const backup = page.locator(".backup-panel");
+  const models = page.locator(".deck-list").last();
+  expect(
+    await models.evaluate(
+      (element, backupElement) =>
+        Boolean(
+          backupElement &&
+            element.compareDocumentPosition(backupElement) &
+              Node.DOCUMENT_POSITION_FOLLOWING,
+        ),
+      await backup.elementHandle(),
+    ),
+  ).toBe(true);
+  await expect(backup).toHaveCSS("border-top-style", "dashed");
+  await expect(backup).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
 });
 
 test("catálogo latino contém substantivos, pronomes, adjetivos e verbos curados", async ({
