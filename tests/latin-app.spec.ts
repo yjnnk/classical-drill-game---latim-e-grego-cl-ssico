@@ -40,7 +40,10 @@ test("porta oferece uma rodada latina completa com três alternativas", async ({
     .filter({ has: page.getByRole("heading", { name: "porta", exact: true }) });
   await model.getByRole("button", { name: "Iniciar rodada" }).click();
 
-  await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
+  await expect(page.getByText("Qual é a análise desta forma?")).toHaveCount(0);
+  await expect(
+    page.getByRole("region", { name: "Qual é a análise desta forma?" }),
+  ).toBeVisible();
   await expect(page.locator(".latin-form")).toHaveAttribute("lang", "la");
   await expect(
     page.getByRole("group", { name: "Alternativas" }).getByRole("button"),
@@ -85,10 +88,6 @@ test("mantém legíveis os textos latinos no tema claro", async ({
     .getByRole("article")
     .filter({ has: page.getByRole("heading", { name: "porta", exact: true }) });
   await model.getByRole("button", { name: "Iniciar rodada" }).click();
-  await expect(page.getByText("Qual é a análise desta forma?")).toHaveCSS(
-    "color",
-    "rgb(94, 80, 73)",
-  );
   await expect(page.locator(".latin-form")).toHaveCSS(
     "color",
     "rgb(64, 26, 33)",
@@ -150,7 +149,7 @@ test("permite repetir uma sessão latina concluída com progresso zerado", async
   await page.getByRole("button", { name: "Repetir sessão" }).click();
   await expect(page.getByText("Progresso: 0 de 12")).toBeVisible();
   await expect(page.getByText(/Sessão \d/)).toHaveCount(0);
-  await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
+  await expect(page.getByText("Qual é a análise desta forma?")).toHaveCount(0);
 
   for (let index = 0; index < 12; index += 1) {
     await answerPortaCorrectly(page);
@@ -344,7 +343,8 @@ test("oferece produção assistida e alterna as direções no modelo misto", asy
   await page.getByRole("button", { name: "Iniciar rodada" }).click();
   await expect(
     page.getByText("Qual forma corresponde a esta análise?"),
-  ).toBeVisible();
+  ).toHaveCount(0);
+  await expect(page.locator(".analysis-prompt")).toBeVisible();
   await page.getByRole("button", { name: "Sair" }).click();
   await page.getByRole("button", { name: "Abandonar rodada" }).click();
 
@@ -352,7 +352,8 @@ test("oferece produção assistida e alterna as direções no modelo misto", asy
     has: page.getByRole("heading", { name: "porta + rēx + laudō + hic" }),
   });
   await mixed.getByRole("button", { name: "Iniciar rodada" }).click();
-  await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
+  await expect(page.getByText("Qual é a análise desta forma?")).toHaveCount(0);
+  await expect(page.locator(".latin-form")).toBeVisible();
   await page
     .getByRole("group", { name: "Alternativas" })
     .getByRole("button")
@@ -361,7 +362,8 @@ test("oferece produção assistida e alterna as direções no modelo misto", asy
   await page.getByRole("button", { name: "Continuar" }).click();
   await expect(
     page.getByText("Qual forma corresponde a esta análise?"),
-  ).toBeVisible();
+  ).toHaveCount(0);
+  await expect(page.locator(".analysis-prompt")).toBeVisible();
 });
 
 test("recusa um backup grego na área latina", async ({ page }) => {

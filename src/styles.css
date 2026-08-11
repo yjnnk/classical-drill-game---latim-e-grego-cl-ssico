@@ -523,6 +523,7 @@ legend {
   display: grid;
   grid-template-rows: auto 1fr auto;
   align-items: center;
+  padding-block: clamp(1rem, 4vh, 2.5rem);
 }
 
 .round-header {
@@ -551,13 +552,8 @@ legend {
 }
 
 .prompt {
-  padding: 3rem 0;
+  padding: 1.5rem 0;
   text-align: center;
-}
-
-.prompt > p:first-child {
-  color: #657169;
-  font-size: 1rem;
 }
 
 .greek-form {
@@ -807,7 +803,7 @@ html[data-theme="dark"] {
 html[data-theme="dark"] body { background: #151c18; }
 html[data-theme="dark"] .deck-card, html[data-theme="dark"] .preference-panel, html[data-theme="dark"] .backup-panel, html[data-theme="dark"] .active-round, html[data-theme="dark"] .content-block, html[data-theme="dark"] .catalog, html[data-theme="dark"] .round-settings, html[data-theme="dark"] .option, html[data-theme="dark"] input[type="text"], html[data-theme="dark"] .name-field input, html[data-theme="dark"] .search, html[data-theme="dark"] .paradigm-form { background: #202923; color: #f4f7f4; }
 html[data-theme="dark"] h1, html[data-theme="dark"] .deck-card h2, html[data-theme="dark"] .deck-card h3, html[data-theme="dark"] .catalog-card h3, html[data-theme="dark"] .block-header h2, html[data-theme="dark"] .catalog h2, html[data-theme="dark"] .round-settings h2, html[data-theme="dark"] .greek-form, html[data-theme="dark"] .latin-form, html[data-theme="dark"] .analysis-prompt { color: #f1f4ef; }
-html[data-theme="dark"] .intro, html[data-theme="dark"] .deck-card p:last-child, html[data-theme="dark"] .catalog-card p, html[data-theme="dark"] .round-header, html[data-theme="dark"] .prompt > p:first-child, html[data-theme="dark"] .feedback-copy span, html[data-theme="dark"] .form-context, html[data-theme="dark"] .editor-title p, html[data-theme="dark"] .name-field, html[data-theme="dark"] legend, html[data-theme="dark"] .quantity-field, html[data-theme="dark"] .editor-footer p, html[data-theme="dark"] .editor-footer .quiet { color: #d3ddd5; }
+html[data-theme="dark"] .intro, html[data-theme="dark"] .deck-card p:last-child, html[data-theme="dark"] .catalog-card p, html[data-theme="dark"] .round-header, html[data-theme="dark"] .feedback-copy span, html[data-theme="dark"] .form-context, html[data-theme="dark"] .editor-title p, html[data-theme="dark"] .name-field, html[data-theme="dark"] legend, html[data-theme="dark"] .quantity-field, html[data-theme="dark"] .editor-footer p, html[data-theme="dark"] .editor-footer .quiet { color: #d3ddd5; }
 html[data-theme="dark"] .quiet { color: #d3ddd5; }
 html[data-theme="dark"] .eyebrow, html[data-theme="dark"] .deck-label, html[data-theme="dark"] .section-title { color: #a9c7b3; }
 html[data-theme="dark"] .primary { background: #315e42; }
@@ -874,7 +870,6 @@ html[data-theme="light"][data-language="latin"] .paradigm-form {
 
 html[data-theme="light"][data-language="latin"] .intro,
 html[data-theme="light"][data-language="latin"] .round-header,
-html[data-theme="light"][data-language="latin"] .prompt > p:first-child,
 html[data-theme="light"][data-language="latin"] .feedback-copy span,
 html[data-theme="light"][data-language="latin"] .form-context {
   color: #5e5049;

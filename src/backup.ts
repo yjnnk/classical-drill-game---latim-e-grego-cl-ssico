@@ -30,7 +30,8 @@ export function parseBackup(text: string): BackupFile {
     return deck.blocks.every((block) => {
       if (!block || typeof block.id !== "string" || blockIds.has(block.id) || typeof block.selected !== "object" ||
         typeof block.showTransliteration !== "boolean" || !["with", "without"].includes(block.articleMode) ||
-        !catalogParadigms.some(({ id }) => id === block.paradigmId)) return false;
+        !catalogParadigms.some(({ id, legacyIds }) =>
+          id === block.paradigmId || legacyIds?.includes(block.paradigmId))) return false;
       blockIds.add(block.id);
       return Object.values(block.selected).every((selection) => Array.isArray(selection) && selection.every((item) => typeof item === "string"));
     });

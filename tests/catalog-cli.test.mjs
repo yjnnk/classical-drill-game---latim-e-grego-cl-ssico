@@ -273,6 +273,52 @@ async function writeKnownWorkbook(path, official = false) {
 
   const participles = workbook.addWorksheet("Participles");
   participles.addRows([
+    [null, "–ων -οῦσα -ον"],
+    [null, "Present & Aorist II Active"],
+    [
+      null,
+      "being",
+      "ἀ. m",
+      "θ. f",
+      "οὐ. n",
+      null,
+      "ἀ. m",
+      "θ. f",
+      "οὐ. n",
+      null,
+      "ἀ. m",
+      "θ. f",
+      "οὐ. n",
+    ],
+    [
+      null,
+      "πτῶσις / ἀριθμός",
+      "singular",
+      null,
+      null,
+      null,
+      "dual",
+      null,
+      null,
+      null,
+      "plural",
+    ],
+    [
+      null,
+      "ὀρθή",
+      "ὤν",
+      "οὖσα",
+      "ὄν",
+      null,
+      "ὄντε",
+      "οὔσᾱ",
+      "ὄντε",
+      null,
+      "ὄντες",
+      "οὖσαι",
+      "ὄντα",
+    ],
+    [],
     [null, "Present Active"],
     [
       null,
@@ -516,6 +562,7 @@ test("a CLI gera um catálogo versionado com κρήνη e λῡ́ω", async () 
     "noun",
     "numeral",
     "participle",
+    "participle",
     "pronoun",
     "terminology",
     "verb",
@@ -546,8 +593,16 @@ test("a CLI gera um catálogo versionado com κρήνη e λῡ́ω", async () 
       { degree: "superlative" },
     ],
   );
+  const on = catalog.paradigms.find(
+    ({ lemma }) => lemma.greek === "ὤν, οὖσα, ὄν",
+  );
+  assert.ok(
+    on.items
+      .flatMap(({ analyses }) => analyses)
+      .every(({ tense, voice }) => tense === "present" && voice === "active"),
+  );
   const luon = catalog.paradigms.find(
-    ({ category }) => category === "participle",
+    ({ lemma }) => lemma.greek === "λῡ́ων, λῡ́ουσα, λῦον",
   );
   assert.ok(
     luon.items.some(({ analyses }) =>
@@ -649,22 +704,11 @@ test("a CLI gera um catálogo versionado com κρήνη e λῡ́ω", async () 
     luo.items.find(({ variants }) => variants.includes("λύ̄ειν")).analyses,
     [{ form: "infinitive", tense: "present", voice: "active" }],
   );
-  assert.deepEqual(
-    luo.items.find(({ variants }) => variants.includes("λῡομένη")).analyses,
-    [
-      {
-        form: "participle",
-        tense: "present",
-        voice: "middle",
-        gender: "feminine",
-      },
-      {
-        form: "participle",
-        tense: "present",
-        voice: "passive",
-        gender: "feminine",
-      },
-    ],
+  assert.equal(
+    luo.items
+      .flatMap(({ analyses }) => analyses)
+      .some(({ form }) => form === "participle"),
+    false,
   );
   assert.ok(
     luo.items
@@ -746,6 +790,34 @@ test("o catálogo distribuído contém todos os paradigmas validados", async () 
   assert.equal(verbs.length, 23);
   assert.equal(adjectives.length, 29);
   assert.equal(participles.length, 7);
+  const participleMetadata = Object.fromEntries(
+    participles.map(({ lemma, items }) => {
+      const analyses = items.flatMap(({ analyses }) => analyses);
+      return [
+        lemma.greek,
+        {
+          tenses: [...new Set(analyses.map(({ tense }) => tense))],
+          voices: [...new Set(analyses.map(({ voice }) => voice))],
+        },
+      ];
+    }),
+  );
+  assert.deepEqual(participleMetadata, {
+    "ὤν, οὖσα, ὄν": { tenses: ["present"], voices: ["active"] },
+    "λῡ́ων, λῡ́ουσα, λῦον": { tenses: ["present"], voices: ["active"] },
+    "λῡ́σᾱς, λῡ́σᾱσα, λῦσαν": { tenses: ["aorist"], voices: ["active"] },
+    "λυθείς, λυθεῖσα, λυθέν": { tenses: ["aorist"], voices: ["passive"] },
+    "διδούς, διδοῦσα, διδόν": { tenses: ["present"], voices: ["active"] },
+    "δεικνῡ́ς, δεικνῦσα, δεικνύν": { tenses: ["present"], voices: ["active"] },
+    "λελυκώς, λελυκυῖα, λελυκός": { tenses: ["perfect"], voices: ["active"] },
+  });
+  assert.ok(
+    verbs.every(({ items }) =>
+      items
+        .flatMap(({ analyses }) => analyses)
+        .every(({ form }) => form !== "participle"),
+    ),
+  );
   assert.equal(numerals.length, 1);
   assert.equal(numerals[0].items.length, 345);
   assert.equal(terminology.length, 1);
@@ -916,6 +988,45 @@ function validMinimalCatalog() {
   };
 }
 
+function validMinimalParticipleCatalog() {
+  const catalog = validMinimalCatalog();
+  catalog.paradigms = [
+    {
+      id: "participle:luo:present",
+      kind: "participle",
+      category: "participle",
+      lemma: {
+        greek: "λῡ́ων, λῡ́ουσα, λῦον",
+        transliteration: "lū́ōn",
+        gloss: "soltar",
+      },
+      participleGroup: {
+        id: "luo",
+        greek: "λῡ́ω",
+        transliteration: "lū́ō",
+        gloss: "soltar",
+      },
+      items: [
+        {
+          id: "participle:luo:present:nominative-singular-masculine",
+          variants: ["λῡ́ων"],
+          analyses: [
+            {
+              form: "participle",
+              tense: "present",
+              voice: "active",
+              gender: "masculine",
+              case: "nominative",
+              number: "singular",
+            },
+          ],
+        },
+      ],
+    },
+  ];
+  return catalog;
+}
+
 async function expectValidationFailure(catalog, message) {
   const directory = await mkdtemp(join(tmpdir(), "greek-catalog-invalid-"));
   const catalogPath = join(directory, "catalog.json");
@@ -950,6 +1061,26 @@ test("o validador rejeita rótulos ausentes e vocabulário desconhecido", async 
   await expectValidationFailure(
     unknownCase,
     /Valor gramatical inválido.*case=ablative/,
+  );
+});
+
+test("o validador rejeita grupos de particípios inválidos ou inconsistentes", async () => {
+  const incomplete = validMinimalParticipleCatalog();
+  incomplete.paradigms[0].participleGroup.greek = "";
+  await expectValidationFailure(
+    incomplete,
+    /Grupo de particípios inválido.*campo greek/,
+  );
+
+  const inconsistent = validMinimalParticipleCatalog();
+  const second = structuredClone(inconsistent.paradigms[0]);
+  second.id = "participle:luo:aorist";
+  second.items[0].id = "participle:luo:aorist:nominative-singular-masculine";
+  second.participleGroup.gloss = "libertar";
+  inconsistent.paradigms.push(second);
+  await expectValidationFailure(
+    inconsistent,
+    /Grupo de particípios inconsistente: luo/,
   );
 });
 

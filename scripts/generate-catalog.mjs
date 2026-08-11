@@ -552,6 +552,9 @@ function parseDeclinableGrid(sheet, headerRow, metadata) {
     id,
     kind: metadata.category,
     category: metadata.category,
+    ...(metadata.participleGroup
+      ? { participleGroup: metadata.participleGroup }
+      : {}),
     lemma: {
       greek: rawItems.slice(0, 3).flatMap(({ variants }) => variants[0]).join(", "),
       transliteration: transliterateGreek(first),
@@ -644,10 +647,35 @@ function parseAdjectives(sheet) {
   return [...paradigms, ...parseAdjectiveComparisons(sheet)];
 }
 
-const participleGlosses = {
-  "ὤν": "ser", "λῡ́ων": "soltar", "λῡ́σᾱς": "soltar",
-  "λυθείς": "soltar", "διδούς": "dar", "δεικνῡ́ς": "mostrar",
-  "λελυκώς": "soltar"
+const participleMetadata = {
+  "ὤν": {
+    tense: "present", voice: "active",
+    group: { id: "eimi", greek: "εἰμί", transliteration: "eimí", gloss: "ser" }
+  },
+  "λῡ́ων": {
+    tense: "present", voice: "active",
+    group: { id: "luo", greek: "λῡ́ω", transliteration: "lū́ō", gloss: "soltar" }
+  },
+  "λῡ́σᾱς": {
+    tense: "aorist", voice: "active",
+    group: { id: "luo", greek: "λῡ́ω", transliteration: "lū́ō", gloss: "soltar" }
+  },
+  "λυθείς": {
+    tense: "aorist", voice: "passive",
+    group: { id: "luo", greek: "λῡ́ω", transliteration: "lū́ō", gloss: "soltar" }
+  },
+  "διδούς": {
+    tense: "present", voice: "active",
+    group: { id: "didomi", greek: "δίδωμι", transliteration: "dídōmi", gloss: "dar" }
+  },
+  "δεικνῡ́ς": {
+    tense: "present", voice: "active",
+    group: { id: "deiknymi", greek: "δείκνῡμι", transliteration: "deíknȳmi", gloss: "mostrar" }
+  },
+  "λελυκώς": {
+    tense: "perfect", voice: "active",
+    group: { id: "luo", greek: "λῡ́ω", transliteration: "lū́ō", gloss: "soltar" }
+  }
 };
 
 function parseParticiples(sheet) {
@@ -659,12 +687,14 @@ function parseParticiples(sheet) {
       textOf(sheet.getRow(Math.max(1, row.number - offset)).getCell(2))
     ).join(" ");
     const nominative = textOf(sheet.getRow(row.number + 1).getCell(3));
-    const tense = /Perfect/iu.test(context) ? "perfect" : /Aorist/iu.test(context) ? "aorist" : "present";
-    const voice = /Passive/iu.test(context) ? "passive" : "active";
+    const curated = participleMetadata[nominative];
+    const tense = curated?.tense ?? (/Perfect/iu.test(context) ? "perfect" : /Aorist/iu.test(context) ? "aorist" : "present");
+    const voice = curated?.voice ?? (/Passive/iu.test(context) ? "passive" : "active");
     const paradigm = parseDeclinableGrid(sheet, row.number, {
       category: "participle",
-      gloss: participleGlosses[nominative] ?? textOf(sheet.getRow(row.number - 1).getCell(2)),
-      analysis: { form: "participle", tense, voice }
+      gloss: curated?.group.gloss ?? textOf(sheet.getRow(row.number - 1).getCell(2)),
+      analysis: { form: "participle", tense, voice },
+      participleGroup: curated?.group
     });
     if (paradigm) paradigms.push(paradigm);
   });
@@ -1027,21 +1057,7 @@ function parseVerb(sheet, source) {
       : "";
     const gender = { m: "masculine", f: "feminine", n: "neuter" }[genderLabel];
     if (label === "participle") parsingParticiple = true;
-    if (parsingParticiple && gender) {
-      for (const [column, voices] of nonFiniteVoices) {
-        const value = textOf(row.getCell(column));
-        if (!value) continue;
-        const variants = splitVariants(value);
-        if (variants.length === 0) continue;
-        rawItems.push({
-          variants,
-          analyses: voices.map((voice) => ({
-            form: "participle", tense, voice, gender
-          }))
-        });
-      }
-      return;
-    }
+    if (parsingParticiple && gender) return;
 
     if (!textOf(row.getCell(voiceColumn)) && !label && finiteByColumn.size > 0) {
       for (const [column, item] of finiteByColumn) {

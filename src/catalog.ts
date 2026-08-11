@@ -142,6 +142,7 @@ export type CatalogCategory =
 
 export interface CatalogParadigm {
   id: string;
+  legacyIds?: string[];
   category: CatalogCategory;
   declension?: "first" | "second" | "third" | "fourth" | "fifth";
   lemma: { form: string; transliteration: string; gloss: string };
@@ -225,6 +226,12 @@ interface GeneratedParadigm {
     | "terminology";
   declension?: "first" | "second" | "third";
   lemma: { greek: string; transliteration: string; gloss: string };
+  participleGroup?: {
+    id: string;
+    greek: string;
+    transliteration: string;
+    gloss: string;
+  };
   items: GeneratedItem[];
 }
 interface GeneratedCatalog {
@@ -431,15 +438,25 @@ function adjectiveParadigm(source: GeneratedParadigm): CatalogParadigm {
   };
 }
 
-function participleParadigm(source: GeneratedParadigm): CatalogParadigm {
-  const analyses = source.items.flatMap(
+function participleParadigm(sources: GeneratedParadigm[]): CatalogParadigm {
+  const first = sources[0]!;
+  const group = first.participleGroup;
+  const items = sources.flatMap((source) => source.items);
+  const analyses = items.flatMap(
     (item) => item.analyses as GeneratedParticipleAnalysis[],
   );
   return {
-    id: source.id,
+    id: group ? `participle:${group.id}` : first.id,
+    legacyIds: sources.map(({ id }) => id),
     category: "Particípio",
-    lemma: mappedLemma(source),
-    items: source.items.map((item) => ({
+    lemma: group
+      ? {
+          form: `Particípios de ${group.greek}`,
+          transliteration: `Particípios de ${group.transliteration}`,
+          gloss: `particípios de ${group.gloss}`,
+        }
+      : mappedLemma(first),
+    items: items.map((item) => ({
       id: item.id,
       form: item.variants.join(" / "),
       forms: item.variants,
@@ -642,18 +659,31 @@ function verbParadigm(source: GeneratedParadigm): CatalogParadigm {
 }
 
 export const catalogVersion = generatedCatalog.catalogVersion;
-export const catalogParadigms: CatalogParadigm[] =
-  generatedCatalog.paradigms.map((source) =>
+const nonParticipleParadigms = generatedCatalog.paradigms
+  .filter(({ kind }) => kind !== "participle")
+  .map((source) =>
     source.kind === "nominal"
       ? nominalParadigm(source)
       : source.kind === "adjective"
         ? adjectiveParadigm(source)
-        : source.kind === "participle"
-          ? participleParadigm(source)
-          : source.kind === "numeral" || source.kind === "terminology"
-            ? matchingParadigm(source)
-            : verbParadigm(source),
+        : source.kind === "numeral" || source.kind === "terminology"
+          ? matchingParadigm(source)
+          : verbParadigm(source),
   );
+const participlesByGroup = new Map<string, GeneratedParadigm[]>();
+for (const source of generatedCatalog.paradigms.filter(
+  ({ kind }) => kind === "participle",
+)) {
+  const key = source.participleGroup?.id ?? source.id;
+  participlesByGroup.set(key, [
+    ...(participlesByGroup.get(key) ?? []),
+    source,
+  ]);
+}
+export const catalogParadigms: CatalogParadigm[] = [
+  ...nonParticipleParadigms,
+  ...[...participlesByGroup.values()].map(participleParadigm),
+];
 
 function requireCatalogParadigm(id: string): CatalogParadigm {
   const paradigm = catalogParadigms.find((candidate) => candidate.id === id);

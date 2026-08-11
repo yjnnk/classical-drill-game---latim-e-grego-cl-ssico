@@ -105,7 +105,10 @@ function isSavedDeck(
         typeof block.paradigmId === "string" &&
         typeof block.selected === "object" &&
         typeof block.showTransliteration === "boolean" &&
-        paradigms.some(({ id }) => id === block.paradigmId),
+        paradigms.some(
+          ({ id, legacyIds }) =>
+            id === block.paradigmId || legacyIds?.includes(block.paradigmId),
+        ),
     )
   );
 }
@@ -114,7 +117,10 @@ export function paradigmFor(
   block: ContentBlock,
   paradigms: CatalogParadigm[] = catalogParadigms,
 ): CatalogParadigm {
-  const paradigm = paradigms.find(({ id }) => id === block.paradigmId);
+  const paradigm = paradigms.find(
+    ({ id, legacyIds }) =>
+      id === block.paradigmId || legacyIds?.includes(block.paradigmId),
+  );
   if (!paradigm) throw new Error(`Paradigma ausente: ${block.paradigmId}`);
   return paradigm;
 }

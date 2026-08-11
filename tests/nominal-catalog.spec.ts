@@ -95,7 +95,7 @@ test("pronome filtra gênero e funciona em produção assistida", async ({
 
   await expect(
     page.getByText("Qual forma corresponde a esta análise?"),
-  ).toBeVisible();
+  ).toHaveCount(0);
   await expect(page.locator(".analysis-prompt")).toContainText("feminino");
   await expect(
     page.getByRole("group", { name: "Alternativas" }).getByRole("button"),
