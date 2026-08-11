@@ -28,7 +28,7 @@ test("numerais filtram o tipo e funcionam nas duas direções", async ({
   await block.getByLabel("ordinal").uncheck();
   await block.getByLabel("adverbial").uncheck();
   await page.getByRole("button", { name: "Iniciar rodada" }).click();
-  await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
+  await expect(page.getByText("Qual é a análise desta forma?")).toHaveCount(0);
   await expect(
     page.getByRole("group", { name: "Alternativas" }).getByRole("button"),
   ).toHaveCount(3);
@@ -44,7 +44,7 @@ test("numerais filtram o tipo e funcionam nas duas direções", async ({
   await page.getByRole("button", { name: "Iniciar rodada" }).click();
   await expect(
     page.getByText("Qual forma corresponde a esta análise?"),
-  ).toBeVisible();
+  ).toHaveCount(0);
   await expect(page.locator(".analysis-prompt")).not.toContainText(
     /Cardinal|Ordinal|Adverbial|Latin|English/,
   );

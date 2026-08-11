@@ -443,7 +443,7 @@ export function createLatinApp(
       if (!question) return complete();
       persistRound();
       const analysis = question.direction === "analysis";
-      root.innerHTML = `<section class="round latin-round"><header class="round-header"><button class="quiet" data-exit>Sair</button><p>Progresso: ${round.masteredCount} de ${round.total}</p></header><div class="prompt"><p>${analysis ? "Qual é a análise desta forma?" : "Qual forma corresponde a esta análise?"}</p><p class="${analysis ? "latin-form" : "analysis-prompt"}" ${analysis ? 'lang="la"' : ""}>${question.prompt}</p>${question.item.support ? `<p class="form-support">${question.item.support}</p>` : ""}${question.context ? `<p class="form-context">Lema: <span lang="la">${question.context}</span></p>` : ""}</div><div class="options" role="group" aria-label="Alternativas">${question.choices.map((choice, index) => `<button class="option"><span class="option-number">${index + 1}</span><span>${choiceLabelHtml(choice.label)}</span></button>`).join("")}</div><div class="feedback" aria-live="polite"></div></section>`;
+      root.innerHTML = `<section class="round latin-round" aria-label="${analysis ? "Qual é a análise desta forma?" : "Qual forma corresponde a esta análise?"}"><header class="round-header"><button class="quiet" data-exit>Sair</button><p>Progresso: ${round.masteredCount} de ${round.total}</p></header><div class="prompt"><p class="${analysis ? "latin-form" : "analysis-prompt"}" ${analysis ? 'lang="la"' : ""}>${question.prompt}</p>${question.item.support ? `<p class="form-support">${question.item.support}</p>` : ""}${question.context ? `<p class="form-context">Lema: <span lang="la">${question.context}</span></p>` : ""}</div><div class="options" role="group" aria-label="Alternativas">${question.choices.map((choice, index) => `<button class="option"><span class="option-number">${index + 1}</span><span>${choiceLabelHtml(choice.label)}</span></button>`).join("")}</div><div class="feedback" aria-live="polite"></div></section>`;
       root
         .querySelector<HTMLButtonElement>("[data-exit]")
         ?.addEventListener("click", renderHome);
@@ -476,7 +476,7 @@ export function createLatinApp(
       if (!result.isCorrect) selectedButton.classList.add("incorrect");
       const feedback = root.querySelector<HTMLElement>(".feedback");
       if (feedback) {
-        feedback.innerHTML = `<div class="feedback-copy ${result.isCorrect ? "success" : "error"}"><strong>${result.isCorrect ? "✓ Correto" : "↻ Ainda não"}</strong><span>${result.isCorrect ? "Você reconheceu a forma." : `A resposta é ${result.correctLabel}. Esta forma voltará.`}</span></div><div class="feedback-actions"><button class="quiet" data-paradigm>Ver no paradigma</button><button class="primary" data-continue>Continuar</button></div><div class="paradigm-context" hidden></div>`;
+        feedback.innerHTML = `<div class="feedback-copy ${result.isCorrect ? "success" : "error"}"><strong>${result.isCorrect ? "✓ Correto" : "↻ Ainda não"}</strong>${result.isCorrect ? "" : `<span>A resposta é ${result.correctLabel}. Esta forma voltará.</span>`}</div><div class="feedback-actions"><button class="quiet" data-paradigm>Ver no paradigma</button><button class="primary" data-continue>Continuar</button></div><div class="paradigm-context" hidden></div>`;
         feedback
           .querySelector<HTMLButtonElement>("[data-continue]")
           ?.addEventListener("click", renderQuestion);

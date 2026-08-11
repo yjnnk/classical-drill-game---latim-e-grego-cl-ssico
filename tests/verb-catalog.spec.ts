@@ -83,12 +83,11 @@ for (const [paradigmId, lemma] of [
       });
       await deck.getByRole("button", { name: "Iniciar rodada" }).click();
       await expect(
-        page.getByText(
-          direction === "Análise"
-            ? "Qual é a análise desta forma?"
-            : "Qual forma corresponde a esta análise?",
-        ),
-      ).toBeVisible();
+        page.getByText("Qual é a análise desta forma?"),
+      ).toHaveCount(0);
+      await expect(
+        page.getByText("Qual forma corresponde a esta análise?"),
+      ).toHaveCount(0);
       await expect(
         page.getByRole("group", { name: "Alternativas" }).getByRole("button"),
       ).toHaveCount(3);
@@ -109,7 +108,8 @@ test("formas finitas podem ser recortadas e praticadas em Análise", async ({
   });
 
   await block.getByLabel("infinitivo").uncheck();
-  await block.getByLabel("particípio").uncheck();
+  await expect(block.getByLabel("particípio")).toHaveCount(0);
+  await expect(block.getByRole("group", { name: "Gênero" })).toHaveCount(0);
   await block.getByLabel("imperfeito", { exact: true }).uncheck();
   await expect(block.getByRole("group", { name: "Tempo" })).toContainText(
     "presente",
@@ -127,7 +127,7 @@ test("formas finitas podem ser recortadas e praticadas em Análise", async ({
     "singular",
   );
   await page.getByRole("button", { name: "Iniciar rodada" }).click();
-  await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
+  await expect(page.getByText("Qual é a análise desta forma?")).toHaveCount(0);
   await expect(
     page.getByRole("group", { name: "Alternativas" }).getByRole("button"),
   ).toHaveCount(3);
@@ -145,13 +145,13 @@ test("infinitivos funcionam em Produção assistida sem traços artificiais", as
     has: page.getByRole("heading", { name: "λῡ́ω", exact: true }),
   });
   await block.getByLabel("forma finita").uncheck();
-  await block.getByLabel("particípio").uncheck();
+  await expect(block.getByLabel("particípio")).toHaveCount(0);
   await page.getByLabel("Produção assistida").check();
   await page.getByRole("button", { name: "Iniciar rodada" }).click();
 
   await expect(
     page.getByText("Qual forma corresponde a esta análise?"),
-  ).toBeVisible();
+  ).toHaveCount(0);
   await expect(page.locator(".analysis-prompt")).toContainText("infinitivo");
   await expect(page.locator(".analysis-prompt")).not.toContainText("pessoa");
   await expect(page.locator(".analysis-prompt")).not.toContainText("singular");
@@ -172,7 +172,7 @@ test("um recorte verbal sem distrações suficientes é sinalizado antes da roda
     has: page.getByRole("heading", { name: "λῡ́ω", exact: true }),
   });
   await block.getByLabel("forma finita").uncheck();
-  await block.getByLabel("particípio").uncheck();
+  await expect(block.getByLabel("particípio")).toHaveCount(0);
   for (const label of [
     "imperfeito",
     "futuro",

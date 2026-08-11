@@ -6,7 +6,7 @@ test("oferece retomar exatamente a pergunta ativa após recarregar", async ({
   await page.goto("/");
   await page.getByRole("button", { name: "Grego clássico" }).click();
   await page.getByRole("button", { name: "Iniciar rodada" }).first().click();
-  const prompt = await page.locator(".prompt > p").nth(1).textContent();
+  const prompt = await page.locator(".prompt > p").first().textContent();
 
   await page.reload();
   await page.getByRole("button", { name: "Grego clássico" }).click();
@@ -17,7 +17,7 @@ test("oferece retomar exatamente a pergunta ativa após recarregar", async ({
     page.getByRole("button", { name: "Iniciar rodada" }).first(),
   ).toBeDisabled();
   await page.getByRole("button", { name: "Retomar rodada" }).click();
-  await expect(page.locator(".prompt > p").nth(1)).toHaveText(prompt ?? "");
+  await expect(page.locator(".prompt > p").first()).toHaveText(prompt ?? "");
 });
 
 test("abandonar remove a rodada sem criar histórico", async ({ page }) => {

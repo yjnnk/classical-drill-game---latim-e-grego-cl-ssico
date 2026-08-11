@@ -19,9 +19,9 @@ test("permite responder com 1–3 e continuar com Enter", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Grego clássico" }).click();
   await page.getByRole("button", { name: "Iniciar rodada" }).first().click();
-  const prompt = await page.locator(".prompt > p").nth(1).textContent();
+  const prompt = await page.locator(".prompt > p").first().textContent();
   await page.keyboard.press("1");
   await expect(page.locator(".feedback-copy strong")).toBeVisible();
   await page.keyboard.press("Enter");
-  await expect(page.locator(".prompt > p").nth(1)).not.toHaveText(prompt ?? "");
+  await expect(page.locator(".prompt > p").first()).not.toHaveText(prompt ?? "");
 });

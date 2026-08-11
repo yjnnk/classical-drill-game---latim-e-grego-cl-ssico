@@ -25,26 +25,41 @@ test("adjetivos são encontráveis e oferecem somente filtros aplicáveis", asyn
   }
   await expect(block.getByRole("group", { name: "Tempo" })).toHaveCount(0);
   await page.getByRole("button", { name: "Iniciar rodada" }).click();
-  await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
+  await expect(page.getByText("Qual é a análise desta forma?")).toHaveCount(0);
   await expect(
     page.getByRole("group", { name: "Alternativas" }).getByRole("button"),
   ).toHaveCount(3);
 });
 
-test("particípios declinados funcionam em produção sem modo ou pessoa", async ({
+test("particípios de λῡ́ω ficam reunidos e funcionam sem modo ou pessoa", async ({
   page,
 }) => {
-  await page.getByRole("button", { name: "Particípios" }).click();
+  await page
+    .getByRole("button", { name: "Particípios", exact: true })
+    .click();
   await page.getByLabel("Pesquisar paradigmas").fill("soltar");
-  await page.getByRole("button", { name: /Adicionar λῡ́ων/ }).click();
+  await expect(
+    page.getByRole("heading", { name: "Particípios de λῡ́ω" }),
+  ).toHaveCount(1);
+  await page
+    .getByRole("button", { name: /Adicionar Particípios de λῡ́ω/ })
+    .click();
   const block = page
     .getByRole("article")
-    .filter({ has: page.getByRole("heading", { name: /λῡ́ων/ }) });
+    .filter({
+      has: page.getByRole("heading", { name: "Particípios de λῡ́ω" }),
+    });
   for (const group of ["Tempo", "Voz", "Caso", "Número", "Gênero"]) {
     await expect(block.getByRole("group", { name: group })).toBeVisible();
   }
   await expect(block.getByRole("group", { name: "Modo" })).toHaveCount(0);
   await expect(block.getByRole("group", { name: "Pessoa" })).toHaveCount(0);
+  await expect(block.getByRole("group", { name: "Tempo" })).toContainText(
+    /presente.*aoristo.*perfeito/s,
+  );
+  await expect(block.getByRole("group", { name: "Voz" })).toContainText(
+    /ativo.*passivo/s,
+  );
   await page.getByLabel("Produção assistida").check();
   await page.getByRole("button", { name: "Iniciar rodada" }).click();
   await expect(page.locator(".analysis-prompt")).toContainText("particípio");

@@ -96,6 +96,7 @@ export function validateCatalog(catalog) {
   const identifiers = new Set();
   const paradigmIds = new Set();
   const itemIds = new Set();
+  const participleGroups = new Map();
 
   for (const paradigm of catalog.paradigms) {
     requireNonEmptyString(paradigm.id, "Paradigma sem identificador.");
@@ -121,6 +122,30 @@ export function validateCatalog(catalog) {
       paradigm.lemma?.gloss,
       `Paradigma ${paradigm.id} sem glosa.`
     );
+    if (paradigm.kind === "participle") {
+      const group = paradigm.participleGroup;
+      if (!group || typeof group !== "object") {
+        throw new Error(`Paradigma ${paradigm.id} sem grupo de particípios.`);
+      }
+      for (const field of ["id", "greek", "transliteration", "gloss"]) {
+        requireNonEmptyString(
+          group[field],
+          `Grupo de particípios inválido em ${paradigm.id}: campo ${field}`
+        );
+      }
+      const identity = JSON.stringify({
+        greek: group.greek,
+        transliteration: group.transliteration,
+        gloss: group.gloss
+      });
+      const existing = participleGroups.get(group.id);
+      if (existing && existing !== identity) {
+        throw new Error(
+          `Grupo de particípios inconsistente: ${group.id}`
+        );
+      }
+      participleGroups.set(group.id, identity);
+    }
     if (!Array.isArray(paradigm.items) || paradigm.items.length === 0) {
       throw new Error(`Paradigma ${paradigm.id} sem itens.`);
     }

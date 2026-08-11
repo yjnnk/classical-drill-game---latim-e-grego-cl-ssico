@@ -212,7 +212,7 @@ test("o estudante salva produção assistida com quantidade definida", async ({
 
   await expect(
     page.getByText("Qual forma corresponde a esta análise?"),
-  ).toBeVisible();
+  ).toHaveCount(0);
   await expect(page.getByText(/ de 3/)).toBeVisible();
   await expect(
     page.getByRole("group", { name: "Alternativas" }).getByRole("button"),

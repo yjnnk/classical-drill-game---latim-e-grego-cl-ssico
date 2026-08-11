@@ -42,7 +42,11 @@ test("o estudante inicia uma rodada de κρήνη", async ({ page }) => {
   });
   await deck.getByRole("button", { name: "Iniciar rodada" }).click();
 
-  await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
+  await expect(page.getByText("Qual é a análise desta forma?")).toHaveCount(0);
+  await expect(
+    page.getByRole("region", { name: "Qual é a análise desta forma?" }),
+  ).toBeVisible();
+  await expect(page.locator(".greek-form")).toBeVisible();
   await expect(page.getByText(/ de 8/)).toBeVisible();
   await expect(page.getByRole("button")).toHaveCount(4);
 });
@@ -58,7 +62,7 @@ test("o estudante inicia uma rodada de λῡ́ω a partir do catálogo", async (
 
   await deck.getByRole("button", { name: "Iniciar rodada" }).click();
 
-  await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
+  await expect(page.getByText("Qual é a análise desta forma?")).toHaveCount(0);
   await expect(page.getByRole("group", { name: "Alternativas" })).toContainText(
     "presente",
   );
@@ -95,6 +99,15 @@ test("uma forma errada volta depois de outras perguntas", async ({ page }) => {
   await expect(
     page.getByText("Esta forma voltará.", { exact: false }),
   ).toBeVisible();
+  const continueButton = await page
+    .getByRole("button", { name: "Continuar" })
+    .boundingBox();
+  const viewport = page.viewportSize();
+  expect(continueButton).not.toBeNull();
+  expect(viewport).not.toBeNull();
+  expect(continueButton!.y + continueButton!.height).toBeLessThanOrEqual(
+    viewport!.height,
+  );
   await page.getByRole("button", { name: "Continuar" }).click();
 
   for (let index = 0; index < 7; index += 1) {
@@ -104,6 +117,23 @@ test("uma forma errada volta depois de outras perguntas", async ({ page }) => {
   }
 
   await expect(page.locator(".greek-form")).toHaveText(missedForm);
+});
+
+test("o acerto mostra somente o feedback essencial", async ({ page }) => {
+  await startRound(page);
+  await answerCurrentCorrectly(page);
+
+  await expect(page.getByText("✓ Correto", { exact: true })).toBeVisible();
+  await expect(page.getByText("Você reconheceu a forma.")).toHaveCount(0);
+  const continueButton = await page
+    .getByRole("button", { name: "Continuar" })
+    .boundingBox();
+  const viewport = page.viewportSize();
+  expect(continueButton).not.toBeNull();
+  expect(viewport).not.toBeNull();
+  expect(continueButton!.y + continueButton!.height).toBeLessThanOrEqual(
+    viewport!.height,
+  );
 });
 
 test("destaca o separador entre análises gregas sincréticas", async ({ page }) => {
@@ -193,7 +223,7 @@ test("a rodada termina depois de acertar todas as formas", async ({ page }) => {
   await page.getByRole("button", { name: "Repetir sessão" }).click();
   await expect(page.getByText("Progresso: 0 de 8")).toBeVisible();
   await expect(page.getByText(/Sessão \d/)).toHaveCount(0);
-  await expect(page.getByText("Qual é a análise desta forma?")).toBeVisible();
+  await expect(page.getByText("Qual é a análise desta forma?")).toHaveCount(0);
 
   for (let index = 0; index < 8; index += 1) {
     await answerCurrentCorrectly(page);
