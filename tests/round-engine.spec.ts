@@ -46,6 +46,33 @@ test("produção assistida oferece três formas e agrupa variantes corretas", ()
   ]);
 });
 
+for (const direction of ["analysis", "production"] as const) {
+  test(`um único item usa o paradigma apenas como distração em ${direction}`, () => {
+    const studyItem = items[0]!;
+    const round = new DrillRound([studyItem], {
+      direction,
+      coverage: "all",
+      choiceItems: items,
+      random: () => 0.5,
+    });
+
+    const question = round.question();
+    expect(question?.item.id).toBe(studyItem.id);
+    expect(question?.choices).toHaveLength(3);
+    const wrong = question?.choices.find(({ correct }) => !correct);
+    if (!wrong) throw new Error("Pergunta sem distração.");
+    round.answer(wrong.id);
+
+    const restored = DrillRound.restore(round.snapshot());
+    const repeated = restored.question();
+    expect(repeated?.choices).toHaveLength(3);
+    const correct = repeated?.choices.find(({ correct }) => correct);
+    if (!correct) throw new Error("Pergunta sem resposta correta.");
+    restored.answer(correct.id);
+    expect(restored.question()).toBeNull();
+  });
+}
+
 test("análise apresenta uma variante equivalente de cada vez", () => {
   const variantItems = items.map((item) =>
     item.id === "a3" ? { ...item, forms: ["λῡ́ει", "λῡ́ῃ"] } : item,

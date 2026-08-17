@@ -46,7 +46,7 @@ test("a busca aceita uma palavra inteira sem perder o foco", async ({ page }) =>
   ).toBeVisible();
 });
 
-test("substantivo sem artigo e sem dual respeita o recorte na rodada", async ({
+test("substantivo sem artigo e sem dual respeita o recorte das perguntas", async ({
   page,
 }) => {
   await page.getByLabel("Pesquisar paradigmas").fill("árvore");
@@ -71,9 +71,6 @@ test("substantivo sem artigo e sem dual respeita o recorte na rodada", async ({
     const form = (await page.locator(".greek-form").textContent())?.trim();
     if (!form || !answers[form]) throw new Error(`Forma inesperada: ${form}`);
     expect(form).not.toMatch(/^(ὁ|ἡ|τὸ|τοῦ|τῷ|τὴν|οἱ|αἱ|τὰ|τῶν|τοῖς|ταῖς)/);
-    await expect(
-      page.getByRole("group", { name: "Alternativas" }),
-    ).not.toContainText("dual");
     await page.getByRole("button", { name: answers[form] }).click();
     await page.getByRole("button", { name: "Continuar" }).click();
   }

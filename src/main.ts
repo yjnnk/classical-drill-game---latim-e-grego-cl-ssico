@@ -679,7 +679,9 @@ function startRound(
   sessionCount = 1,
 ): void {
   if (!restoredRound && loadActiveRound()) return renderHome();
-  const round = restoredRound ?? new DrillRound(deck.items, config);
+  const round =
+    restoredRound ??
+    new DrillRound(deck.items, { ...config, choiceItems: deck.choiceItems });
   const persist = (): void =>
     saveActiveRound({
       version: 1,

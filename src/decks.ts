@@ -7,7 +7,6 @@ import {
   type FilterField,
 } from "./catalog";
 import {
-  roundFeasibilityError,
   type CoverageMode,
   type DirectionMode,
   type RoundConfig,
@@ -218,17 +217,12 @@ function analysisIdentity(analysis: Analysis): string {
 
 export function blockError(
   block: ContentBlock,
-  direction: DirectionMode = "analysis",
+  _direction: DirectionMode = "analysis",
   paradigms: CatalogParadigm[] = catalogParadigms,
 ): string | null {
   const items = itemsForBlock(block, paradigms);
-  const analysisSets = new Set(
-    items.map((item) => item.analyses.map(analysisIdentity).sort().join("|")),
-  );
-  if (analysisSets.size < 3) {
-    return "Escolha formas que ofereçam pelo menos três análises distintas.";
-  }
-  return roundFeasibilityError(items, direction);
+  if (items.length === 0) return "Selecione ao menos uma forma neste bloco.";
+  return null;
 }
 
 export function deckError(
@@ -283,6 +277,20 @@ export function playableDeck(
     }
   }
   const items = [...deduplicated.values()];
+  const choiceItems = deck.blocks.flatMap((block) => {
+    const paradigm = paradigmFor(block, paradigms);
+    return paradigm.items.map((item) => ({
+      ...item,
+      id: `${item.id}:${block.articleMode}`,
+      form:
+        block.articleMode === "without" && item.bareForm
+          ? item.bareForm
+          : item.form,
+      sourceBlockIds: [block.id],
+      sourceParadigmIds: [paradigm.id],
+      productionContext: paradigm.lemma.form,
+    }));
+  });
   const formsAcrossParadigms = new Map<string, Set<string>>();
   const variantsOf = (item: DrillItem) =>
     item.form.split(/\s*\/\s*/u).map((variant) => variant.normalize("NFC"));
@@ -330,6 +338,7 @@ export function playableDeck(
     title: deck.name,
     description: `${deck.blocks.length} bloco${deck.blocks.length === 1 ? "" : "s"}`,
     items,
+    choiceItems,
   };
 }
 

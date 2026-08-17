@@ -423,7 +423,9 @@ export function createLatinApp(
     sessionCount = 1,
   ): void => {
     if (!restored && loadActiveRound("latin")) return renderHome();
-    const round = restored ?? new DrillRound(deck.items, config);
+    const round =
+      restored ??
+      new DrillRound(deck.items, { ...config, choiceItems: deck.choiceItems });
     const persistRound = () =>
       saveActiveRound(
         {

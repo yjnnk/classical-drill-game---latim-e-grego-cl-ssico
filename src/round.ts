@@ -9,6 +9,7 @@ export interface RoundConfig {
   coverage: CoverageMode;
   quantity?: number;
   random?: () => number;
+  choiceItems?: DrillItem[];
 }
 
 export interface RoundChoice {
@@ -42,6 +43,7 @@ export interface RoundSnapshot {
   masteredIds: string[];
   activeQuestion: RoundQuestion | null;
   total: number;
+  choiceItems?: DrillItem[];
 }
 
 const labels = {
@@ -246,6 +248,7 @@ export class DrillRound {
   readonly total: number;
   private readonly mastered = new Set<string>();
   private readonly eligible: DrillItem[];
+  private readonly choiceItems: DrillItem[];
   private readonly random: () => number;
   private queue: ScheduledItem[];
   private activeQuestion: RoundQuestion | null = null;
@@ -257,6 +260,7 @@ export class DrillRound {
   ) {
     this.random = config.random ?? Math.random;
     this.eligible = snapshot?.eligible ?? items;
+    this.choiceItems = snapshot?.choiceItems ?? config.choiceItems ?? items;
     if (snapshot) {
       this.queue = snapshot.queue;
       snapshot.masteredIds.forEach((id) => this.mastered.add(id));
@@ -303,6 +307,7 @@ export class DrillRound {
       masteredIds: [...this.mastered],
       activeQuestion: this.activeQuestion,
       total: this.total,
+      choiceItems: this.choiceItems,
     });
   }
 
@@ -334,7 +339,7 @@ export class DrillRound {
     const correctIdentity = analysisSetIdentity(displayedAnalyses);
     const candidates = [
       ...new Map(
-        this.eligible.map((candidate) => [
+        this.choiceItems.map((candidate) => [
           analysisSetIdentity(candidate.analyses),
           candidate.analyses,
         ]),
@@ -343,14 +348,20 @@ export class DrillRound {
       .filter(
         ([identity, analyses]) =>
           identity !== correctIdentity &&
-          analyses[0]?.kind === displayedAnalyses[0]?.kind,
+          analyses[0]?.kind === displayedAnalyses[0]?.kind &&
+          !this.choiceItems.some(
+            (candidate) =>
+              analysisSetIdentity(candidate.analyses) === identity &&
+              sharesParadigm(displayedItem, candidate) &&
+              displayedForms(candidate).includes(prompt),
+          ),
       )
       .sort(([, left], [, right]) => {
-        const leftItem = this.eligible.find(
+        const leftItem = this.choiceItems.find(
           ({ analyses }) =>
             analysisSetIdentity(analyses) === analysisSetIdentity(left),
         );
-        const rightItem = this.eligible.find(
+        const rightItem = this.choiceItems.find(
           ({ analyses }) =>
             analysisSetIdentity(analyses) === analysisSetIdentity(right),
         );
@@ -398,7 +409,7 @@ export class DrillRound {
       string,
       { analyses: Analysis[]; forms: string[]; item: DrillItem }
     >();
-    for (const candidate of this.eligible) {
+    for (const candidate of this.choiceItems) {
       const identity = productionIdentity(candidate);
       const group = groups.get(identity) ?? {
         analyses: candidate.analyses,
@@ -409,7 +420,21 @@ export class DrillRound {
         group.forms.push(candidate.form);
       groups.set(identity, group);
     }
-    const correct = groups.get(correctIdentity);
+    const selectedGroups = new Map<
+      string,
+      { analyses: Analysis[]; forms: string[]; item: DrillItem }
+    >();
+    for (const candidate of this.eligible) {
+      const identity = productionIdentity(candidate);
+      const group = selectedGroups.get(identity) ?? {
+        analyses: candidate.analyses,
+        forms: [],
+        item: candidate,
+      };
+      if (!group.forms.includes(candidate.form)) group.forms.push(candidate.form);
+      selectedGroups.set(identity, group);
+    }
+    const correct = selectedGroups.get(correctIdentity);
     if (!correct) throw new Error(`Forma correta ausente para ${item.id}.`);
     const normalizedCorrect = new Set(
       correct.forms.map((form) => withoutDiacritics(form)),

@@ -130,9 +130,10 @@ test("um rascunho inválido é salvo, mas não pode iniciar", async ({ page }) =
   });
   await block.getByLabel("acusativo").uncheck();
   await block.getByLabel("singular").uncheck();
+  await block.getByLabel("dual").uncheck();
   await block.getByLabel("plural").uncheck();
   await expect(block).toContainText(
-    "Escolha formas que ofereçam pelo menos três análises distintas.",
+    "Selecione ao menos uma forma neste bloco.",
   );
   await expect(
     page.getByRole("button", { name: "Iniciar rodada" }),
@@ -187,7 +188,7 @@ test("sobreposições preservam o apoio global e filtros removem análises sincr
         page.getByRole("group", { name: "Alternativas" }),
       ).not.toContainText("dativo · dual");
     }
-    await page.getByRole("button", { name: answer[form] }).click();
+    await page.getByText(answer[form], { exact: true }).click();
     await page.getByRole("button", { name: "Continuar" }).click();
   }
   await expect(page.getByText("Rodada concluída")).toBeVisible();
