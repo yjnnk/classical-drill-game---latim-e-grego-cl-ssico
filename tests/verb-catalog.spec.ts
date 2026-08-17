@@ -160,7 +160,7 @@ test("infinitivos funcionam em Produção assistida sem traços artificiais", as
   ).toHaveCount(3);
 });
 
-test("um recorte verbal sem distrações suficientes é sinalizado antes da rodada", async ({
+test("um recorte verbal estreito usa outras formas apenas como distrações", async ({
   page,
 }) => {
   await openEditor(page);
@@ -186,10 +186,70 @@ test("um recorte verbal sem distrações suficientes é sinalizado antes da roda
   await block.getByLabel("médio").uncheck();
   await block.getByLabel("passivo").uncheck();
 
-  await expect(block).toContainText(
-    "Escolha formas que ofereçam pelo menos três análises distintas.",
-  );
+  await expect(block.locator(".validation-message")).toHaveCount(0);
+  await page.getByRole("button", { name: "Iniciar rodada" }).click();
+  await expect(page.locator(".greek-form")).toHaveText("λύ̄ειν");
   await expect(
-    page.getByRole("button", { name: "Iniciar rodada" }),
-  ).toBeDisabled();
+    page.getByRole("group", { name: "Alternativas" }).getByRole("button"),
+  ).toHaveCount(3);
+});
+
+test("um recorte de uma única forma de εἰμί ainda pode ser treinado", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.evaluate(() => {
+    localStorage.clear();
+    localStorage.setItem(
+      "classical-drill-decks:v1",
+      JSON.stringify({
+        version: 1,
+        decks: [
+          {
+            id: "deck:eimi-single-form",
+            name: "εἰμί — primeira pessoa do singular",
+            blocks: [
+              {
+                id: "block:eimi-single-form",
+                paradigmId: "verb:eimi",
+                selected: {
+                  form: ["finite"],
+                  tense: ["present"],
+                  voice: ["active"],
+                  mood: ["indicative"],
+                  person: ["first"],
+                  number: ["singular"],
+                },
+                showTransliteration: false,
+                articleMode: "with",
+              },
+            ],
+            direction: "analysis",
+            coverage: "all",
+            quantity: 10,
+          },
+        ],
+      }),
+    );
+  });
+  await page.reload();
+  await page.getByRole("button", { name: "Grego clássico" }).click();
+
+  const deck = page.getByRole("article").filter({
+    has: page.getByRole("heading", {
+      name: "εἰμί — primeira pessoa do singular",
+    }),
+  });
+  await expect(
+    deck.getByText(
+      "Este bloco não oferece duas distrações válidas para a direção escolhida.",
+    ),
+  ).toHaveCount(0);
+  await expect(deck.getByRole("button", { name: "Iniciar rodada" })).toBeEnabled();
+  await deck.getByRole("button", { name: "Iniciar rodada" }).click();
+
+  await expect(page.locator(".greek-form")).toHaveText("εἰμί");
+  await expect(
+    page.getByRole("group", { name: "Alternativas" }).getByRole("button"),
+  ).toHaveCount(3);
 });

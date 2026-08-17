@@ -109,6 +109,7 @@ export interface DrillDeck {
   title: string;
   description: string;
   items: DrillItem[];
+  choiceItems?: DrillItem[];
 }
 
 export type FilterField =
