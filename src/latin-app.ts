@@ -22,6 +22,7 @@ import {
   saveDecks,
   type ContentBlock,
   type SavedDeck,
+  withChoiceFallbacks,
 } from "./decks";
 import {
   loadPreferences,
@@ -114,7 +115,16 @@ export function createLatinApp(
           startRound(
             value.deck,
             value.config,
-            DrillRound.restore(value.snapshot),
+            DrillRound.restore(
+              value.snapshot,
+              withChoiceFallbacks(
+                value.snapshot.eligible,
+                value.snapshot.choiceItems ??
+                  value.deck.choiceItems ??
+                  value.snapshot.eligible,
+                latinCatalogParadigms,
+              ),
+            ),
           );
       });
     root

@@ -19,6 +19,7 @@ import {
   saveDecks,
   type ContentBlock,
   type SavedDeck,
+  withChoiceFallbacks,
 } from "./decks";
 import { DrillRound, type RoundConfig, type RoundQuestion } from "./round";
 import { loadPreferences, savePreferences } from "./preferences";
@@ -161,7 +162,15 @@ function renderHome(): void {
         startRound(
           current.deck,
           current.config,
-          DrillRound.restore(current.snapshot),
+          DrillRound.restore(
+            current.snapshot,
+            withChoiceFallbacks(
+              current.snapshot.eligible,
+              current.snapshot.choiceItems ??
+                current.deck.choiceItems ??
+                current.snapshot.eligible,
+            ),
+          ),
         );
     });
   app
