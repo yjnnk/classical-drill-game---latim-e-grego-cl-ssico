@@ -253,3 +253,142 @@ test("um recorte de uma única forma de εἰμί ainda pode ser treinado", asyn
     page.getByRole("group", { name: "Alternativas" }).getByRole("button"),
   ).toHaveCount(3);
 });
+
+test("o infinitivo de εἰμί encontra distrações fora do próprio paradigma", async ({
+  page,
+}) => {
+  const pageErrors: Error[] = [];
+  page.on("pageerror", (error) => pageErrors.push(error));
+  await page.goto("/");
+  await page.evaluate(() => {
+    localStorage.clear();
+    localStorage.setItem(
+      "classical-drill-decks:v1",
+      JSON.stringify({
+        version: 1,
+        decks: [
+          {
+            id: "deck:eimi-infinitive",
+            name: "εἶναι",
+            blocks: [
+              {
+                id: "block:eimi-infinitive",
+                paradigmId: "verb:eimi",
+                selected: {
+                  form: ["infinitive"],
+                  tense: ["present"],
+                  voice: ["active"],
+                },
+                showTransliteration: false,
+                articleMode: "with",
+              },
+            ],
+            direction: "analysis",
+            coverage: "all",
+            quantity: 10,
+          },
+        ],
+      }),
+    );
+  });
+  await page.reload();
+  await page.getByRole("button", { name: "Grego clássico" }).click();
+  const deck = page.getByRole("article").filter({
+    has: page.getByRole("heading", { name: "εἶναι", exact: true }),
+  });
+  await deck.getByRole("button", { name: "Iniciar rodada" }).click();
+
+  expect(pageErrors.map(({ message }) => message)).toEqual([]);
+  await expect(page.locator(".greek-form")).toHaveText("εἶναι");
+  await expect(
+    page.getByRole("group", { name: "Alternativas" }).getByRole("button"),
+  ).toHaveCount(3);
+
+  await page.evaluate(() => {
+    const key = "classical-drill:greek:active-round:v1";
+    const active = JSON.parse(localStorage.getItem(key) ?? "null");
+    const onlyEimi = (item: { sourceParadigmIds?: string[] }) =>
+      item.sourceParadigmIds?.includes("verb:eimi");
+    active.deck.choiceItems = active.deck.choiceItems.filter(onlyEimi);
+    active.snapshot.choiceItems = active.snapshot.choiceItems.filter(onlyEimi);
+    active.snapshot.activeQuestion = null;
+    localStorage.setItem(key, JSON.stringify(active));
+  });
+  await page.reload();
+  await page.getByRole("button", { name: "Grego clássico" }).click();
+  await page.getByRole("button", { name: "Retomar rodada" }).click();
+  await expect(page.locator(".greek-form")).toHaveText("εἶναι");
+  await expect(
+    page.getByRole("group", { name: "Alternativas" }).getByRole("button"),
+  ).toHaveCount(3);
+  expect(pageErrors.map(({ message }) => message)).toEqual([]);
+});
+
+test("a rodada presente de εἰμί avança das formas finitas ao infinitivo", async ({
+  page,
+}) => {
+  const answers: Record<string, string> = {
+    "εἰμί": "presente · ativo · indicativo · 1ª pessoa · singular",
+    "εἶ": "presente · ativo · indicativo · 2ª pessoa · singular",
+    "ἐστί(ν)": "presente · ativo · indicativo · 3ª pessoa · singular",
+    "ἐσμέν": "presente · ativo · indicativo · 1ª pessoa · plural",
+    "ἐστέ": "presente · ativo · indicativo · 2ª pessoa · plural",
+    "εἰσί(ν)": "presente · ativo · indicativo · 3ª pessoa · plural",
+    "εἶναι": "infinitivo · presente · ativo",
+  };
+  const pageErrors: Error[] = [];
+  page.on("pageerror", (error) => pageErrors.push(error));
+  await page.goto("/");
+  await page.evaluate(() => {
+    localStorage.clear();
+    localStorage.setItem(
+      "classical-drill-decks:v1",
+      JSON.stringify({
+        version: 1,
+        decks: [
+          {
+            id: "deck:eimi-present",
+            name: "εἰμί — presente",
+            blocks: [
+              {
+                id: "block:eimi-present",
+                paradigmId: "verb:eimi",
+                selected: {
+                  form: ["finite", "infinitive"],
+                  tense: ["present"],
+                  voice: ["active"],
+                  mood: ["indicative"],
+                  person: ["first", "second", "third"],
+                  number: ["singular", "plural"],
+                },
+                showTransliteration: false,
+                articleMode: "with",
+              },
+            ],
+            direction: "analysis",
+            coverage: "all",
+            quantity: 10,
+          },
+        ],
+      }),
+    );
+  });
+  await page.reload();
+  await page.getByRole("button", { name: "Grego clássico" }).click();
+  const deck = page.getByRole("article").filter({
+    has: page.getByRole("heading", { name: "εἰμί — presente" }),
+  });
+  await deck.getByRole("button", { name: "Iniciar rodada" }).click();
+
+  for (let index = 0; index < Object.keys(answers).length; index += 1) {
+    const form = await page.locator(".greek-form").innerText();
+    const answer = answers[form];
+    if (!answer) throw new Error(`Forma inesperada na rodada: ${form}`);
+    await page.getByText(answer, { exact: true }).click();
+    await expect(page.getByText("✓ Correto", { exact: true })).toBeVisible();
+    await page.getByRole("button", { name: "Continuar" }).click();
+  }
+
+  await expect(page.getByText("Você reconheceu todas as formas.")).toBeVisible();
+  expect(pageErrors.map(({ message }) => message)).toEqual([]);
+});

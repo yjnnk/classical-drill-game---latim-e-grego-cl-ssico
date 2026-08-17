@@ -260,7 +260,7 @@ export class DrillRound {
   ) {
     this.random = config.random ?? Math.random;
     this.eligible = snapshot?.eligible ?? items;
-    this.choiceItems = snapshot?.choiceItems ?? config.choiceItems ?? items;
+    this.choiceItems = config.choiceItems ?? snapshot?.choiceItems ?? items;
     if (snapshot) {
       this.queue = snapshot.queue;
       snapshot.masteredIds.forEach((id) => this.mastered.add(id));
@@ -291,10 +291,13 @@ export class DrillRound {
     this.total = this.queue.length;
   }
 
-  static restore(snapshot: RoundSnapshot): DrillRound {
+  static restore(
+    snapshot: RoundSnapshot,
+    choiceItems: DrillItem[] = snapshot.choiceItems ?? snapshot.eligible,
+  ): DrillRound {
     return new DrillRound(
       snapshot.eligible,
-      { direction: "analysis", coverage: "all" },
+      { direction: "analysis", coverage: "all", choiceItems },
       snapshot,
     );
   }

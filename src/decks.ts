@@ -215,6 +215,14 @@ function analysisIdentity(analysis: Analysis): string {
   );
 }
 
+function analysisSetIdentity(analyses: Analysis[]): string {
+  return analyses.map(analysisIdentity).sort().join("|");
+}
+
+function normalizedFormIdentity(form: string): string {
+  return form.normalize("NFD").replace(/\p{M}/gu, "");
+}
+
 export function blockError(
   block: ContentBlock,
   _direction: DirectionMode = "analysis",
@@ -237,6 +245,71 @@ export function deckError(
       .map((block) => blockError(block, deck.direction, paradigms))
       .find(Boolean) ?? null
   );
+}
+
+function articleModeFromItem(item: DrillItem): ContentBlock["articleMode"] {
+  return item.id.endsWith(":without") ? "without" : "with";
+}
+
+export function withChoiceFallbacks(
+  items: DrillItem[],
+  primaryChoiceItems: DrillItem[],
+  paradigms: CatalogParadigm[] = catalogParadigms,
+): DrillItem[] {
+  const articleModes = new Set(
+    [...items, ...primaryChoiceItems].map(articleModeFromItem),
+  );
+  const representedParadigmIds = new Set(
+    items.flatMap(({ sourceParadigmIds }) => sourceParadigmIds ?? []),
+  );
+  const choiceItemsById = new Map(
+    primaryChoiceItems.map((item) => [item.id, item]),
+  );
+  const relevantKinds = new Set(
+    items.flatMap((item) =>
+      item.analyses[0]?.kind ? [item.analyses[0].kind] : [],
+    ),
+  );
+  const fallbackAnalysisIdentities = new Map<string, Set<string>>();
+  const fallbackFormIdentities = new Map<string, Set<string>>();
+  // Three external identities leave two distractors even when one matches the answer.
+  for (const paradigm of paradigms) {
+    if (representedParadigmIds.has(paradigm.id)) continue;
+    for (const articleMode of articleModes) {
+      for (const item of paradigm.items) {
+        const kind = item.analyses[0]?.kind;
+        if (!kind || !relevantKinds.has(kind)) continue;
+        const key = `${articleMode}:${kind}`;
+        const analysisIdentities =
+          fallbackAnalysisIdentities.get(key) ?? new Set<string>();
+        const formIdentities =
+          fallbackFormIdentities.get(key) ?? new Set<string>();
+        const analysisId = analysisSetIdentity(item.analyses);
+        const presentedForm =
+          articleMode === "without" && item.bareForm
+            ? item.bareForm
+            : item.form;
+        const formId = normalizedFormIdentity(presentedForm);
+        const addsAnalysis =
+          analysisIdentities.size < 3 && !analysisIdentities.has(analysisId);
+        const addsForm = formIdentities.size < 3 && !formIdentities.has(formId);
+        if (!addsAnalysis && !addsForm) continue;
+        choiceItemsById.set(`${item.id}:${articleMode}`, {
+          ...item,
+          id: `${item.id}:${articleMode}`,
+          form: presentedForm,
+          sourceBlockIds: [],
+          sourceParadigmIds: [paradigm.id],
+          productionContext: paradigm.lemma.form,
+        });
+        analysisIdentities.add(analysisId);
+        formIdentities.add(formId);
+        fallbackAnalysisIdentities.set(key, analysisIdentities);
+        fallbackFormIdentities.set(key, formIdentities);
+      }
+    }
+  }
+  return [...choiceItemsById.values()];
 }
 
 export function playableDeck(
@@ -277,20 +350,32 @@ export function playableDeck(
     }
   }
   const items = [...deduplicated.values()];
-  const choiceItems = deck.blocks.flatMap((block) => {
+  const choiceItemsById = new Map<string, DrillItem>();
+  for (const block of deck.blocks) {
     const paradigm = paradigmFor(block, paradigms);
-    return paradigm.items.map((item) => ({
-      ...item,
-      id: `${item.id}:${block.articleMode}`,
-      form:
-        block.articleMode === "without" && item.bareForm
-          ? item.bareForm
-          : item.form,
-      sourceBlockIds: [block.id],
-      sourceParadigmIds: [paradigm.id],
-      productionContext: paradigm.lemma.form,
-    }));
-  });
+    for (const item of paradigm.items) {
+      const id = `${item.id}:${block.articleMode}`;
+      const existing = choiceItemsById.get(id);
+      choiceItemsById.set(id, {
+        ...item,
+        id,
+        form:
+          block.articleMode === "without" && item.bareForm
+            ? item.bareForm
+            : item.form,
+        sourceBlockIds: [
+          ...new Set([...(existing?.sourceBlockIds ?? []), block.id]),
+        ],
+        sourceParadigmIds: [paradigm.id],
+        productionContext: paradigm.lemma.form,
+      });
+    }
+  }
+  const choiceItems = withChoiceFallbacks(
+    items,
+    [...choiceItemsById.values()],
+    paradigms,
+  );
   const formsAcrossParadigms = new Map<string, Set<string>>();
   const variantsOf = (item: DrillItem) =>
     item.form.split(/\s*\/\s*/u).map((variant) => variant.normalize("NFC"));
