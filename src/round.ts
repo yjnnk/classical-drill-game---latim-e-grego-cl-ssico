@@ -244,11 +244,52 @@ function sharesParadigm(left: DrillItem, right: DrillItem): boolean {
   return (left.sourceParadigmIds ?? []).some((id) => rightParadigms.has(id));
 }
 
+interface AnalysisChoiceGroup {
+  identity: string;
+  analyses: Analysis[];
+  item: DrillItem;
+}
+
+interface ProductionChoiceGroup {
+  analysisIdentity: string;
+  analyses: Analysis[];
+  forms: string[];
+  item: DrillItem;
+}
+
+function productionGroups(
+  items: DrillItem[],
+): Map<string, ProductionChoiceGroup> {
+  const groups = new Map<string, ProductionChoiceGroup>();
+  for (const item of items) {
+    const identity = productionIdentity(item);
+    const group = groups.get(identity) ?? {
+      analysisIdentity: analysisSetIdentity(item.analyses),
+      analyses: item.analyses,
+      forms: [],
+      item,
+    };
+    if (!group.forms.includes(item.form)) group.forms.push(item.form);
+    groups.set(identity, group);
+  }
+  return groups;
+}
+
 export class DrillRound {
   readonly total: number;
   private readonly mastered = new Set<string>();
   private readonly eligible: DrillItem[];
   private readonly choiceItems: DrillItem[];
+  private readonly choiceEntries: Array<{
+    item: DrillItem;
+    analysisIdentity: string;
+  }>;
+  private readonly analysisChoiceGroups: AnalysisChoiceGroup[];
+  private readonly productionChoiceGroups: Map<string, ProductionChoiceGroup>;
+  private readonly selectedProductionGroups: Map<
+    string,
+    ProductionChoiceGroup
+  >;
   private readonly random: () => number;
   private queue: ScheduledItem[];
   private activeQuestion: RoundQuestion | null = null;
@@ -261,6 +302,23 @@ export class DrillRound {
     this.random = config.random ?? Math.random;
     this.eligible = snapshot?.eligible ?? items;
     this.choiceItems = config.choiceItems ?? snapshot?.choiceItems ?? items;
+    this.choiceEntries = this.choiceItems.map((item) => ({
+      item,
+      analysisIdentity: analysisSetIdentity(item.analyses),
+    }));
+    const analysisChoiceGroups = new Map<string, AnalysisChoiceGroup>();
+    for (const { item, analysisIdentity: identity } of this.choiceEntries) {
+      if (!analysisChoiceGroups.has(identity)) {
+        analysisChoiceGroups.set(identity, {
+          identity,
+          analyses: item.analyses,
+          item,
+        });
+      }
+    }
+    this.analysisChoiceGroups = [...analysisChoiceGroups.values()];
+    this.productionChoiceGroups = productionGroups(this.choiceItems);
+    this.selectedProductionGroups = productionGroups(this.eligible);
     if (snapshot) {
       this.queue = snapshot.queue;
       snapshot.masteredIds.forEach((id) => this.mastered.add(id));
@@ -340,43 +398,30 @@ export class DrillRound {
     const displayedAnalyses = analysesForPrompt(item, prompt, this.eligible);
     const displayedItem = { ...item, analyses: displayedAnalyses };
     const correctIdentity = analysisSetIdentity(displayedAnalyses);
-    const candidates = [
-      ...new Map(
-        this.choiceItems.map((candidate) => [
-          analysisSetIdentity(candidate.analyses),
-          candidate.analyses,
-        ]),
-      ).entries(),
-    ]
+    const trueAnalysisIdentities = new Set(
+      this.choiceEntries
+        .filter(
+          ({ item: candidate }) =>
+            sharesParadigm(displayedItem, candidate) &&
+            displayedForms(candidate).includes(prompt),
+        )
+        .map(({ analysisIdentity: identity }) => identity),
+    );
+    const candidates = this.analysisChoiceGroups
       .filter(
-        ([identity, analyses]) =>
+        ({ identity, analyses }) =>
           identity !== correctIdentity &&
           analyses[0]?.kind === displayedAnalyses[0]?.kind &&
-          !this.choiceItems.some(
-            (candidate) =>
-              analysisSetIdentity(candidate.analyses) === identity &&
-              sharesParadigm(displayedItem, candidate) &&
-              displayedForms(candidate).includes(prompt),
-          ),
+          !trueAnalysisIdentities.has(identity),
       )
-      .sort(([, left], [, right]) => {
-        const leftItem = this.choiceItems.find(
-          ({ analyses }) =>
-            analysisSetIdentity(analyses) === analysisSetIdentity(left),
-        );
-        const rightItem = this.choiceItems.find(
-          ({ analyses }) =>
-            analysisSetIdentity(analyses) === analysisSetIdentity(right),
-        );
+      .sort((left, right) => {
         const paradigmPriority =
-          Number(
-            Boolean(rightItem && sharesParadigm(displayedItem, rightItem)),
-          ) -
-          Number(Boolean(leftItem && sharesParadigm(displayedItem, leftItem)));
+          Number(sharesParadigm(displayedItem, right.item)) -
+          Number(sharesParadigm(displayedItem, left.item));
         return (
           paradigmPriority ||
-          setCloseness(right, displayedAnalyses) -
-            setCloseness(left, displayedAnalyses)
+          setCloseness(right.analyses, displayedAnalyses) -
+            setCloseness(left.analyses, displayedAnalyses)
         );
       })
       .slice(0, 2);
@@ -391,8 +436,8 @@ export class DrillRound {
         label: formatAnalysisSet(displayedAnalyses),
         correct: true,
       },
-      ...candidates.map(([id, analyses]) => ({
-        id,
+      ...candidates.map(({ identity, analyses }) => ({
+        id: identity,
         label: formatAnalysisSet(analyses),
         correct: false,
       })),
@@ -408,41 +453,12 @@ export class DrillRound {
   private productionQuestion(item: DrillItem): RoundQuestion {
     const correctAnalysisIdentity = analysisSetIdentity(item.analyses);
     const correctIdentity = productionIdentity(item);
-    const groups = new Map<
-      string,
-      { analyses: Analysis[]; forms: string[]; item: DrillItem }
-    >();
-    for (const candidate of this.choiceItems) {
-      const identity = productionIdentity(candidate);
-      const group = groups.get(identity) ?? {
-        analyses: candidate.analyses,
-        forms: [],
-        item: candidate,
-      };
-      if (!group.forms.includes(candidate.form))
-        group.forms.push(candidate.form);
-      groups.set(identity, group);
-    }
-    const selectedGroups = new Map<
-      string,
-      { analyses: Analysis[]; forms: string[]; item: DrillItem }
-    >();
-    for (const candidate of this.eligible) {
-      const identity = productionIdentity(candidate);
-      const group = selectedGroups.get(identity) ?? {
-        analyses: candidate.analyses,
-        forms: [],
-        item: candidate,
-      };
-      if (!group.forms.includes(candidate.form)) group.forms.push(candidate.form);
-      selectedGroups.set(identity, group);
-    }
-    const correct = selectedGroups.get(correctIdentity);
+    const correct = this.selectedProductionGroups.get(correctIdentity);
     if (!correct) throw new Error(`Forma correta ausente para ${item.id}.`);
     const normalizedCorrect = new Set(
       correct.forms.map((form) => withoutDiacritics(form)),
     );
-    const distractors = [...groups.entries()]
+    const distractors = [...this.productionChoiceGroups.entries()]
       .filter(
         ([identity, group]) =>
           identity !== correctIdentity &&
@@ -483,9 +499,9 @@ export class DrillRound {
       item,
       direction: "production",
       prompt: formatAnalysisSet(item.analyses),
-      context: [...groups.values()].some(
+      context: [...this.productionChoiceGroups.values()].some(
         (group) =>
-          analysisSetIdentity(group.analyses) === correctAnalysisIdentity &&
+          group.analysisIdentity === correctAnalysisIdentity &&
           !sharesParadigm(item, group.item),
       )
         ? item.productionContext
