@@ -1,26 +1,14 @@
 import { expect, test } from "@playwright/test";
 
-test("transliteração e tradução são globais, independentes e persistentes", async ({
+test("apoios pedagógicos não aparecem na área grega", async ({
   page,
 }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Grego clássico" }).click();
-  await page.evaluate(() => localStorage.clear());
-  await page.reload();
-  await page.getByRole("button", { name: "Grego clássico" }).click();
-  await page.getByLabel("Mostrar transliteração").check();
-  await expect(page.getByLabel("Mostrar tradução")).not.toBeChecked();
-  await page.reload();
-  await page.getByRole("button", { name: "Grego clássico" }).click();
-  await expect(page.getByLabel("Mostrar transliteração")).toBeChecked();
-  await expect(page.getByLabel("Mostrar tradução")).not.toBeChecked();
-
-  await page.getByRole("button", { name: "Criar baralho" }).click();
-  await page.getByLabel("Nome do baralho").fill("Apoios");
-  await page.getByRole("button", { name: "Adicionar conteúdo" }).click();
-  await page.getByLabel("Pesquisar paradigmas").fill("fonte");
-  await expect(page.getByText("krḗnē", { exact: true })).toBeVisible();
-  await expect(page.getByText("fonte", { exact: true })).toHaveCount(0);
+  await expect(page.getByText("Apoios pedagógicos")).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Exibição" })).toHaveCount(0);
+  await expect(page.getByLabel("Mostrar transliteração")).toHaveCount(0);
+  await expect(page.getByLabel("Mostrar tradução")).toHaveCount(0);
 });
 
 test("a forma grega permanece principal e o paradigma abre após responder", async ({

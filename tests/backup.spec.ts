@@ -6,7 +6,12 @@ test("exporta e restaura preferências sem incluir a rodada ativa", async ({
 }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Grego clássico" }).click();
-  await page.getByRole("checkbox", { name: "Mostrar transliteração" }).check();
+  await page.evaluate(() =>
+    localStorage.setItem(
+      "classical-drill:greek:preferences:v1",
+      JSON.stringify({ showTransliteration: true, showTranslation: false }),
+    ),
+  );
   await page.getByRole("button", { name: "Iniciar rodada" }).first().click();
   await page.getByRole("button", { name: "Sair" }).click();
 
@@ -23,16 +28,24 @@ test("exporta e restaura preferências sem incluir a rodada ativa", async ({
   await page.evaluate(() => localStorage.clear());
   await page.reload();
   await page.getByRole("button", { name: "Grego clássico" }).click();
-  await expect(
-    page.getByRole("checkbox", { name: "Mostrar transliteração" }),
-  ).not.toBeChecked();
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        localStorage.getItem("classical-drill:greek:preferences:v1"),
+      ),
+    )
+    .toBeNull();
   await page.locator("input[data-action='import']").setInputFiles(path);
   await expect(page.getByText(/Prévia:/)).toBeVisible();
   await page.getByRole("button", { name: "Substituir dados locais" }).click();
 
-  await expect(
-    page.getByRole("checkbox", { name: "Mostrar transliteração" }),
-  ).toBeChecked();
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        localStorage.getItem("classical-drill:greek:preferences:v1"),
+      ),
+    )
+    .toContain('"showTransliteration":true');
   await expect(
     page.getByText("Rodada em andamento", { exact: true }),
   ).toHaveCount(0);

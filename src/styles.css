@@ -72,10 +72,6 @@ button {
   margin-bottom: clamp(2rem, 5vw, 3rem);
 }
 
-.home > .title-row + .preference-panel {
-  margin-top: 0;
-}
-
 .section-title {
   margin: 3rem 0 1rem;
   color: #405249;
@@ -133,25 +129,6 @@ h1 {
 .deck-list {
   display: grid;
   gap: 1rem;
-}
-
-.preference-panel {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 2rem;
-  padding: 1rem 1.25rem;
-  border: 1px solid rgb(55 79 66 / 18%);
-  border-radius: 1rem;
-  background: rgb(255 253 247 / 65%);
-}
-
-.preference-panel h2 {
-  margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.4rem;
-  font-weight: 500;
 }
 
 .active-round {
@@ -801,7 +778,7 @@ html[data-theme="dark"] {
 }
 
 html[data-theme="dark"] body { background: #151c18; }
-html[data-theme="dark"] .deck-card, html[data-theme="dark"] .preference-panel, html[data-theme="dark"] .backup-panel, html[data-theme="dark"] .active-round, html[data-theme="dark"] .content-block, html[data-theme="dark"] .catalog, html[data-theme="dark"] .round-settings, html[data-theme="dark"] .option, html[data-theme="dark"] input[type="text"], html[data-theme="dark"] .name-field input, html[data-theme="dark"] .search, html[data-theme="dark"] .paradigm-form { background: #202923; color: #f4f7f4; }
+html[data-theme="dark"] .deck-card, html[data-theme="dark"] .backup-panel, html[data-theme="dark"] .active-round, html[data-theme="dark"] .content-block, html[data-theme="dark"] .catalog, html[data-theme="dark"] .round-settings, html[data-theme="dark"] .option, html[data-theme="dark"] input[type="text"], html[data-theme="dark"] .name-field input, html[data-theme="dark"] .search, html[data-theme="dark"] .paradigm-form { background: #202923; color: #f4f7f4; }
 html[data-theme="dark"] h1, html[data-theme="dark"] .deck-card h2, html[data-theme="dark"] .deck-card h3, html[data-theme="dark"] .catalog-card h3, html[data-theme="dark"] .block-header h2, html[data-theme="dark"] .catalog h2, html[data-theme="dark"] .round-settings h2, html[data-theme="dark"] .greek-form, html[data-theme="dark"] .latin-form, html[data-theme="dark"] .analysis-prompt { color: #f1f4ef; }
 html[data-theme="dark"] .intro, html[data-theme="dark"] .deck-card p:last-child, html[data-theme="dark"] .catalog-card p, html[data-theme="dark"] .round-header, html[data-theme="dark"] .feedback-copy span, html[data-theme="dark"] .form-context, html[data-theme="dark"] .editor-title p, html[data-theme="dark"] .name-field, html[data-theme="dark"] legend, html[data-theme="dark"] .quantity-field, html[data-theme="dark"] .editor-footer p, html[data-theme="dark"] .editor-footer .quiet { color: #d3ddd5; }
 html[data-theme="dark"] .quiet { color: #d3ddd5; }
@@ -851,7 +828,6 @@ html[data-theme="light"][data-language="latin"] .section-title {
 }
 
 html[data-theme="light"][data-language="latin"] .deck-card,
-html[data-theme="light"][data-language="latin"] .preference-panel,
 html[data-theme="light"][data-language="latin"] .backup-panel,
 html[data-theme="light"][data-language="latin"] .active-round,
 html[data-theme="light"][data-language="latin"] .content-block,
@@ -875,7 +851,6 @@ html[data-theme="light"][data-language="latin"] .form-context {
   color: #5e5049;
 }
 
-html[data-theme="light"][data-language="latin"] .preference-panel h2,
 html[data-theme="light"][data-language="latin"] .backup-panel h2,
 html[data-theme="light"][data-language="latin"] .active-round h2,
 html[data-theme="light"][data-language="latin"] .round-settings h2,

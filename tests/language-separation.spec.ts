@@ -100,7 +100,13 @@ test("migra dados gregos legados somente depois de validar a cópia", async ({
   await page.reload();
   await page.getByRole("button", { name: "Grego clássico" }).click();
 
-  await expect(page.getByLabel("Mostrar transliteração")).toBeChecked();
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        localStorage.getItem("classical-drill:greek:preferences:v1"),
+      ),
+    )
+    .toContain('"showTransliteration":true');
   await expect
     .poll(() =>
       page.evaluate(() =>
@@ -135,7 +141,13 @@ test("preserva dados legados inválidos para recuperação manual", async ({
       ),
     )
     .toBe("{inválido");
-  await expect(page.getByLabel("Mostrar transliteração")).not.toBeChecked();
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        localStorage.getItem("classical-drill:greek:preferences:v1"),
+      ),
+    )
+    .toBeNull();
 });
 
 test("conclui uma migração interrompida sem sobrescrever o destino", async ({
@@ -161,5 +173,11 @@ test("conclui uma migração interrompida sem sobrescrever o destino", async ({
       ),
     )
     .toBeNull();
-  await expect(page.getByLabel("Mostrar transliteração")).toBeChecked();
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        localStorage.getItem("classical-drill:greek:preferences:v1"),
+      ),
+    )
+    .toContain('"showTransliteration":true');
 });

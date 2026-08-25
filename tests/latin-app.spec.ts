@@ -80,10 +80,6 @@ test("mantém legíveis os textos latinos no tema claro", async ({
     "Monte recortes precisos do que deseja recordar. Tudo fica neste aparelho.",
   );
   await expect(page.locator(".intro")).toHaveCSS("color", "rgb(94, 80, 73)");
-  await expect(page.getByRole("heading", { name: "Exibição" })).toHaveCSS(
-    "color",
-    "rgb(64, 26, 33)",
-  );
   const model = page
     .getByRole("article")
     .filter({ has: page.getByRole("heading", { name: "porta", exact: true }) });
@@ -119,7 +115,7 @@ test("mantém espaço entre criar baralho e o primeiro card", async ({
   await openLatin(page);
 
   const header = page.locator(".title-row");
-  const firstCard = page.locator(".preference-panel");
+  const firstCard = page.locator(".deck-list").first();
   const [headerBox, cardBox] = await Promise.all([
     header.boundingBox(),
     firstCard.boundingBox(),
@@ -237,20 +233,14 @@ test("um bloco latino pode ter todas as formas desselecionadas", async ({
   await expect(block).toContainText("0 formas incluídas");
 });
 
-test("apoios latinos de tradução e forma sem mácrons são independentes", async ({
+test("apoios pedagógicos não aparecem na área latina", async ({
   page,
 }) => {
   await openLatin(page);
-  await page.getByLabel("Mostrar forma sem mácrons").check();
-  await expect(page.getByLabel("Mostrar tradução")).not.toBeChecked();
-  await page.reload();
-  await page.getByRole("button", { name: "Latim" }).click();
-  await expect(page.getByLabel("Mostrar forma sem mácrons")).toBeChecked();
-  const model = page
-    .getByRole("article")
-    .filter({ has: page.getByRole("heading", { name: "porta", exact: true }) });
-  await model.getByRole("button", { name: "Iniciar rodada" }).click();
-  await expect(page.locator(".form-support")).toBeVisible();
+  await expect(page.getByText("Apoios pedagógicos")).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Exibição" })).toHaveCount(0);
+  await expect(page.getByLabel("Mostrar forma sem mácrons")).toHaveCount(0);
+  await expect(page.getByLabel("Mostrar tradução")).toHaveCount(0);
 });
 
 test("latim mantém baralhos e rodada ativa em chaves próprias", async ({

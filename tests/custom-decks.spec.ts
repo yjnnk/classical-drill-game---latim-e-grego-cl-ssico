@@ -4,12 +4,17 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Grego clássico" }).click();
   await page.evaluate(() => localStorage.clear());
+  await page.evaluate(() =>
+    localStorage.setItem(
+      "classical-drill:greek:preferences:v1",
+      JSON.stringify({ showTransliteration: true, showTranslation: false }),
+    ),
+  );
   await page.reload();
   await page.getByRole("button", { name: "Grego clássico" }).click();
 });
 
 test("o estudante pesquisa, filtra e salva um baralho", async ({ page }) => {
-  await page.getByRole("checkbox", { name: "Mostrar transliteração" }).check();
   await page.getByRole("button", { name: "Criar baralho" }).click();
   await expect(page.getByLabel("Nome do baralho")).toHaveValue(
     "baralho customizado",
@@ -152,7 +157,6 @@ test("um rascunho inválido é salvo, mas não pode iniciar", async ({ page }) =
 test("sobreposições preservam o apoio global e filtros removem análises sincréticas", async ({
   page,
 }) => {
-  await page.getByRole("checkbox", { name: "Mostrar transliteração" }).check();
   await page.getByRole("button", { name: "Criar baralho" }).click();
   await page.getByLabel("Nome do baralho").fill("Genitivos");
   await page.getByRole("button", { name: "Adicionar conteúdo" }).click();

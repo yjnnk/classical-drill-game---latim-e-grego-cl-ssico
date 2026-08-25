@@ -115,7 +115,6 @@ function renderHome(): void {
   document.documentElement.dataset.language = "greek";
   document.onkeydown = null;
   const saved = loadDecks();
-  const preferences = loadPreferences();
   const theme = loadTheme();
   const active = loadActiveRound();
   app.innerHTML = `
@@ -130,12 +129,6 @@ function renderHome(): void {
       </div>
 
       ${active ? `<section class="active-round" aria-labelledby="active-round-title"><div><p class="deck-label">Rodada em andamento</p><h2 id="active-round-title">${escapeHtml(active.deck.title)}</h2><p>Progresso: ${active.snapshot.masteredIds.length} de ${active.snapshot.total}</p></div><div class="card-actions"><button class="primary" data-action="resume">Retomar rodada</button><button class="quiet danger" data-action="abandon">Abandonar rodada</button></div></section>` : ""}
-
-      <section class="preference-panel" aria-labelledby="preference-title">
-        <div><p class="deck-label">Apoios pedagógicos</p><h2 id="preference-title">Exibição</h2></div>
-        <label class="filter-option"><input type="checkbox" data-preference="showTransliteration" ${preferences.showTransliteration ? "checked" : ""}><span>Mostrar transliteração</span></label>
-        <label class="filter-option"><input type="checkbox" data-preference="showTranslation" ${preferences.showTranslation ? "checked" : ""}><span>Mostrar tradução</span></label>
-      </section>
 
       ${saved.length ? `<h2 class="section-title">Meus baralhos</h2><div class="deck-list">${saved.map(savedDeckCard).join("")}</div>` : ""}
       <h2 class="section-title">Modelos para começar</h2>
@@ -179,15 +172,6 @@ function renderHome(): void {
       clearActiveRound();
       renderHome();
     });
-
-  app.querySelectorAll<HTMLInputElement>("[data-preference]").forEach((input) =>
-    input.addEventListener("change", () => {
-      const next = loadPreferences();
-      next[input.dataset.preference as keyof typeof next] = input.checked;
-      savePreferences(next);
-      renderHome();
-    }),
-  );
 
   app
     .querySelector<HTMLButtonElement>("[data-action='export']")
